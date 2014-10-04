@@ -18,14 +18,14 @@ module.exports = function (app, config) {
       if (req.user) {
         res.json(req.user);
       } else {
-        res.send(401);
+        res.status(401).end();
       }
     });
 
   app.route('/api/session')
     .delete(function (req, res) {
       req.logout();
-      res.send(200);
+      res.status(200).end();
     });
 
 /*
