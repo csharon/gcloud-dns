@@ -4,6 +4,7 @@
     .controller('headerCtrl', HeaderCtrl)
     .directive('xdPageHeader', XdPageHeader);
 
+  /* @ngInject */
   function XdPageHeader() {
     return {
       restrict: 'EA',
@@ -14,6 +15,7 @@
     };
   }
 
+  /* @ngInject */
   function HeaderCtrl($scope, $log, googleOAuth) {
     var vm = this;
 

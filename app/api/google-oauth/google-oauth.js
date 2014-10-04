@@ -3,6 +3,7 @@
   angular.module('xd.api.GoogleOauth', [])
     .factory('googleOAuth', GoogleOauth);
 
+  /* @ngInject */
   function GoogleOauth($http, $window, $log) {
     var _token = '';
     var _isAuthenticated = false;
