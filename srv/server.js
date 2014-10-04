@@ -7,6 +7,7 @@ var config = require('./lib/config/config')[env];
 
 require('./lib/config/express')(app, config);
 require('./lib/config/routes')(app, config);
+require('./lib/config/passport')(config);
 
 app.listen(config.port);
 console.log('Listening on port ' + config.port + '....');
