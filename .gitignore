@@ -2,6 +2,7 @@ node_modules/
 bower_components/
 .DS_Store
 *.log
+*.tpls.js
 .idea/
 .sass-cache/
 public/
