@@ -1,0 +1,48 @@
+{
+  "name": "gcloud-dns",
+  "version": "0.0.0",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:csharon/gcloud-dns.git"
+  },
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "jquery": "~2.1.1",
+    "angular": "~1.3.0",
+    "angular-ui-router": "~0.2.11",
+    "restangular": "~1.4.0",
+    "font-awesome": "~4.2.0",
+    "bootstrap-sass-official": "~3.2.0",
+    "angular-bootstrap": "~0.11.2",
+    "lodash": "~2.4.1",
+    "angular-material": "~0.0.3",
+    "angular-material-src": "git@github.com:angular/material.git",
+    "angular-animate": "~1.3.0"
+  },
+  "devDependencies": {
+    "angular-mocks": "~1.3.0"
+  },
+  "overrides": {
+    "font-awesome": {
+      "main": "./fonts/*"
+    },
+    "bootstrap-sass-official": {
+      "main": "./assets/javascripts/bootstrap.js"
+    },
+    "angular-material-src": {
+      "main": [
+        "./config/lib/angular-animate-sequence/angular-animate-sequence.js",
+        "./config/lib/angular-animate-sequence/angular-animate-stylers.js"
+      ]
+    }
+  },
+  "resolutions": {
+    "angular": "~1.3.0"
+  }
+}
