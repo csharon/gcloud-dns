@@ -6,12 +6,12 @@
 
     $httpProvider.defaults.useXDomain = true;
     delete $httpProvider.defaults.headers.common['X-Requested-With'];
-
+/*
     $stateProvider
-      .state('test1', { url: '/test1', templateUrl: '/views/test1/test1.html', controller: 'Test1Ctrl', controllerAs: 'vm'})
+      .state('home', { url: '/test1', templateUrl: '/views/test1/test1.html', controller: 'Test1Ctrl', controllerAs: 'vm'})
       .state('test2', { url: '/test2', templateUrl: '/views/test2/test2.html', controller: 'Test2Ctrl', controllerAs: 'vm'});
 
-    $urlRouterProvider.otherwise('/test1');
+    $urlRouterProvider.otherwise('/test1');*/
   }
 
   /* @ngInject */
@@ -23,9 +23,8 @@
   angular.module('GcloudDns', [
     'ui.router',
     'ngMaterial',
-    'xd.tmpls',
-    'xd.views.test1',
-    'xd.views.test2'
+    'xd.layout.PageHeader',
+    'xd.tmpls'
   ])
     .config(config)
 
