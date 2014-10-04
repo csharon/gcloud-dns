@@ -1,5 +1,14 @@
 (function () {
 
+  angular.module('GcloudDns', [
+    'ui.router',
+    'ngMaterial',
+    'xd.layout.PageHeader',
+    'xd.tmpls'
+  ])
+    .config(config)
+    .controller('gcloudDnsCtrl', GcloudDnsCtrl);
+
   /* @ngInject */
   function config ($httpProvider, $stateProvider, $locationProvider, $urlRouterProvider) {
     $locationProvider.html5Mode(true);
@@ -20,13 +29,5 @@
     vm.appTitle = 'Gcloud Dns';
   }
 
-  angular.module('GcloudDns', [
-    'ui.router',
-    'ngMaterial',
-    'xd.layout.PageHeader',
-    'xd.tmpls'
-  ])
-    .config(config)
 
-    .controller('gcloudDnsCtrl', GcloudDnsCtrl);
 })();
