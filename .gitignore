@@ -1,0 +1,10 @@
+node_modules/
+bower_components/
+.DS_Store
+*.log
+.idea/
+.sass-cache/
+public/
+build/
+dist/
+dev/

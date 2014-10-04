@@ -1,0 +1,8 @@
+{
+  "generator-xd-angular": {
+    "projectName": "gcloud-dns",
+    "vendorPrefix": "xd",
+    "repoUrl": "git@github.com:csharon/gcloud-dns.git",
+    "webserver": "express"
+  }
+}
