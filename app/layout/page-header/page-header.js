@@ -16,10 +16,11 @@
   }
 
   /* @ngInject */
-  function HeaderCtrl($scope, $log, googleOAuth) {
+  function HeaderCtrl($scope, googleOAuth) {
     var vm = this;
 
     vm.authenticated = false;
+    vm.profile = {};
 
     vm.login = function () {
       googleOAuth.login();
@@ -35,6 +36,11 @@
       },
       function (authenticated) {
         vm.authenticated = authenticated;
+        if (authenticated) {
+          vm.profile = googleOAuth.profile();
+        } else {
+          vm.profile = {};
+        }
       }
     );
 
