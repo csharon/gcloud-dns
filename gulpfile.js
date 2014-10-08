@@ -21,7 +21,7 @@ gulp.task('docs', ['open:docs']);
  *  Development Sub Tasks
  */
 
-gulp.task('dev:build', ['clean:dev', 'lint', 'jade:index', 'sass', 'copy:vendor', 'build:js']);
+gulp.task('dev:build', ['clean:dev', 'lint', 'jade:index', 'sass', 'copy:vendor', 'copy:assets', 'build:js']);
 
 gulp.task('clean:dev', function () {
   del.sync([config.filesets.dev]);
