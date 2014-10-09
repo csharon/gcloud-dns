@@ -5,7 +5,9 @@
     'xd.layout.PageHeader',
     'xd.tmpls',
     'xd.views.Welcome',
-    'xd.views.DnsManager'
+    'xd.views.DnsManager',
+    'xd.api.GcloudDns',
+    'xd.api.ZoneResource'
   ])
     .config(config)
     .controller('gcloudDnsCtrl', GcloudDnsCtrl);
@@ -24,10 +26,24 @@
   }
 
   /* @ngInject */
-  function GcloudDnsCtrl ($state) {
+  function GcloudDnsCtrl ($scope, $state, googleOAuth, gcloudDns) {
     var vm = this;
     vm.appTitle = 'Gcloud Dns';
     $state.go('welcome');
+    $scope.$watch(
+      function () {
+        return googleOAuth.isAuthenticated();
+      },
+      function (authenticated) {
+        if (authenticated) {
+          gcloudDns.setToken(googleOAuth.token());
+          gcloudDns.setProject('xdoji-dns');
+          $state.go('dns-manager');
+        } else {
+          $state.go('welcome');
+        }
+      }
+    );
   }
 
 
