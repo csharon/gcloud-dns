@@ -28,17 +28,13 @@
     var vm = this;
     vm.zoneList = [];
 
-    vm.open = function () {
+    vm.openNew = function () {
       $modal.open({
         templateUrl: '/views/add-zone/add-zone.html',
+        controller: 'addZoneCtrl as vm',
         size: 'lg'
       });
     };
-
-    vm.cancel = function () {
-      $modalInstance.dismiss('cancel');
-    };
-
 
     $scope.$watch(
       function () {
