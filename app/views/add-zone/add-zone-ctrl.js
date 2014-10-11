@@ -5,13 +5,17 @@
    * @name xd.views.AddZone:addZoneCtrl
    *
    */
-  angular.module('xd.views.AddZone', [])
+  angular.module('xd.views.AddZone', ['xd.services.ZoneModel', 'xd.components.ZoneForm', 'ui.bootstrap'])
     .controller('addZoneCtrl', AddZoneCtrl);
 
   /* @ngInject */
-  function AddZoneCtrl() {
+  function AddZoneCtrl($modalInstance) {
     var vm = this;
-    vm.name = 'AddZoneCtrl';
+    vm.name = 'Add a New Zone';
+
+    vm.cancel = function () {
+      $modalInstance.dismiss('cancel');
+    };
   }
 
 })();
