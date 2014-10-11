@@ -1,3 +1,4 @@
+/*jshint camelcase: false*/
 (function () {
   var GcloudDnsConfig = {
     BASE_URL: 'https://www.googleapis.com/dns/v1beta1',
