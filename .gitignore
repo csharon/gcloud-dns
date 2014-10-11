@@ -5,6 +5,7 @@ bower_components/
 *.tpls.js
 .idea/
 .sass-cache/
+coverage/
 public/
 build/
 dist/
