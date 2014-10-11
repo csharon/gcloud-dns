@@ -1,9 +1,8 @@
 div.zoneList
   h3 DNS Zones
 
+  div
+    btn.btn.btn-sm.btn-primary(ng-click="vm.openNew()") +
+
   div.btn-group-vertical
     btn.btn.btn-sm.btn-default(ng-repeat="zone in vm.zoneList") {{zone.dnsName}}
-
-  div
-    br
-    btn.btn.btn-sm.btn-primary(ng-click="vm.openNew()") Add New Zone

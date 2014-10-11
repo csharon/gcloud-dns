@@ -5,7 +5,7 @@
    * @name xd.views.AddZone:addZoneCtrl
    *
    */
-  angular.module('xd.views.AddZone', ['xd.services.ZoneModel', 'ui.bootstrap'])
+  angular.module('xd.views.AddZone', ['xd.services.ZoneModel', 'xd.components.ZoneForm', 'ui.bootstrap'])
     .controller('addZoneCtrl', AddZoneCtrl);
 
   /* @ngInject */
