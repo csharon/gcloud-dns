@@ -16,7 +16,7 @@
   }
 
   /* @ngInject */
-  function HeaderCtrl($scope, $state, googleOAuth) {
+  function HeaderCtrl($scope, googleOAuth) {
     var vm = this;
 
     vm.authenticated = false;
@@ -38,10 +38,10 @@
         vm.authenticated = authenticated;
         if (authenticated) {
           vm.profile = googleOAuth.profile();
-          $state.go('dns-manager');
+
         } else {
           vm.profile = {};
-          $state.go('welcome');
+
         }
       }
     );

@@ -5,7 +5,7 @@
    * @name xd.views.DnsManager:dnsManagerCtrl
    *
    */
-  angular.module('xd.views.DnsManager', [])
+  angular.module('xd.views.DnsManager', ['xd.components.ZoneList'])
     .controller('dnsManagerCtrl', DnsManagerCtrl);
 
   /* @ngInject */
