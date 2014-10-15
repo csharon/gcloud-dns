@@ -1,8 +1,8 @@
 div.zoneList
-  h3 DNS Zones
-
   div
-    btn.btn.btn-sm.btn-primary(ng-click="vm.openNew()") +
+    btn.btn(ng-click="vm.createZone()")
+      i.fa.fa-plus-square-o.fa-2x.add-icon
 
-  div.btn-group-vertical
-    btn.btn.btn-sm.btn-default(ng-repeat="zone in vm.zoneList" ng-click="vm.selectZone(zone)") {{zone.dnsName}}
+  div.list-group
+    a.list-group-item(href="#" ng-class="(selectedZone == zone) ?'active':''" ng-repeat="zone in zones" ng-click="vm.selectZone(zone)")
+      | {{zone.dnsName}}

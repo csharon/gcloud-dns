@@ -1,6 +1,6 @@
-div.dnsManager
+div.container.dnsManager
   h3 {{dm.name}}
 
-  zone-list
+  zone-list.col-sm-4(zones="dm.zoneList" selectedZone="dm.selectedZone")
 
-  zone-viewer(zone="dm.selectedZone")
+  zone-viewer.col-sm-8(zone="dm.selectedZone")

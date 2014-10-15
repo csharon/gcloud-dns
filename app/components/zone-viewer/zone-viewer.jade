@@ -1,5 +1,10 @@
 div.zoneViewer
-  h3 {{zone.name}}
-    dl
-      dt {{ zone.dnsName }}
-      dd {{ zone.description }}
+  h4 {{zone.dnsName}}
+    small {{ zone.description }}
+  dl.dl-horizontal
+    dt Name:
+    dd {{ zone.name }}
+    dt Created:
+    dd {{ zone.creationTime | moment }}
+    dt Name Servers:
+    dd(ng-repeat="ns in zone.nameServers") {{ ns }}
