@@ -9,7 +9,8 @@
     'xd.views.AddZone',
     'xd.components.ZoneList',
     'xd.api.GcloudDns',
-    'xd.api.ZoneResource'
+    'xd.api.ZoneResource',
+    'xd.services.XdToastr'
   ])
     .config(config)
     .controller('gcloudDnsCtrl', GcloudDnsCtrl);
@@ -23,7 +24,7 @@
 
     $stateProvider
       .state('welcome', { templateUrl: '/views/welcome/welcome.html', controller: 'welcomeCtrl', controllerAs: 'vm'})
-      .state('dns-manager', { templateUrl: '/views/dns-manager/dns-manager.html', controller: 'dnsManagerCtrl', controllerAs: 'vm'});
+      .state('dns-manager', { templateUrl: '/views/dns-manager/dns-manager.html', controller: 'dnsManagerCtrl', controllerAs: 'dm'});
 
   }
 
