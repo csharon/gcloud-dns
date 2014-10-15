@@ -36,6 +36,10 @@
       });
     };
 
+    vm.selectZone = function (zone) {
+      zoneModel.selectZone(zone);
+    };
+
     $scope.$watch(
       function () {
         return zoneModel.zoneList();

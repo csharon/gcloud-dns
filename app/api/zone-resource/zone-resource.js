@@ -15,11 +15,14 @@
   /* @ngInject */
   function ZoneResource(gcloudDns) {
 
-
+    var zones = gcloudDns.getProject().all(ZoneResourceConfig.RESOURCE_NAME);
     //Public API
     return {
       getAll: function () {
-        return gcloudDns.getProject().getList(ZoneResourceConfig.RESOURCE_NAME);
+        return zones.getList();
+      },
+      create: function(zone) {
+        return zones.post(zone);
       }
 
     };
