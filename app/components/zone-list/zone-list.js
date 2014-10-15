@@ -8,7 +8,7 @@
    * @function
    * @description
    */
-  angular.module('xd.components.ZoneList', ['xd.tmpls', 'xd.services.ZoneModel', 'xd.views.AddZone', 'xd.api.GoogleOauth', 'ui.bootstrap'])
+  angular.module('xd.components.ZoneList', ['xd.tmpls'])
     .controller('zoneListCtrl', ZoneListCtrl)
     .directive('zoneList', ZoneList);
 
@@ -17,6 +17,10 @@
     return {
       restrict: 'E',
       replace: true,
+      scope: {
+        zones: '=',
+        selectedZone: '='
+      },
       controller: 'zoneListCtrl',
       controllerAs: 'vm',
       templateUrl: '/components/zone-list/zone-list.html'
@@ -24,41 +28,19 @@
   }
 
   /* @ngInject */
-  function ZoneListCtrl($scope, $modal, zoneModel, googleOAuth) {
+  function ZoneListCtrl($scope) {
     var vm = this;
-    vm.zoneList = [];
 
-    vm.openNew = function () {
-      $modal.open({
-        templateUrl: '/views/add-zone/add-zone.html',
-        controller: 'addZoneCtrl as vm',
-        size: 'lg'
-      });
-    };
+    vm.isActive = function (zone, selectedZone) {
+      return selectedZone.id === zone.id;
+    }
+    vm.createZone = function () {
+      $scope.$emit('CREATE_ZONE');
+    }
 
     vm.selectZone = function (zone) {
-      zoneModel.selectZone(zone);
-    };
-
-    $scope.$watch(
-      function () {
-        return zoneModel.zoneList();
-      },
-      function (zones) {
-        vm.zoneList = zones;
-      }
-    );
-
-    $scope.$watch(
-      function () {
-        return googleOAuth.isAuthenticated();
-      },
-      function (authenticated) {
-        if (authenticated) {
-          zoneModel.refreshZones();
-        }
-      }
-    );
+      $scope.$emit('SELECT_ZONE', zone);
+    }
 
 
   }
