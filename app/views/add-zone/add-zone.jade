@@ -1,2 +1,6 @@
-div.addZone
+div.addZone.modal-header
+  button.close(ng-click="vm.cancel()") Close
   h3 {{vm.name}}
+
+  div.modal-body
+    zone-form
