@@ -6,6 +6,8 @@
     'xd.tmpls',
     'xd.views.Welcome',
     'xd.views.DnsManager',
+    'xd.views.AddZone',
+    'xd.components.ZoneList',
     'xd.api.GcloudDns',
     'xd.api.ZoneResource'
   ])

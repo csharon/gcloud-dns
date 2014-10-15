@@ -1,6 +1,8 @@
 div.zoneList
-  h3 Zone List
+  h3 DNS Zones
 
-  ul
-    li(ng-repeat="zone in vm.zoneList") {{zone.dnsName}}
+  div
+    btn.btn.btn-sm.btn-primary(ng-click="vm.openNew()") +
 
+  div.btn-group-vertical
+    btn.btn.btn-sm.btn-default(ng-repeat="zone in vm.zoneList") {{zone.dnsName}}
