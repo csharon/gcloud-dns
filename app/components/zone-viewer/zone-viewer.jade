@@ -5,6 +5,6 @@ div.zoneViewer
     dt Name:
     dd {{ zone.name }}
     dt Created:
-    dd {{ zone.creationTime | moment }}
+    dd {{ zone.creationTime | moment:'DD MMM, YYYY' }}
     dt Name Servers:
     dd(ng-repeat="ns in zone.nameServers") {{ ns }}
