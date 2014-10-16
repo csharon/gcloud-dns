@@ -1,17 +1,18 @@
-div.zone-form
-  form(name="zoneForm" role="form" ng-submit="vm.createZone(zone)" novalidate)
-    div.form-group
-      label(for="dns-name") DNS Name
-      input.form-control(placeholder="somedomain.com." name="dns-name" ng-model="vm.zone.name")
+div.zone-form.panel.panel-default
+  div.panel-body
+    form(name="zoneForm" role="form" ng-submit="vm.createZone(zone)" novalidate)
+      div.form-group
+        label(for="dns-name") DNS Name
+        input.form-control(placeholder="somedomain.com." name="dns-name" ng-model="vm.zone.name")
 
-    div.form-group
-      label(for="zone-name")
-      input.form-control(placeholder="some-zone-name" name="zone-name" ng-model="vm.zone.dnsName")
+      div.form-group
+        label(for="zone-name")
+        input.form-control(placeholder="some-zone-name" name="zone-name" ng-model="vm.zone.dnsName")
 
-    div.form-group
-      label(for="description")
-      input.form-control(name="description" ng-model="vm.zone.description")
+      div.form-group
+        label(for="description")
+        input.form-control(name="description" ng-model="vm.zone.description")
 
-    div.form-group
-      button.btn.btn-default.btn-sm.pull-right(type="button" ng-click="vm.cancel()") Cancel
-      button.btn.btn-primary.btn-sm.pull-right(type="submit") Create
+  div.panel-footer.clearfix.action-bar
+    button.btn.btn-default.btn-sm.pull-right(type="button" ng-click="vm.cancel()") Cancel
+    button.btn.btn-primary.pull-right(type="submit") Create
