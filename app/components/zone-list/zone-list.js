@@ -16,11 +16,11 @@
   function ZoneList() {
     return {
       restrict: 'E',
-      replace: true,
       scope: {
         zones: '=',
         selectedZone: '='
       },
+      bindToController: true,
       controller: 'zoneListCtrl',
       controllerAs: 'vm',
       templateUrl: '/components/zone-list/zone-list.html'
@@ -31,17 +31,16 @@
   function ZoneListCtrl($scope) {
     var vm = this;
 
-    vm.isActive = function (zone, selectedZone) {
-      return selectedZone.id === zone.id;
-    }
-    vm.createZone = function () {
+    vm.createZone = createZone;
+    vm.selectZone = selectZone;
+
+    function createZone() {
       $scope.$emit('CREATE_ZONE');
     }
 
-    vm.selectZone = function (zone) {
+    function selectZone(zone) {
       $scope.$emit('SELECT_ZONE', zone);
     }
-
 
   }
 

@@ -1,6 +1,5 @@
 div.container.dnsManager
-  h3 {{dm.name}}
 
-  zone-list.col-sm-4(zones="dm.zoneList" selectedZone="dm.selectedZone")
+  zone-list.col-sm-3(zones="dm.zoneModel.zoneList" selectedZone="dm.zoneModel.selectedZone")
 
-  zone-viewer.col-sm-8(zone="dm.selectedZone")
+  zone-viewer.col-sm-9(zone="dm.zoneModel.selectedZone" ng-if="dm.zoneModel.selectedZone.id")

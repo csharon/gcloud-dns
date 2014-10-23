@@ -10,13 +10,20 @@
 
   /* @ngInject */
   function ZoneModel($log, $q, zoneResource) {
-    var _zoneList = [];
-    var _selectedZone = {};
+
+    // Public API
+    var model = {
+      zoneList: [],
+      selectedZone: {},
+      refreshZones: refreshZoneList,
+      createZone: createZone,
+      selectZone: selectZone
+    };
 
     function refreshZoneList() {
       zoneResource.getAll().then(
         function (resp) {
-          _zoneList = resp;
+          model.zoneList = resp;
           return resp;
         },
         function (err) {
@@ -25,11 +32,15 @@
       );
     }
 
+    function selectZone(zone) {
+      model.selectedZone = zone;
+    }
+
     function createZone(zone) {
       return zoneResource.create(zone).then(
         function (resp) {
-          _selectedZone = resp;
-          _zoneList.push(resp);
+          model.selectedZone = resp;
+          model.zoneList.push(resp);
           return resp;
         },
         function (err) {
@@ -39,22 +50,7 @@
 
     }
 
-    function selectZone(zone) {
-      _selectedZone = zone;
-    }
-
-    //Public API
-    return {
-      zoneList: function () {
-        return _zoneList;
-      },
-      selectedZone: function () {
-        return _selectedZone;
-      },
-      selectZone: selectZone,
-      refreshZones: refreshZoneList,
-      createZone: createZone
-    };
+    return model;
   }
 
 })();
