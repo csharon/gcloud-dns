@@ -1,10 +1,13 @@
 div.zoneViewer
-  h3 {{zone.dnsName}}
-  small {{ zone.description }}
-  dl
-    dt Name:
-    dd {{ zone.name }}
-    dt Created:
-    dd {{ zone.creationTime | moment:'DD MMM, YYYY' }}
-    dt Name Servers:
-    dd(ng-repeat="ns in zone.nameServers") {{ ns }}
+  div.panel.panel-info
+    div.panel-heading
+      h3.panel-title {{zone.dnsName}}
+      small {{ zone.description }}
+    div.panel-body
+      dl
+        dt Name:
+        dd {{ zone.name }}
+        dt Created:
+        dd {{ zone.creationTime | moment:'DD MMM, YYYY' }}
+        dt Name Servers:
+        dd(ng-repeat="ns in zone.nameServers") {{ ns }}
