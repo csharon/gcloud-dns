@@ -15,7 +15,6 @@
   function ZoneForm() {
     return {
       restrict: 'E',
-      replace: true,
       templateUrl: '/components/zone-form/zone-form.html'
     };
   }

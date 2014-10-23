@@ -20,30 +20,7 @@
     var dm = this;
     dm.name = 'DNS Manager';
 
-    dm.zoneList = [];
-    dm.selectedZone = {
-      name: '',
-      dnsName: '',
-      description: ''
-    };
-
-    $scope.$watch(
-      function () {
-        return zoneModel.selectedZone();
-      },
-      function (zone) {
-        dm.selectedZone = zone;
-      }
-    );
-
-    $scope.$watch(
-      function () {
-        return zoneModel.zoneList();
-      },
-      function (zones) {
-        dm.zoneList = zones;
-      }
-    );
+    dm.zoneModel = zoneModel;
 
     $scope.$watch(
       function () {

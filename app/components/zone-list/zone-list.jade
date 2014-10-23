@@ -1,8 +1,13 @@
 div.zoneList
-  div
-    btn.btn(ng-click="vm.createZone()")
-      i.fa.fa-plus-square-o.fa-2x.add-icon
 
   div.list-group
-    a.list-group-item(href="#" ng-class="(selectedZone == zone) ?'active':''" ng-repeat="zone in zones" ng-click="vm.selectZone(zone)")
+    a.list-group-item.list-item-icon-left(href="#" ng-click="vm.createZone()")
+      i.fa.fa-plus-square-o.add-icon
+      span new zone...
+    a.list-group-item(
+      href="#"
+      ng-class="{active: $parent.vm.selectedZone.id == zone.id}"
+      ng-repeat="zone in vm.zones"
+      ng-click="vm.selectZone(zone)"
+      )
       | {{zone.dnsName}}

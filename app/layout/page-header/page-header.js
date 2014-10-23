@@ -21,14 +21,8 @@
 
     vm.authenticated = false;
     vm.profile = {};
-
-    vm.login = function () {
-      googleOAuth.login();
-    };
-
-    vm.logout = function () {
-      googleOAuth.logout();
-    };
+    vm.login = googleOAuth.login;
+    vm.logout = googleOAuth.logout;
 
     $scope.$watch(
       function () {
