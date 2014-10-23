@@ -1,5 +1,6 @@
-div.welcome
+div.welcome.jumbotron
 
   img(src="/assets/images/cloud-dns-logo.png")
-  h2 Welcome to Google Cloud DNS
-    h3 Click the lock to begin!
+  h1 Welcome to Google Cloud DNS
+    p Use this application to manage your Google Cloud DNS zones.
+    button.btn.btn-primary(ng-click="vm.auth.login()") Get Started
