@@ -23,6 +23,9 @@
       },
       create: function(zone) {
         return zones.post(zone);
+      },
+      remove: function(zone) {
+        return zone.remove();
       }
 
     };

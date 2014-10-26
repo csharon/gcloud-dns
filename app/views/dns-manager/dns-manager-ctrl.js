@@ -11,12 +11,13 @@
     'xd.views.AddZone',
     'xd.api.GoogleOauth',
     'ui.bootstrap',
-    'xd.wrappers.moment'
+    'xd.wrappers.moment',
+    'xd.services.XdToastr'
   ])
     .controller('dnsManagerCtrl', DnsManagerCtrl);
 
   /* @ngInject */
-  function DnsManagerCtrl($scope, zoneModel, googleOAuth, $modal) {
+  function DnsManagerCtrl($scope, zoneModel, googleOAuth, $modal, xdToastr) {
     var dm = this;
     dm.name = 'DNS Manager';
 
@@ -43,6 +44,17 @@
 
     $scope.$on('SELECT_ZONE', function (event, zone) {
       zoneModel.selectZone(zone);
+    });
+
+    $scope.$on('DELETE_ZONE', function (event, zone) {
+      zoneModel.deleteZone(zone).then(
+        function (resp) {
+          xdToastr.success ( resp.dnsName + ' deleted!' );
+        },
+        function (err) {
+          xdToastr.error ('Unable to delete ' + zoneModel.selectedZone.dnsName + '!' );
+        }
+      );
     });
   }
 
