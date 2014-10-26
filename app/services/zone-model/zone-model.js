@@ -17,7 +17,8 @@
       selectedZone: {},
       refreshZones: refreshZoneList,
       createZone: createZone,
-      selectZone: selectZone
+      selectZone: selectZone,
+      deleteZone: deleteZone
     };
 
     function refreshZoneList() {
@@ -42,6 +43,24 @@
           model.selectedZone = resp;
           model.zoneList.push(resp);
           return resp;
+        },
+        function (err) {
+          return $q.reject(err);
+        }
+      );
+
+    }
+
+    function deleteZone(zone) {
+      return zoneResource.remove(zone).then(
+        function (resp) {
+          var tempZone =_(model.zoneList)
+            .remove(function (zone) {
+              return zone.id === model.selectedZone.id;
+            })
+            .first();
+          model.selectedZone = {};
+          return tempZone;
         },
         function (err) {
           return $q.reject(err);
