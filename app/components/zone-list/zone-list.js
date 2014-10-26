@@ -33,9 +33,14 @@
 
     vm.createZone = createZone;
     vm.selectZone = selectZone;
+    vm.deleteZone = deleteZone;
 
     function createZone() {
       $scope.$emit('CREATE_ZONE');
+    }
+
+    function deleteZone(zone) {
+      $scope.$emit('DELETE_ZONE', zone);
     }
 
     function selectZone(zone) {
