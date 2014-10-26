@@ -1,0 +1,138 @@
+<?xml version="1.0"?>
+<testsuites>
+  <testsuite name="PhantomJS 1.9.7 (Mac OS X)" package="" timestamp="2014-10-26T02:49:45" id="0" hostname="mbpro.local" tests="9" errors="0" failures="8" time="0.014">
+    <properties>
+      <property name="browser.fullName" value="Mozilla/5.0 (Macintosh; Intel Mac OS X) AppleWebKit/534.34 (KHTML, like Gecko) PhantomJS/1.9.7 Safari/534.34"/>
+    </properties>
+    <testcase name="should have a getAll function that makes a GET request to https://www.googleapis.com/dns/v1beta1/projects and returns an array" time="0.001" classname="PhantomJS 1.9.7 (Mac OS X).xd_api_GcloudDns">
+      <failure type="">TypeError: &apos;undefined&apos; is not a function (evaluating &apos;gcloudDns.getAll()&apos;)
+    at /dv/xdoji/gcloud-dns/app/api/gcloud-dns/gcloud-dns-spec.js:18
+    at invoke (/dv/xdoji/gcloud-dns/bower_components/angular/angular.js:4152)
+    at workFn (/dv/xdoji/gcloud-dns/bower_components/angular-mocks/angular-mocks.js:2255)
+undefined
+</failure>
+    </testcase>
+    <testcase name="should have a getAll function that makes a GET request to /api/v1/managedZones and returns an array" time="0.001" classname="PhantomJS 1.9.7 (Mac OS X).xd_api_ZoneResource">
+      <failure type="">TypeError: &apos;undefined&apos; is not an object (evaluating &apos;gcloudDns.getProject().all&apos;)
+    at ZoneResource (/dv/xdoji/gcloud-dns/app/api/zone-resource/zone-resource.js:18)
+    at invoke (/dv/xdoji/gcloud-dns/bower_components/angular/angular.js:4152)
+    at enforcedReturnValue (/dv/xdoji/gcloud-dns/bower_components/angular/angular.js:4005)
+    at invoke (/dv/xdoji/gcloud-dns/bower_components/angular/angular.js:4152)
+    at /dv/xdoji/gcloud-dns/bower_components/angular/angular.js:3970
+    at getService (/dv/xdoji/gcloud-dns/bower_components/angular/angular.js:4111)
+    at invoke (/dv/xdoji/gcloud-dns/bower_components/angular/angular.js:4143)
+    at workFn (/dv/xdoji/gcloud-dns/bower_components/angular-mocks/angular-mocks.js:2255)
+undefined
+</failure>
+    </testcase>
+    <testcase name="should replace with div tag" time="0.001" classname="PhantomJS 1.9.7 (Mac OS X).xd_components_ZoneForm">
+      <failure type="">AssertionError: expected &apos;ZONE-FORM&apos; to equal &apos;DIV&apos;
+    at /dv/xdoji/gcloud-dns/node_modules/chai/chai.js:925
+    at assertEqual (/dv/xdoji/gcloud-dns/node_modules/chai/chai.js:1402)
+    at /dv/xdoji/gcloud-dns/node_modules/chai/chai.js:3638
+    at /dv/xdoji/gcloud-dns/app/components/zone-form/zone-form-spec.js:17
+</failure>
+    </testcase>
+    <testcase name="should replace with div tag" time="0" classname="PhantomJS 1.9.7 (Mac OS X).xd_components_ZoneList">
+      <failure type="">AssertionError: expected &apos;ZONE-LIST&apos; to equal &apos;DIV&apos;
+    at /dv/xdoji/gcloud-dns/node_modules/chai/chai.js:925
+    at assertEqual (/dv/xdoji/gcloud-dns/node_modules/chai/chai.js:1402)
+    at /dv/xdoji/gcloud-dns/node_modules/chai/chai.js:3638
+    at /dv/xdoji/gcloud-dns/app/components/zone-list/zone-list-spec.js:17
+</failure>
+    </testcase>
+    <testcase name="&quot;before each&quot; hook: workFn" time="0.003" classname="PhantomJS 1.9.7 (Mac OS X).xd_components_ZoneViewer">
+      <failure type="">Error: [$injector:unpr] Unknown provider: momentFilterProvider &lt;- momentFilter
+http://errors.angularjs.org/1.3.0/$injector/unpr?p0=momentFilterProvider%20%3C-%20momentFilter
+    at /dv/xdoji/gcloud-dns/bower_components/angular/angular.js:3964
+    at getService (/dv/xdoji/gcloud-dns/bower_components/angular/angular.js:4111)
+    at /dv/xdoji/gcloud-dns/bower_components/angular/angular.js:3969
+    at getService (/dv/xdoji/gcloud-dns/bower_components/angular/angular.js:4111)
+    at /dv/xdoji/gcloud-dns/bower_components/angular/angular.js:16250
+    at /dv/xdoji/gcloud-dns/bower_components/angular/angular.js:11915
+    at /dv/xdoji/gcloud-dns/bower_components/angular/angular.js:11908
+    at /dv/xdoji/gcloud-dns/bower_components/angular/angular.js:11887
+    at /dv/xdoji/gcloud-dns/bower_components/angular/angular.js:11775
+    at $parse (/dv/xdoji/gcloud-dns/bower_components/angular/angular.js:12411)
+    at $interpolate (/dv/xdoji/gcloud-dns/bower_components/angular/angular.js:9922)
+    at addTextInterpolateDirective (/dv/xdoji/gcloud-dns/bower_components/angular/angular.js:7898)
+    at collectDirectives (/dv/xdoji/gcloud-dns/bower_components/angular/angular.js:7088)
+    at compileNodes (/dv/xdoji/gcloud-dns/bower_components/angular/angular.js:6910)
+    at compileNodes (/dv/xdoji/gcloud-dns/bower_components/angular/angular.js:6928)
+    at compileNodes (/dv/xdoji/gcloud-dns/bower_components/angular/angular.js:6928)
+    at compileNodes (/dv/xdoji/gcloud-dns/bower_components/angular/angular.js:6928)
+    at compileNodes (/dv/xdoji/gcloud-dns/bower_components/angular/angular.js:6928)
+    at /dv/xdoji/gcloud-dns/bower_components/angular/angular.js:7825
+    at processQueue (/dv/xdoji/gcloud-dns/bower_components/angular/angular.js:12914)
+    at /dv/xdoji/gcloud-dns/bower_components/angular/angular.js:12930
+    at /dv/xdoji/gcloud-dns/bower_components/angular/angular.js:14123
+    at /dv/xdoji/gcloud-dns/bower_components/angular/angular.js:13939
+    at /dv/xdoji/gcloud-dns/bower_components/angular/angular.js:14227
+    at /dv/xdoji/gcloud-dns/app/components/zone-viewer/zone-viewer-spec.js:12
+    at invoke (/dv/xdoji/gcloud-dns/bower_components/angular/angular.js:4152)
+    at workFn (/dv/xdoji/gcloud-dns/bower_components/angular-mocks/angular-mocks.js:2255)
+undefined
+</failure>
+    </testcase>
+    <testcase name="should have a data function that returns an array" time="0.004" classname="PhantomJS 1.9.7 (Mac OS X).xd_services_ZoneModel">
+      <failure type="">TypeError: &apos;undefined&apos; is not an object (evaluating &apos;gcloudDns.getProject().all&apos;)
+    at ZoneResource (/dv/xdoji/gcloud-dns/app/api/zone-resource/zone-resource.js:18)
+    at invoke (/dv/xdoji/gcloud-dns/bower_components/angular/angular.js:4152)
+    at enforcedReturnValue (/dv/xdoji/gcloud-dns/bower_components/angular/angular.js:4005)
+    at invoke (/dv/xdoji/gcloud-dns/bower_components/angular/angular.js:4152)
+    at /dv/xdoji/gcloud-dns/bower_components/angular/angular.js:3970
+    at getService (/dv/xdoji/gcloud-dns/bower_components/angular/angular.js:4111)
+    at invoke (/dv/xdoji/gcloud-dns/bower_components/angular/angular.js:4143)
+    at enforcedReturnValue (/dv/xdoji/gcloud-dns/bower_components/angular/angular.js:4005)
+    at invoke (/dv/xdoji/gcloud-dns/bower_components/angular/angular.js:4152)
+    at /dv/xdoji/gcloud-dns/bower_components/angular/angular.js:3970
+    at getService (/dv/xdoji/gcloud-dns/bower_components/angular/angular.js:4111)
+    at invoke (/dv/xdoji/gcloud-dns/bower_components/angular/angular.js:4143)
+    at workFn (/dv/xdoji/gcloud-dns/bower_components/angular-mocks/angular-mocks.js:2255)
+undefined
+</failure>
+    </testcase>
+    <testcase name="&quot;before each&quot; hook: workFn" time="0.002" classname="PhantomJS 1.9.7 (Mac OS X).xd_views_AddZone">
+      <failure type="">Error: [$injector:unpr] Unknown provider: $modalInstanceProvider &lt;- $modalInstance
+http://errors.angularjs.org/1.3.0/$injector/unpr?p0=%24modalInstanceProvider%20%3C-%20%24modalInstance
+    at /dv/xdoji/gcloud-dns/bower_components/angular/angular.js:3964
+    at getService (/dv/xdoji/gcloud-dns/bower_components/angular/angular.js:4111)
+    at /dv/xdoji/gcloud-dns/bower_components/angular/angular.js:3969
+    at getService (/dv/xdoji/gcloud-dns/bower_components/angular/angular.js:4111)
+    at invoke (/dv/xdoji/gcloud-dns/bower_components/angular/angular.js:4143)
+    at instantiate (/dv/xdoji/gcloud-dns/bower_components/angular/angular.js:4163)
+    at /dv/xdoji/gcloud-dns/bower_components/angular/angular.js:8350
+    at /dv/xdoji/gcloud-dns/app/views/add-zone/add-zone-ctrl-spec.js:8
+    at invoke (/dv/xdoji/gcloud-dns/bower_components/angular/angular.js:4152)
+    at workFn (/dv/xdoji/gcloud-dns/bower_components/angular-mocks/angular-mocks.js:2255)
+undefined
+</failure>
+    </testcase>
+    <testcase name="&quot;before each&quot; hook: workFn" time="0.002" classname="PhantomJS 1.9.7 (Mac OS X).xd_views_DnsManager">
+      <failure type="">TypeError: &apos;undefined&apos; is not an object (evaluating &apos;gcloudDns.getProject().all&apos;)
+    at ZoneResource (/dv/xdoji/gcloud-dns/app/api/zone-resource/zone-resource.js:18)
+    at invoke (/dv/xdoji/gcloud-dns/bower_components/angular/angular.js:4152)
+    at enforcedReturnValue (/dv/xdoji/gcloud-dns/bower_components/angular/angular.js:4005)
+    at invoke (/dv/xdoji/gcloud-dns/bower_components/angular/angular.js:4152)
+    at /dv/xdoji/gcloud-dns/bower_components/angular/angular.js:3970
+    at getService (/dv/xdoji/gcloud-dns/bower_components/angular/angular.js:4111)
+    at invoke (/dv/xdoji/gcloud-dns/bower_components/angular/angular.js:4143)
+    at enforcedReturnValue (/dv/xdoji/gcloud-dns/bower_components/angular/angular.js:4005)
+    at invoke (/dv/xdoji/gcloud-dns/bower_components/angular/angular.js:4152)
+    at /dv/xdoji/gcloud-dns/bower_components/angular/angular.js:3970
+    at getService (/dv/xdoji/gcloud-dns/bower_components/angular/angular.js:4111)
+    at invoke (/dv/xdoji/gcloud-dns/bower_components/angular/angular.js:4143)
+    at instantiate (/dv/xdoji/gcloud-dns/bower_components/angular/angular.js:4163)
+    at /dv/xdoji/gcloud-dns/bower_components/angular/angular.js:8350
+    at /dv/xdoji/gcloud-dns/app/views/dns-manager/dns-manager-ctrl-spec.js:8
+    at invoke (/dv/xdoji/gcloud-dns/bower_components/angular/angular.js:4152)
+    at workFn (/dv/xdoji/gcloud-dns/bower_components/angular-mocks/angular-mocks.js:2255)
+undefined
+</failure>
+    </testcase>
+    <testcase name="should have scope" time="0" classname="PhantomJS 1.9.7 (Mac OS X).xd_views_Welcome"/>
+    <system-out><![CDATA[
+]]></system-out>
+    <system-err/>
+  </testsuite>
+</testsuites>
