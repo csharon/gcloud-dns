@@ -35,6 +35,7 @@
 
     function selectZone(zone) {
       model.selectedZone = zone;
+      getRecords(zone);
     }
 
     function createZone(zone) {
@@ -67,6 +68,17 @@
         }
       );
 
+    }
+
+    function getRecords(zone) {
+      return zoneResource.getRecords(zone).then(
+        function (resp) {
+          model.selectedZone.records = resp;
+        },
+        function (err) {
+          return $q.reject(err);
+        }
+      );
     }
 
     return model;
