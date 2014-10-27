@@ -1,5 +1,5 @@
-div.dnsManager
+div.dnsManager(layout="vertical" layout-sm="horizonal")
 
-  zone-list.col-sm-4(zones="dm.zoneModel.zoneList" selectedZone="dm.zoneModel.selectedZone")
+  zone-list(zones="dm.zoneModel.zoneList" selectedZone="dm.zoneModel.selectedZone")
 
-  zone-viewer.col-sm-8(zone="dm.zoneModel.selectedZone" ng-if="dm.zoneModel.selectedZone.id")
+  zone-viewer(flex layout-padding zone="dm.zoneModel.selectedZone" ng-if="dm.zoneModel.selectedZone.id")
