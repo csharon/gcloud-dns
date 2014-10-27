@@ -1,0 +1,15 @@
+div.recordList
+  table.table.table-striped
+    thead
+      th type
+      th ttl
+      th name
+      th value
+    tbody
+      tr(ng-repeat="record in vm.records")
+        td {{ record.type }}
+        td {{ record.ttl }}
+        td {{ record.name }}
+        td(layout="vertical")
+          span(ng-repeat="rrdata in record.rrdatas") {{rrdata}}
+
