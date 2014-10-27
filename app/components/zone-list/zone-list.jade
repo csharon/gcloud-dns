@@ -1,15 +1,18 @@
 div.zoneList
 
-  ul.list-group
-    li.list-group-item.list-item-icon-left(href="#" ng-click="vm.createZone()")
-      i.fa.fa-plus-square-o.add-icon
-      span new zone...
-    li.list-group-item.col-sm-12(
-      ng-repeat="zone in vm.zones"
-      ng-class="{active: $parent.vm.selectedZone.id == zone.id}")
-      div.col-sm-8
-        a(href="#" ng-click="vm.selectZone(zone)") {{zone.dnsName}}
-
-      div.col-sm-4
-        a(href="#" ng-click="vm.deleteZone(zone)")
-          i.fa.fa-minus-square-o.minus-icon.pull-right
+  md-list
+    md-item
+      md-item-content(ng-click="vm.createZone()")
+        .md-tile-left
+          i.fa.fa-plus-square-o.add-icon
+        .md-tile-content
+          span new zone...
+        md-divider
+    md-item(ng-repeat="zone in vm.zones")
+      md-item-content
+        div(flex ng-click="vm.selectZone(zone)")
+          h3 {{zone.dnsName}}
+        div
+          a(href="#" ng-click="vm.deleteZone(zone)")
+            i.fa.fa-minus-square-o.minus-icon.pull-right.remove-icon
+      md-divider
