@@ -1,6 +1,7 @@
 (function () {
   var ZoneResourceConfig = {
-    RESOURCE_NAME: 'managedZones'
+    RESOURCE_NAME: 'managedZones',
+    RESOURCE_RECORD_SET: 'rrsets'
   };
 
   /**
@@ -26,6 +27,9 @@
       },
       remove: function(zone) {
         return zone.remove();
+      },
+      getRecords: function (zone) {
+        return zone.getList(ZoneResourceConfig.RESOURCE_RECORD_SET);
       }
 
     };
