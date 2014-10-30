@@ -1,7 +1,8 @@
 (function () {
   var ZoneResourceConfig = {
     RESOURCE_NAME: 'managedZones',
-    RESOURCE_RECORD_SET: 'rrsets'
+    RESOURCE_RECORD_SET: 'rrsets',
+    CHANGE_SET: 'changes'
   };
 
   /**
@@ -30,6 +31,9 @@
       },
       getRecords: function (zone) {
         return zone.getList(ZoneResourceConfig.RESOURCE_RECORD_SET);
+      },
+      createChangeSet: function (zone, changeSet) {
+        return zone.all(ZoneResourceConfig.CHANGE_SET).post(changeSet);
       }
 
     };
