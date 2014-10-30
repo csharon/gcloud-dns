@@ -12,7 +12,8 @@
     'xd.api.GoogleOauth',
     'ui.bootstrap',
     'xd.wrappers.moment',
-    'xd.services.XdToastr'
+    'xd.services.XdToastr',
+    'xd.components.ChangesetEditor'
   ])
     .controller('dnsManagerCtrl', DnsManagerCtrl);
 
@@ -53,6 +54,17 @@
         },
         function (err) {
           xdToastr.error ('Unable to delete ' + zoneModel.selectedZone.dnsName + '!' );
+        }
+      );
+    });
+
+    $scope.$on('SAVE_CHANGE_SET', function (event, changeSet) {
+      zoneModel.saveChanges(changeSet).then(
+        function () {
+          xdToastr.success ( zoneModel.selectedZone.dnsName + ' updated!' );
+        },
+        function () {
+          xdToastr.error ('Unable to make changes to ' + zoneModel.selectedZone.dnsName + '!' );
         }
       );
     });

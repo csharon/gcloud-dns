@@ -1,0 +1,51 @@
+div.recordList
+  table.table.table-striped
+    caption Deletions
+    thead
+      th type
+      th ttl
+      th name
+      th value
+    tbody
+      tr(ng-repeat="record in vm.changeSet.deletions")
+        td {{ record.type }}
+          td {{ record.ttl }}
+          td {{ record.name }}
+          td(layout="vertical")
+            span(ng-repeat="rrdata in record.rrdatas") {{rrdata}}
+
+  select(ng-model="vm.deletedRecord"
+    ng-options="record.type for record in vm.zone.records"
+    ng-change="vm.deleteRecord()")
+
+  table.table.table-striped
+    caption Additions
+    thead
+      th type
+      th ttl
+      th name
+      th value
+    tbody
+      tr(ng-repeat="record in vm.changeSet.additions")
+        td {{ record.type }}
+          td {{ record.ttl }}
+          td {{ record.name }}
+          td(layout="vertical")
+            span(ng-repeat="rrdata in record.rrdatas") {{rrdata}}
+  form.form-inline(name="recordForm" role="form" ng-submit="vm.addRecord()" novalidate)
+    .form-group
+      label.sr-only(for="type") Type
+      input.form-control(name="type" ng-model="vm.newRecord.type" placeholder="Type")
+    .form-group
+      label.sr-only(for="ttl") TTL
+      input.form-control(name="ttl" ng-model="vm.newRecord.ttl" placeholder="TTL")
+    .form-group
+      label.sr-only(for="name") Name
+      input.form-control(name="name" ng-model="vm.newRecord.name" placeholder="Name")
+    .form-group
+      label.sr-only(for="value") Value
+      input.form-control(name="value" ng-model="vm.rrdata" placeholder="Value")
+    button.btn.btn-primary(type="submit") Add
+
+
+  button.btn.btn-success(type="button" ng-click="vm.saveChanges()") Save Changes

@@ -18,7 +18,8 @@
       refreshZones: refreshZoneList,
       createZone: createZone,
       selectZone: selectZone,
-      deleteZone: deleteZone
+      deleteZone: deleteZone,
+      saveChanges: saveChanges
     };
 
     function refreshZoneList() {
@@ -79,6 +80,25 @@
           return $q.reject(err);
         }
       );
+    }
+
+    function saveChanges(changeSet) {
+      return zoneResource.createChangeSet(model.selectedZone, changeSet).then(
+        function (resp) {
+          reconcileRecords(resp)
+          return resp;
+        },
+        function (err) {
+          return $q.reject(err);
+        }
+      );
+    }
+
+    function reconcileRecords(changeSet) {
+      // TODO: remove deleted records from the selectedZone.records array
+      // TODO: add records
+      // TODO: update model.selectedZone.records
+
     }
 
     return model;
