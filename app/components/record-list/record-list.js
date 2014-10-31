@@ -29,7 +29,7 @@
 
   /* @ngInject */
   function RecordListCtrl() {
-    var vm = this;
+
 
   }
 

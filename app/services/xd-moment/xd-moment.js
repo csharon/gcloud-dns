@@ -8,7 +8,7 @@
   /* @ngInject */
   function momentFilter(xdMoment) {
     return function (aDate, formatString) {
-      var dateFormat = formatString || 'MM/DD/YYYY'
+      var dateFormat = formatString || 'MM/DD/YYYY';
       if (angular.isDate(aDate)) {
         return xdMoment(aDate).format(dateFormat);
       } else if (angular.isString(aDate)) {

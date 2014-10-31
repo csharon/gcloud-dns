@@ -1,3 +1,4 @@
+/*global toastr*/
 (function () {
 
   angular.module('xd.services.XdToastr', [])

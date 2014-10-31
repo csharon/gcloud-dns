@@ -55,7 +55,7 @@
 
     function deleteZone(zone) {
       return zoneResource.remove(zone).then(
-        function (resp) {
+        function () {
           var tempZone =_(model.zoneList)
             .remove(function (zone) {
               return zone.id === model.selectedZone.id;
@@ -85,7 +85,7 @@
     function saveChanges(changeSet) {
       return zoneResource.createChangeSet(model.selectedZone, changeSet).then(
         function (resp) {
-          reconcileRecords(resp)
+          reconcileRecords(resp);
           return resp;
         },
         function (err) {

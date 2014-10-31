@@ -18,7 +18,7 @@
     .controller('dnsManagerCtrl', DnsManagerCtrl);
 
   /* @ngInject */
-  function DnsManagerCtrl($scope, zoneModel, googleOAuth, $modal, xdToastr) {
+  function DnsManagerCtrl($scope, $log, zoneModel, googleOAuth, $modal, xdToastr) {
     var dm = this;
     dm.name = 'DNS Manager';
 
@@ -53,6 +53,7 @@
           xdToastr.success ( resp.dnsName + ' deleted!' );
         },
         function (err) {
+          $log.error(err);
           xdToastr.error ('Unable to delete ' + zoneModel.selectedZone.dnsName + '!' );
         }
       );
@@ -63,7 +64,8 @@
         function () {
           xdToastr.success ( zoneModel.selectedZone.dnsName + ' updated!' );
         },
-        function () {
+        function (err) {
+          $log.error(err);
           xdToastr.error ('Unable to make changes to ' + zoneModel.selectedZone.dnsName + '!' );
         }
       );
