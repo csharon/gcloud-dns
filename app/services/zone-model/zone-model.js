@@ -85,20 +85,13 @@
     function saveChanges(changeSet) {
       return zoneResource.createChangeSet(model.selectedZone, changeSet).then(
         function (resp) {
-          reconcileRecords(resp);
+          getRecords(model.selectedZone);
           return resp;
         },
         function (err) {
           return $q.reject(err);
         }
       );
-    }
-
-    function reconcileRecords(changeSet) {
-      // TODO: remove deleted records from the selectedZone.records array
-      // TODO: add records
-      // TODO: update model.selectedZone.records
-
     }
 
     return model;
