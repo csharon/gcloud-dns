@@ -63,6 +63,7 @@
       zoneModel.saveChanges(changeSet).then(
         function () {
           xdToastr.success ( zoneModel.selectedZone.dnsName + ' updated!' );
+          $scope.$broadcast('RESET_CHANGE_SET');
         },
         function (err) {
           $log.error(err);

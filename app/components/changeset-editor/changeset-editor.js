@@ -29,14 +29,10 @@
   function ChangeSetCtrl($scope) {
     var vm = this;
 
-    vm.changeSet = {
-      additions: [],
-      deletions: []
-    };
-
+    vm.changeSet = {};
     vm.deletedRecord = {};
     vm.newRecord = {};
-    vm.rrdata = [];
+    vm.rrdata = '';
 
     vm.deleteRecord = function () {
       vm.changeSet.deletions.push(vm.deletedRecord);
@@ -47,13 +43,28 @@
       vm.newRecord.rrdatas = [vm.rrdata];
       vm.changeSet.additions.push(vm.newRecord);
       vm.newRecord = {};
+      vm.rrdata = '';
     };
 
     vm.saveChanges = function () {
       $scope.$emit('SAVE_CHANGE_SET', vm.changeSet);
     };
 
+    function resetChangeSet() {
+      vm.changeSet = {
+        additions: [],
+        deletions: []
+      };
+    }
 
+    function initChangeSet() {
+      resetChangeSet();
+
+    }
+
+    $scope.$on('RESET_CHANGE_SET', resetChangeSet);
+
+    initChangeSet();
   }
 
 })();
