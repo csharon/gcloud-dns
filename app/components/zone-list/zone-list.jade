@@ -1,15 +1,6 @@
-div.zoneList
-
-  md-list
-    md-item
-      md-item-content(ng-click="vm.createZone()")
-        .md-tile-left
-          i.fa.fa-plus-square-o.add-icon
-        .md-tile-content
-          span new zone...
-        md-divider
-    md-item(ng-repeat="zone in vm.zones")
-      md-item-content
-        div(flex ng-click="vm.selectZone(zone)")
-          h3 {{zone.dnsName}}
-      md-divider
+md-list
+  md-item(ng-repeat="zone in vm.zones")
+    md-item-content
+      div(flex ng-click="vm.selectZone(zone)")
+        span {{zone.dnsName}}
+    md-divider

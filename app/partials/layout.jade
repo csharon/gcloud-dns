@@ -1,5 +1,5 @@
 doctype html
-html(lang="en", ng-app="GcloudDns")
+html(lang="en" ng-app="GcloudDns" ng-strict-di)
   head
     title Gcloud Dns
     base(href="/")
@@ -9,6 +9,6 @@ html(lang="en", ng-app="GcloudDns")
     // endbower
 
     link(rel="stylesheet", href="/app.css")
-  body(ng-controller="gcloudDnsCtrl as vm", ng-cloak)
+  body(ng-controller="gcloudDnsCtrl as vm" ng-cloak md-theme="blue-grey" layout="vertical")
     block main-content
     include scripts

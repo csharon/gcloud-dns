@@ -1,9 +1,7 @@
 extends partials/layout
 block main-content
-  div.container
-    xd-page-header
 
-    div.row
-      section.content
+  xd-page-header
 
-        div(ui-view)
+  md-content(layout-padding)
+    ui-view

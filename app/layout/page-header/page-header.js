@@ -8,9 +8,9 @@
   function XdPageHeader() {
     return {
       restrict: 'EA',
-      replace: true,
       controller: 'headerCtrl',
       controllerAs: 'vm',
+      bindToController: true,
       templateUrl: '/layout/page-header/page-header.html'
     };
   }
