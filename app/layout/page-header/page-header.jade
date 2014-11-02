@@ -1,9 +1,9 @@
-.navbar.navbar-inverse.navbar-fixed-top
-  .container
-    .navbar-header
-      a.navbar-brand(href="/") Google Cloud DNS
+md-toolbar
+  .md-toolbar-tools(layout="horizontal")
+    h1(flex)
+      span Google Cloud DNS
 
-    .navbar-right
+    div.navbar-right
       img.img-circle(ng-src="{{vm.profile._json.picture}}", ng-if="vm.authenticated")
       button.btn.navbar-btn.btn-primary(ng-click="vm.login()", ng-if="!vm.authenticated")
         i.fa.fa-lock

@@ -1,13 +1,13 @@
 /*globals inject, beforeEach, describe, it, expect, module*/
-describe('xd.components.ZoneViewer', function () {
+describe('xd.components.ZoneHeader', function () {
 
   var el, scope;
 
-  beforeEach( module('xd.components.ZoneViewer'));
+  beforeEach( module('xd.components.ZoneHeader'));
 
   beforeEach( inject( function ($rootScope, $compile){
     scope = $rootScope.$new();
-    el = angular.element('<zone-viewer></zone-viewer>');
+    el = angular.element('<zone-header></zone-header>');
     $compile(el, scope);
     scope.$apply();
   }));

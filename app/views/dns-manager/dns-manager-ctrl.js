@@ -6,23 +6,55 @@
    *
    */
   angular.module('xd.views.DnsManager', [
-    'xd.components.ZoneList', 'xd.components.ZoneViewer',
+    'ui.router',
+    'xd.components.ZoneList',
+    'xd.components.ZoneForm',
+    'xd.components.ZoneHeader',
+    'xd.components.RecordList',
     'xd.services.ZoneModel',
-    'xd.views.AddZone',
     'xd.api.GoogleOauth',
-    'ui.bootstrap',
     'xd.wrappers.moment',
     'xd.services.XdToastr',
     'xd.components.ChangesetEditor'
   ])
+    .config(config)
     .controller('dnsManagerCtrl', DnsManagerCtrl);
 
   /* @ngInject */
-  function DnsManagerCtrl($scope, $log, zoneModel, googleOAuth, $modal, xdToastr) {
+  function config ($stateProvider) {
+    $stateProvider
+      .state('dns', {
+        templateUrl: '/views/dns-manager/dns-manager.html',
+        controller: 'dnsManagerCtrl',
+        controllerAs: 'dm',
+        abstract: true
+      })
+      .state('dns.new', {
+        templateUrl: '/views/dns-manager/templates/zones/new.html'
+      })
+      .state('dns.detail', {
+        templateUrl: '/views/dns-manager/templates/zones/detail.html',
+        abstract: true
+      })
+      .state('dns.noSelection', {
+        templateUrl: '/views/dns-manager/templates/zones/no-selection.html'
+      })
+      .state('dns.detail.view', {
+        templateUrl: '/views/dns-manager/templates/records/view.html'
+      })
+      .state('dns.detail.edit', {
+        templateUrl: '/views/dns-manager/templates/records/edit.html'
+      });
+
+  }
+
+  /* @ngInject */
+  function DnsManagerCtrl($scope, $log, $state, zoneModel, googleOAuth, xdToastr) {
     var dm = this;
     dm.name = 'DNS Manager';
 
     dm.zoneModel = zoneModel;
+    dm.createZone = createZone;
 
     $scope.$watch(
       function () {
@@ -35,22 +67,40 @@
       }
     );
 
-    $scope.$on('CREATE_ZONE', function () {
-      $modal.open({
-        templateUrl: '/views/add-zone/add-zone.html',
-        controller: 'addZoneCtrl as vm',
-        size: 'lg'
-      });
+    $scope.$on('CREATE_ZONE', createZone);
+    $scope.$on('EDIT_ZONE', editZone);
+
+    $scope.$on('CANCEL_CREATE_ZONE', function (event) {
+      $state.go('dns.noSelection');
+    });
+
+    $scope.$on('SAVE_ZONE', function (event, zone) {
+      zoneModel.createZone(zone).then(
+        function (resp) {
+          xdToastr.success(resp.dnsName + ' created!');
+          $state.go('dns.detail.view');
+        },
+        function (err) {
+          $log.error(err);
+          xdToastr.error('Unable to create ' + zone.dnsName + '!');
+        }
+      );
     });
 
     $scope.$on('SELECT_ZONE', function (event, zone) {
-      zoneModel.selectZone(zone);
+      zoneModel.selectZone(zone).then(
+        function () {
+          $state.go('dns.detail.view');
+        }
+      );
+
     });
 
     $scope.$on('DELETE_ZONE', function (event, zone) {
       zoneModel.deleteZone(zone).then(
         function (resp) {
           xdToastr.success ( resp.dnsName + ' deleted!' );
+          $state.go('dns.noSelection');
         },
         function (err) {
           $log.error(err);
@@ -71,6 +121,14 @@
         }
       );
     });
+
+    function createZone() {
+      $state.go('dns.new');
+    }
+
+    function editZone() {
+      $state.go('dns.detail.edit');
+    }
   }
 
 })();

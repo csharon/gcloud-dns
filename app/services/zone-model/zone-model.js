@@ -23,7 +23,7 @@
     };
 
     function refreshZoneList() {
-      zoneResource.getAll().then(
+      return zoneResource.getAll().then(
         function (resp) {
           model.zoneList = resp;
           return resp;
@@ -36,7 +36,7 @@
 
     function selectZone(zone) {
       model.selectedZone = zone;
-      getRecords(zone);
+      return getRecords(zone);
     }
 
     function createZone(zone) {
@@ -44,6 +44,7 @@
         function (resp) {
           model.selectedZone = resp;
           model.zoneList.push(resp);
+          getRecords(resp);
           return resp;
         },
         function (err) {

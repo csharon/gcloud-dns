@@ -2,11 +2,13 @@
 
   angular.module('GcloudDns', [
     'ui.router',
+    'ngAria',
+    'ngAnimate',
+    'ngMaterial',
     'xd.layout.PageHeader',
     'xd.tmpls',
     'xd.views.Welcome',
     'xd.views.DnsManager',
-    'xd.views.AddZone',
     'xd.components.ZoneList',
     'xd.api.GcloudDns',
     'xd.api.ZoneResource',
@@ -41,7 +43,7 @@
         if (authenticated) {
           gcloudDns.setToken(googleOAuth.token());
           gcloudDns.setProject('xdoji-dns');
-          $state.go('dns-manager');
+          $state.go('dns.noSelection');
         } else {
           $state.go('welcome');
         }
