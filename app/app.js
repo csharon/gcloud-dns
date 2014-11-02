@@ -1,32 +1,55 @@
 (function () {
 
+  angular.module('GcloudDns', [
+    'ui.router',
+    'ngAria',
+    'ngAnimate',
+    'ngMaterial',
+    'xd.layout.PageHeader',
+    'xd.tmpls',
+    'xd.views.Welcome',
+    'xd.views.DnsManager',
+    'xd.components.ZoneList',
+    'xd.api.GcloudDns',
+    'xd.api.ZoneResource',
+    'xd.services.XdToastr'
+  ])
+    .config(config)
+    .controller('gcloudDnsCtrl', GcloudDnsCtrl);
+
   /* @ngInject */
-  function config ($httpProvider, $stateProvider, $locationProvider, $urlRouterProvider) {
+  function config ($httpProvider, $stateProvider, $locationProvider) {
     $locationProvider.html5Mode(true);
 
     $httpProvider.defaults.useXDomain = true;
     delete $httpProvider.defaults.headers.common['X-Requested-With'];
-/*
-    $stateProvider
-      .state('home', { url: '/test1', templateUrl: '/views/test1/test1.html', controller: 'Test1Ctrl', controllerAs: 'vm'})
-      .state('test2', { url: '/test2', templateUrl: '/views/test2/test2.html', controller: 'Test2Ctrl', controllerAs: 'vm'});
 
-    $urlRouterProvider.otherwise('/test1');*/
+    $stateProvider
+      .state('welcome', { templateUrl: '/views/welcome/welcome.html', controller: 'welcomeCtrl', controllerAs: 'vm'})
+      .state('dns-manager', { templateUrl: '/views/dns-manager/dns-manager.html', controller: 'dnsManagerCtrl', controllerAs: 'dm'});
+
   }
 
   /* @ngInject */
-  function GcloudDnsCtrl () {
+  function GcloudDnsCtrl ($scope, $state, googleOAuth, gcloudDns) {
     var vm = this;
     vm.appTitle = 'Gcloud Dns';
+    $state.go('welcome');
+    $scope.$watch(
+      function () {
+        return googleOAuth.isAuthenticated();
+      },
+      function (authenticated) {
+        if (authenticated) {
+          gcloudDns.setToken(googleOAuth.token());
+          gcloudDns.setProject('xdoji-dns');
+          $state.go('dns.noSelection');
+        } else {
+          $state.go('welcome');
+        }
+      }
+    );
   }
 
-  angular.module('GcloudDns', [
-    'ui.router',
-    'ngMaterial',
-    'xd.layout.PageHeader',
-    'xd.tmpls'
-  ])
-    .config(config)
 
-    .controller('gcloudDnsCtrl', GcloudDnsCtrl);
 })();

@@ -1,11 +1,14 @@
 doctype html
-html(lang="en", ng-app="GcloudDns")
+html(lang="en" ng-app="GcloudDns" ng-strict-di)
   head
     title Gcloud Dns
     base(href="/")
     link(href="/favicon.ico", rel="shortcut icon", type="image/x-icon")
-    link(rel="stylesheet", href="/vendor/angular-material/angular-material.css")
+
+    // bower:css
+    // endbower
+
     link(rel="stylesheet", href="/app.css")
-  body(ng-controller="gcloudDnsCtrl as vm", ng-cloak)
+  body(ng-controller="gcloudDnsCtrl as vm" ng-cloak md-theme="blue-grey" layout="vertical")
     block main-content
     include scripts
