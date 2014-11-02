@@ -1,0 +1,17 @@
+md-content(layout="horizontal" layout-padding)
+  div(flex)
+    h1 {{vm.zone.dnsName}}
+    p {{ vm.zone.description }}
+  div(layout="vertical")
+    span Name: {{ vm.zone.name }}
+    span Created: {{ vm.zone.creationTime | moment:'DD MMM, YYYY' }}
+    div(layout="horizontal" layout-align="end center")
+      md-button(ng-click="vm.editZone()" aria-label="Edit Zone")
+        span.fa-stack.fa-lg
+          i.fa.fa-square.fa-stack-2x.edit-icon
+          i.fa.fa-pencil.fa-stack-1x.edit-icon-bg
+      md-button(ng-click="vm.deleteZone()" aria-label="Delete Zone")
+        span.fa-stack.fa-lg
+          i.fa.fa-square.fa-stack-2x.remove-icon
+          i.fa.fa-trash.fa-stack-1x.remove-icon-bg
+md-divider

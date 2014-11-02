@@ -15,6 +15,7 @@ module.exports = {
     'bower_components/angular-mocks/angular-mocks.js',
     'bower_components/restangular/dist/restangular.js',
     'bower_components/angular-ui-router/release/angular-ui-router.js',
+    'bower_components/angular-bootstrap/ui-bootstrap.js',
     'bower_components/toastr/toastr.js',
     'bower_components/moment/moment.js',
     'test/spec/gcloud-dns.tpls.js',
@@ -30,8 +31,7 @@ module.exports = {
   // test results reporter to use
   // possible values: 'dots', 'progress'
   // available reporters: https://npmjs.org/browse/keyword/karma-reporter
-  reporters: ['mocha'],
-
+  reporters: ['mocha', 'osx'],
 
   // web server port
   port: 9876,
@@ -54,6 +54,10 @@ module.exports = {
     'karma-chai',
     'karma-sinon-chai',
     'karma-phantomjs-launcher',
-    'karma-mocha-reporter'
+    'karma-mocha-reporter',
+    'karma-coverage',
+    'karma-osx-reporter',
+    'karma-junit-reporter',
+    'karma-chrome-launcher'
   ]
 }

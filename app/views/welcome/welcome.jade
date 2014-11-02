@@ -1,0 +1,11 @@
+div.welcome.jumbotron
+
+  //img(src="/assets/images/cloud-dns-logo.png")
+  div(layout="horizontal" layout-align="start end" layout-padding)
+    span.fa-stack.fa-4x
+      i.fa.fa-cloud.fa-stack-2x
+      i.fa.fa-google.fa-stack-1x.fa-inverse
+    h1(flex) dns editor
+  div
+    p Use this application to manage your Google Cloud DNS zones.
+    button.btn.btn-primary(ng-click="vm.auth.login()") Get Started

@@ -2,7 +2,6 @@
 var gulp = require('gulp'),
   config = require('./lib/config.js'),
   requireDir = require('require-dir'),
-  ngAnnotate = require('gulp-ng-annotate'),
   del = require('del');
 
 var env = process.env.NODE_ENV = process.env.NODE_ENV || 'development';
@@ -22,7 +21,7 @@ gulp.task('docs', ['open:docs']);
  *  Development Sub Tasks
  */
 
-gulp.task('dev:build', ['clean:dev', 'lint', 'templateCache', 'jade:index', 'sass', 'copy:vendor', 'copy:js']);
+gulp.task('dev:build', ['clean:dev', 'lint', 'jade:index', 'sass', 'copy:vendor', 'copy:assets', 'build:js']);
 
 gulp.task('clean:dev', function () {
   del.sync([config.filesets.dev]);
