@@ -1,0 +1,25 @@
+md-content
+  table.table.table-striped
+    thead
+      th type
+      th ttl
+      th name
+      th value
+      th
+    tbody
+      tr(ng-repeat="record in vm.updatedRecordView")
+        td {{ record.type }}
+        td {{ record.ttl }}
+        td {{ record.name }}
+        td(layout="vertical")
+          span(ng-repeat="rrdata in record.rrdatas") {{rrdata}}
+        td
+          div(layout="horizontal" layout-align="end center")
+            md-button(ng-click="vm.editRecord()" aria-label="Edit Record")
+              span.fa-stack.fa-sm
+                i.fa.fa-square.fa-stack-2x.edit-icon
+                i.fa.fa-pencil.fa-stack-1x.edit-icon-bg
+            md-button(ng-click="vm.deleteRecord()" aria-label="Delete Record")
+              span.fa-stack.fa-sm
+                i.fa.fa-square.fa-stack-2x.remove-icon
+                i.fa.fa-trash.fa-stack-1x.remove-icon-bg
