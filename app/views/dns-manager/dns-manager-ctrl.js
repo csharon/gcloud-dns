@@ -15,7 +15,8 @@
     'xd.api.GoogleOauth',
     'xd.wrappers.moment',
     'xd.services.XdToastr',
-    'xd.components.ChangesetEditor'
+    'xd.components.ChangesetEditor',
+    'xd.components.ChangeSetViewer'
   ])
     .config(config)
     .controller('dnsManagerCtrl', DnsManagerCtrl);
