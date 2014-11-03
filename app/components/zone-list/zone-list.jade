@@ -1,6 +1,5 @@
-md-list
+md-list.zone-list
   md-item(ng-repeat="zone in vm.zones")
     md-item-content
-      div(flex ng-click="vm.selectZone(zone)")
-        span {{zone.dnsName}}
+      md-button(flex ng-click="vm.selectZone(zone)" aria-label="{{zone.dnsName}}") {{zone.dnsName}}
     md-divider
