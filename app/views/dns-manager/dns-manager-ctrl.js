@@ -17,7 +17,8 @@
     'xd.wrappers.moment',
     'xd.services.XdToastr',
     'xd.components.ChangesetEditor',
-    'xd.components.ChangeSetViewer'
+    'xd.components.ChangeSetViewer',
+    'xd.components.RecordForm'
   ])
     .config(config)
     .controller('dnsManagerCtrl', DnsManagerCtrl);
@@ -44,6 +45,9 @@
       .state('dns.detail.view', {
         templateUrl: '/views/dns-manager/templates/records/view.html'
       })
+      .state('dns.detail.form', {
+        templateUrl: '/views/dns-manager/templates/records/form.html'
+      })
       .state('dns.detail.edit', {
         templateUrl: '/views/dns-manager/templates/records/edit.html'
       });
@@ -60,9 +64,13 @@
     $scope.$on('CREATE_ZONE', createZone);
     $scope.$on('EDIT_ZONE', editZone);
     $scope.$on('CANCEL_CREATE_ZONE', cancelCreateZone);
+
     $scope.$on('SAVE_ZONE', saveZone);
     $scope.$on('SELECT_ZONE', selectZone);
     $scope.$on('DELETE_ZONE', deleteZone);
+    $scope.$on('EDIT_RECORD', editRecord);
+    $scope.$on('SAVE_RECORD', saveRecord);
+    $scope.$on('CANCEL_EDIT_RECORD', cancelEditRecord);
     $scope.$on('SAVE_CHANGE_SET', saveChangeSet);
 
     $scope.$watch(
@@ -121,6 +129,18 @@
           xdToastr.error ('Unable to delete ' + zoneModel.selectedZone.dnsName + '!' );
         }
       );
+    }
+
+    function editRecord(event, record) {
+      $state.go('dns.detail.form');
+    }
+
+    function cancelEditRecord() {
+      $state.go('dns.detail.edit');
+    }
+
+    function saveRecord(event, record) {
+      $state.go('dns.detail.edit');
     }
 
     function saveChangeSet(event, changeSet) {
