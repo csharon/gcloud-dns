@@ -27,39 +27,19 @@
   }
 
   /* @ngInject */
-  function ChangeSetViewerCtrl() {
+  function ChangeSetViewerCtrl($scope) {
     var vm = this;
 
     vm.updatedRecordView = angular.copy(vm.records);
     vm.changeSet = {additions: [], deletions: []};
+    vm.editRecord = editRecord;
 
-    var originalSOA = _.find(vm.records, {type: 'SOA'});
-
-    var soaVal = getSOAValues(originalSOA.rrdatas[0]);
-    vm.changeSet.deletions.push(originalSOA);
-    var newSOA = angular.copy(originalSOA);
-    var newSOAVal = angular.copy(soaVal);
-    newSOAVal.serial = newSOAVal.serial + 1;
-    newSOA.rrdatas[0] = _.values(newSOAVal).join(' ');
-    vm.changeSet.additions.push(newSOA);
+    function editRecord(record) {
+      $scope.$emit('EDIT_RECORD', record);
+    }
 
   }
 
-  function getSOAValues(rrdataVal) {
-    var soaParts = rrdataVal.split(' ');
-    return {
-      nameServer: soaParts[0],
-      email: soaParts[1],
-      serial: parseInt(soaParts[2], 10),
-      refreshRate: parseInt(soaParts[3], 10),
-      updateRetry: parseInt(soaParts[4], 10),
-      expiry: parseInt(soaParts[5], 10),
-      minCache: parseInt(soaParts[6], 10)
-    };
-  }
 
-  function updateSerial() {
-
-  }
 
 })();
