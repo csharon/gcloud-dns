@@ -55,11 +55,13 @@
   }
 
   /* @ngInject */
-  function DnsManagerCtrl($scope, $log, $state, zoneModel, googleOAuth, xdToastr) {
+  function DnsManagerCtrl($scope, $log, $state, zoneModel, googleOAuth, xdToastr, $mdSidenav) {
     var dm = this;
     dm.name = 'DNS Manager';
     dm.zoneModel = zoneModel;
     dm.createZone = createZone;
+    dm.openZoneList = openZoneList;
+    dm.closeZoneList = closeZoneList;
 
     $scope.$on('CREATE_ZONE', createZone);
     $scope.$on('EDIT_ZONE', editZone);
@@ -112,6 +114,7 @@
     function selectZone(event, zone) {
       zoneModel.selectZone(zone).then(
         function () {
+          closeZoneList();
           $state.go('dns.detail.view');
         }
       );
@@ -154,6 +157,23 @@
           xdToastr.error ('Unable to make changes to ' + zoneModel.selectedZone.dnsName + '!' );
         }
       );
+    }
+
+    function closeZoneList() {
+      $mdSidenav('zone-list').close();
+    }
+
+    function openZoneList() {
+      $mdSidenav('zone-list').open();
+    }
+
+    function createZone() {
+      closeZoneList();
+      $state.go('dns.new');
+    }
+
+    function editZone() {
+      $state.go('dns.detail.edit');
     }
   }
 
