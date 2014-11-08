@@ -2,7 +2,7 @@
 /*jshint expr: true*/
 describe.only('xd.services.ChangeSetModel', function () {
 
-  var model, zone;
+  var model, zone, aRecord, updatedRecord;
   beforeEach( module('xd.services.ChangeSetModel'));
 
   beforeEach(inject(function (changeSetModel) {
@@ -33,6 +33,13 @@ describe.only('xd.services.ChangeSetModel', function () {
         }
       ]
     };
+    aRecord = {
+      name: 'www.taco.com.',
+      type: 'A',
+      ttl: 21600,
+      rrdatas: [
+        '192.168.1.1'
+    ]};
   }));
 
   it('should have an array named updatedRecordView', function () {
@@ -58,25 +65,105 @@ describe.only('xd.services.ChangeSetModel', function () {
 
   });
 
-  describe('addRecord', function () {
-    it('should add a record to the changeSet.additions');
-    it('should add the new record to the updatedRecordView');
-    it('should add a new status to the record');
-    it('should not add the new record to zone.records');
+  describe('record management', function () {
+
+    describe('addRecord', function () {
+      beforeEach(function () {
+        model.createChangeSet(zone);
+        model.addRecord(aRecord);
+      });
+      it('should add a record to the changeSet.additions', function () {
+
+        expect(model.changeSet.additions.length).to.equal(2);
+      });
+
+
+      it('should add the new record to the updatedRecordView', function () {
+        expect(_.contains(model.updatedRecordView, aRecord)).to.be.true;
+
+      });
+
+      it('should add a new status to the record', function () {
+        expect(aRecord.status).to.equal('new');
+      });
+
+      it('should not add the new record to zone.records', function () {
+        expect(zone.records.length).to.equal(2);
+      });
+
+
+    });
+
+    describe('duplicate records', function () {
+      it('should not add a duplicate record', function () {
+        zone.records.push(aRecord);
+        model.createChangeSet(zone);
+        model.addRecord(aRecord);
+        expect(model.changeSet.additions.length).to.equal(1);
+      });
+    });
+
+    describe('updateRecord', function () {
+
+      beforeEach(function () {
+        zone.records.push(aRecord);
+        model.createChangeSet(zone);
+        updatedRecord = angular.copy(aRecord);
+        updatedRecord.name = 'mail.taco.com.';
+        model.updateRecord(updatedRecord, aRecord);
+      });
+      it('should add the new record to the changeSet.additions', function () {
+        expect(model.changeSet.additions.length).to.equal(2);
+        expect(_.contains(model.changeSet.additions, updatedRecord)).to.be.true;
+
+      });
+
+      it('should add the old record to the changeSet.deletions', function () {
+        expect(model.changeSet.deletions.length).to.equal(2);
+        expect(_.contains(model.changeSet.deletions, aRecord)).to.be.true;
+      });
+
+      it('should add the updated record to the updatedRecordView', function () {
+        //expect(model.updatedRecordView.length).to.equal(3);
+        expect(_.contains(model.updatedRecordView, updatedRecord)).to.be.true;
+        expect(_.contains(model.updatedRecordView, aRecord)).to.be.false;
+      });
+
+      it('should add a updated status to the record', function () {
+        expect(updatedRecord.status).to.equal('updated');
+      });
+
+      it('should not add the updated record to zone.records', function () {
+        expect(zone.records.length).to.equal(3);
+      });
+    });
+
+    describe('updating new records', function () {
+      beforeEach(function () {
+        model.createChangeSet(zone);
+        model.addRecord(aRecord);
+        updatedRecord = angular.copy(aRecord);
+        updatedRecord.name = 'mail.taco.com.';
+        model.updateRecord(updatedRecord, aRecord);
+      });
+
+      it('should modify the existing elements on the additions array', function () {
+        expect(_.contains(model.changeSet.additions, updatedRecord)).to.be.true;
+        expect(_.contains(model.changeSet.additions, aRecord)).to.be.false;
+      });
+      it ('should modify the existing element in the updated view list', function () {
+        expect(_.contains(model.updatedRecordView, updatedRecord)).to.be.true;
+        expect(_.contains(model.changeSet.deletions, aRecord)).to.be.false;
+      });
+
+
+    });
+
+    describe('removeRecord', function () {
+      it('should add the record to the changeSet.deletions');
+      it('should add a deleted status to the record');
+    });
   });
 
-  describe('updateRecord', function () {
-    it('should add the new record to the changeSet.additions');
-    it('should add the old record to the changeSet.deletions');
-    it('should add the updated record to the updatedRecordView');
-    it('should remove the original record from the updatedRecordView');
-    it('should add a updated status to the record');
-    it('should not add the updated record to zone.records');
-  });
-
-  describe('removeRecord', function () {
-    it('should add the record to the changeSet.deletions');
-    it('should add a deleted status to the record');
-  });
 
 });
