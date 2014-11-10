@@ -13,6 +13,7 @@
     'xd.components.ZoneHeader',
     'xd.components.RecordList',
     'xd.services.ZoneModel',
+    'xd.services.ChangeSetModel',
     'xd.api.GoogleOauth',
     'xd.wrappers.moment',
     'xd.services.XdToastr',
@@ -55,10 +56,11 @@
   }
 
   /* @ngInject */
-  function DnsManagerCtrl($scope, $log, $state, zoneModel, googleOAuth, xdToastr, $mdSidenav) {
+  function DnsManagerCtrl($scope, $log, $state, zoneModel, googleOAuth, xdToastr, $mdSidenav, changeSetModel) {
     var dm = this;
     dm.name = 'DNS Manager';
     dm.zoneModel = zoneModel;
+    dm.changeSetModel = changeSetModel;
     dm.createZone = createZone;
     dm.openZoneList = openZoneList;
     dm.closeZoneList = closeZoneList;
@@ -90,7 +92,8 @@
       $state.go('dns.new');
     }
 
-    function editZone() {
+    function editZone(event, zone) {
+      changeSetModel.createChangeSet(zone);
       $state.go('dns.detail.edit');
     }
 
@@ -167,14 +170,6 @@
       $mdSidenav('zone-list').open();
     }
 
-    function createZone() {
-      closeZoneList();
-      $state.go('dns.new');
-    }
-
-    function editZone() {
-      $state.go('dns.detail.edit');
-    }
   }
 
 })();
