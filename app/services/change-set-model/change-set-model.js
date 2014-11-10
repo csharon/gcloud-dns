@@ -9,7 +9,7 @@
     .factory('changeSetModel', ChangeSetModel);
 
   /* @ngInject */
-  function ChangeSetModel() {
+  function ChangeSetModel($log) {
 
     //Public API
     var api = {};
@@ -20,6 +20,7 @@
     api.getRecord = getRecord;
     api.addRecord = addRecord;
     api.updateRecord = updateRecord;
+    api.pendingChanges = {unchanged: [], new: [], updated: [], deleted: []};
 
     // Methods
     api.createChangeSet = createChangeSet;
@@ -28,7 +29,11 @@
     function createChangeSet(zone) {
       api.zone = zone;
       // Copy the records to updatedRecordView
-      api.updatedRecordView = angular.copy(zone.records);
+      api.updatedRecordView = _.map(zone.records, function (record) {
+        record.status = "unchanged";
+        return record;
+      });
+      updatePendingChanges();
       // Reset changeSet
       api.changeSet = {additions: [], deletions: []};
 
@@ -57,8 +62,10 @@
       // Assemble the array values and stringify them for submission.
       newSOA.rrdatas[0] = _.values(newSOAVal).join(' ');
       // Push the new SOA record to the Google API
-      api.changeSet.additions.push(newSOA);
-      api.changeSet.deletions.push(originalSOA);
+      updateRecord(newSOA, originalSOA);
+      //api.changeSet.additions.push(newSOA);
+      //api.changeSet.deletions.push(originalSOA);
+
     }
 
     function getSOAValues(rrdataVal) {
@@ -110,7 +117,11 @@
         });
         api.updatedRecordView.push(newRecord);
       }
+      updatePendingChanges();
+    }
 
+    function updatePendingChanges() {
+      api.pendingChanges = _.groupBy(api.updatedRecordView, 'status');
     }
 
     return api;
