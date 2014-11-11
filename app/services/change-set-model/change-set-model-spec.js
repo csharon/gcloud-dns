@@ -160,8 +160,35 @@ describe.only('xd.services.ChangeSetModel', function () {
     });
 
     describe('removeRecord', function () {
-      it('should add the record to the changeSet.deletions');
-      it('should add a deleted status to the record');
+      beforeEach(function () {
+        zone.records.push(aRecord);
+        model.createChangeSet(zone);
+        model.removeRecord(aRecord);
+      });
+      it('should add the record to the changeSet.deletions', function () {
+        expect(_.contains(model.changeSet.deletions, aRecord)).to.be.true;
+      });
+
+      it('should add a deleted status to the record', function () {
+        expect(aRecord.status).to.equal('deleted');
+      });
+    });
+
+    describe('deleting new records', function () {
+      beforeEach(function () {
+        model.createChangeSet(zone);
+        model.addRecord(aRecord);
+        model.removeRecord(aRecord);
+      });
+
+      it('should remove existing elements on the additions array', function () {
+        expect(_.contains(model.changeSet.additions, aRecord)).to.be.false;
+      });
+      it ('should remove the existing element in the updated view list', function () {
+        expect(_.contains(model.updatedRecordView, aRecord)).to.be.false;
+      });
+
+
     });
   });
 
