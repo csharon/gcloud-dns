@@ -9,7 +9,7 @@
     .factory('changeSetModel', ChangeSetModel);
 
   /* @ngInject */
-  function ChangeSetModel($log) {
+  function ChangeSetModel() {
 
     //Public API
     var api = {};
@@ -20,6 +20,7 @@
     api.getRecord = getRecord;
     api.addRecord = addRecord;
     api.updateRecord = updateRecord;
+    api.removeRecord = removeRecord;
     api.pendingChanges = {unchanged: [], new: [], updated: [], deleted: []};
 
     // Methods
@@ -30,7 +31,7 @@
       api.zone = zone;
       // Copy the records to updatedRecordView
       api.updatedRecordView = _.map(zone.records, function (record) {
-        record.status = "unchanged";
+        record.status = 'unchanged';
         return record;
       });
       updatePendingChanges();
@@ -89,6 +90,32 @@
       if (!recordExists(api.zone.records, record) && !recordExists(api.changeSet.additions, record)) {
         api.changeSet.additions.push(record);
         record.status = 'new';
+        api.updatedRecordView.push(record);
+      }
+
+    }
+
+    function removeRecord(record) {
+
+      // If the record status is new
+      if (record.status === 'new') {
+        // remove it from the changeSet.additions
+        _.remove(api.changeSet.additions, function (original) {
+          return original.name === record.name && original.type === record.type;
+        });
+        // update the view by removing the new record
+        _.remove(api.updatedRecordView, function (original) {
+          return original.name === record.name && original.type === record.type;
+        });
+      } else {
+        // add it to the changeset
+        api.changeSet.deletions.push(record);
+        // mark it as deleted
+        record.status = 'deleted';
+        // Update the view
+        _.remove(api.updatedRecordView, function (original) {
+          return original.name === record.name && original.type === record.type;
+        });
         api.updatedRecordView.push(record);
       }
 
