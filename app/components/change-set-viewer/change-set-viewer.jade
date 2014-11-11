@@ -27,8 +27,8 @@ md-content
         td {{ record.type }}
         td {{ record.ttl }}
         td {{ record.name }}
-        td(layout="vertical")
-          span(ng-repeat="rrdata in record.rrdatas") {{rrdata}}
+        td
+          div(ng-repeat="rrdata in record.rrdatas") {{rrdata}}
         td
           div(layout="horizontal" layout-align="end center")
             md-button(ng-click="vm.editRecord(record)" aria-label="Edit Record")
