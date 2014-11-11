@@ -2,13 +2,13 @@ div(flex).record-form
   form.form(name="recordForm" role="form" ng-submit="vm.save()" novalidate)
     .form-group
       label.sr-only(for="type") Type
-      input.form-control(name="type" ng-model="vm.newRecord.type" placeholder="Type")
+      input.form-control(name="type" ng-model="vm.record.type" placeholder="Type")
     .form-group
       label.sr-only(for="ttl") TTL
-      input.form-control(name="ttl" ng-model="vm.newRecord.ttl" placeholder="TTL")
+      input.form-control(name="ttl" ng-model="vm.record.ttl" placeholder="TTL")
     .form-group
       label.sr-only(for="name") Name
-      input.form-control(name="name" ng-model="vm.newRecord.name" placeholder="Name")
+      input.form-control(name="name" ng-model="vm.record.name" placeholder="Name")
     .form-group
       label.sr-only(for="value") Value
       input.form-control(name="value" ng-model="vm.rrdata" placeholder="Value")

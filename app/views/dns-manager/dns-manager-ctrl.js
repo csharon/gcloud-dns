@@ -17,7 +17,6 @@
     'xd.api.GoogleOauth',
     'xd.wrappers.moment',
     'xd.services.XdToastr',
-    'xd.components.ChangesetEditor',
     'xd.components.ChangeSetViewer',
     'xd.components.RecordForm'
   ])
@@ -73,6 +72,7 @@
     $scope.$on('SELECT_ZONE', selectZone);
     $scope.$on('DELETE_ZONE', deleteZone);
     $scope.$on('EDIT_RECORD', editRecord);
+    $scope.$on('ADD_RECORD', addRecord);
     $scope.$on('SAVE_RECORD', saveRecord);
     $scope.$on('CANCEL_EDIT_RECORD', cancelEditRecord);
     $scope.$on('SAVE_CHANGE_SET', saveChangeSet);
@@ -138,6 +138,14 @@
     }
 
     function editRecord(event, record) {
+      changeSetModel.currentRecordIsNew = false;
+      changeSetModel.currentRecord = record;
+      $state.go('dns.detail.form');
+    }
+
+    function addRecord(event) {
+      changeSetModel.currentRecordIsNew = true;
+      changeSetModel.currentRecord = {};
       $state.go('dns.detail.form');
     }
 
@@ -146,6 +154,7 @@
     }
 
     function saveRecord(event, record) {
+      changeSetModel.saveRecord(record);
       $state.go('dns.detail.edit');
     }
 
@@ -154,6 +163,7 @@
         function () {
           xdToastr.success ( zoneModel.selectedZone.dnsName + ' updated!' );
           $scope.$broadcast('RESET_CHANGE_SET');
+          $state.go('dns.detail.view');
         },
         function (err) {
           $log.error(err);

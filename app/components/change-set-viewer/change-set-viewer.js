@@ -27,9 +27,24 @@
     var vm = this;
     vm.changeSetModel = changeSetModel;
     vm.editRecord = editRecord;
+    vm.addRecord = addRecord;
+    vm.deleteRecord = deleteRecord;
+    vm.saveChanges = saveChanges;
 
     function editRecord(record) {
       $scope.$emit('EDIT_RECORD', record);
+    }
+
+    function addRecord() {
+      $scope.$emit('ADD_RECORD');
+    }
+
+    function deleteRecord(record) {
+      changeSetModel.removeRecord(record);
+    }
+
+    function saveChanges() {
+      $scope.$emit('SAVE_CHANGE_SET', changeSetModel.changeSet);
     }
 
   }
