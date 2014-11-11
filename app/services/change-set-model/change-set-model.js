@@ -16,10 +16,13 @@
     // Properties
     api.zone = {};
     api.changeSet = {};
+    api.currentRecord = {};
+    api.currentRecordIsNew = false;
     api.updatedRecordView = [];
     api.getRecord = getRecord;
     api.addRecord = addRecord;
     api.updateRecord = updateRecord;
+    api.saveRecord = saveRecord;
     api.removeRecord = removeRecord;
     api.pendingChanges = {unchanged: [], new: [], updated: [], deleted: []};
 
@@ -86,11 +89,20 @@
       return angular.isDefined(getRecord(list, record.type, record.name));
     }
 
+    function saveRecord(record) {
+      if (api.currentRecordIsNew) {
+        addRecord(record);
+      } else {
+        updateRecord(record, api.currentRecord);
+      }
+    }
+
     function addRecord(record) {
       if (!recordExists(api.zone.records, record) && !recordExists(api.changeSet.additions, record)) {
         api.changeSet.additions.push(record);
         record.status = 'new';
         api.updatedRecordView.push(record);
+        updatePendingChanges();
       }
 
     }
@@ -118,7 +130,7 @@
         });
         api.updatedRecordView.push(record);
       }
-
+      updatePendingChanges();
     }
 
     function updateRecord(newRecord, oldRecord) {
