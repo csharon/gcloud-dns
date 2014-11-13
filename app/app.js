@@ -25,8 +25,7 @@
     delete $httpProvider.defaults.headers.common['X-Requested-With'];
 
     $stateProvider
-      .state('welcome', { templateUrl: '/views/welcome/welcome.html', controller: 'welcomeCtrl', controllerAs: 'vm'})
-      .state('dns-manager', { templateUrl: '/views/dns-manager/dns-manager.html', controller: 'dnsManagerCtrl', controllerAs: 'dm'});
+      .state('welcome', { templateUrl: '/views/welcome/welcome.html', controller: 'welcomeCtrl', controllerAs: 'vm'});
 
   }
 

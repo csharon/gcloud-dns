@@ -1,6 +1,6 @@
 {
   "name": "gcloud-dns",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "repository": {
     "type": "git",
     "url": "git@github.com:csharon/gcloud-dns.git"
@@ -42,7 +42,8 @@
         "angular-material.css",
         "./themes/blue-grey-theme.css",
         "./themes/lime-theme.css",
-        "./themes/grey-theme.css"
+        "./themes/grey-theme.css",
+        "./themes/amber-theme.css"
       ]
     }
   },

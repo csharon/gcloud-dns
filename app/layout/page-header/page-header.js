@@ -1,6 +1,6 @@
 (function () {
 
-  angular.module('xd.layout.PageHeader', ['xd.api.GoogleOauth'])
+  angular.module('xd.layout.PageHeader', ['xd.api.GoogleOauth', 'ngMaterial'])
     .controller('headerCtrl', HeaderCtrl)
     .directive('xdPageHeader', XdPageHeader);
 
@@ -16,13 +16,14 @@
   }
 
   /* @ngInject */
-  function HeaderCtrl($scope, googleOAuth) {
+  function HeaderCtrl($scope, googleOAuth, $mdSidenav) {
     var vm = this;
 
     vm.authenticated = false;
     vm.profile = {};
     vm.login = googleOAuth.login;
     vm.logout = googleOAuth.logout;
+    vm.openZoneList = openZoneList;
 
     $scope.$watch(
       function () {
@@ -39,6 +40,10 @@
         }
       }
     );
+
+    function openZoneList() {
+      $mdSidenav('zone-list').open();
+    }
 
   }
 
