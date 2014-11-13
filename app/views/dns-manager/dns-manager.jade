@@ -1,4 +1,4 @@
-section(layout="horizontal" layout-padding).dnsManager
+section(layout="horizontal" layout-padding).dnsManager.clearfix
 
   md-sidenav(is-locked-open="$media('md')" component-id="zone-list").md-sidenav-left.md-whiteframe-z2
 
@@ -14,6 +14,6 @@ section(layout="horizontal" layout-padding).dnsManager
 
     md-content.md-padding
       zone-list(zones="dm.zoneModel.zoneList" selectedZone="dm.zoneModel.selectedZone")
-  md-content
+  md-content.right-content
 
     ui-view
