@@ -32,6 +32,7 @@
     vm.cancel = cancel;
 
     function save() {
+
       $scope.$emit('SAVE_ZONE', vm.zone);
     }
 

@@ -1,5 +1,6 @@
+/*globals angular*/
 (function () {
-
+  'use strict';
   /**
    * @ngdoc function
    * @name xd.views.DnsManager:dnsManagerCtrl
@@ -12,10 +13,12 @@
     'xd.components.ZoneHeader',
     'xd.components.RecordList',
     'xd.services.ZoneModel',
+    'xd.services.ChangeSetModel',
     'xd.api.GoogleOauth',
     'xd.wrappers.moment',
     'xd.services.XdToastr',
-    'xd.components.ChangesetEditor'
+    'xd.components.ChangeSetViewer',
+    'xd.components.RecordForm'
   ])
     .config(config)
     .controller('dnsManagerCtrl', DnsManagerCtrl);
@@ -42,6 +45,9 @@
       .state('dns.detail.view', {
         templateUrl: '/views/dns-manager/templates/records/view.html'
       })
+      .state('dns.detail.form', {
+        templateUrl: '/views/dns-manager/templates/records/form.html'
+      })
       .state('dns.detail.edit', {
         templateUrl: '/views/dns-manager/templates/records/edit.html'
       });
@@ -49,12 +55,27 @@
   }
 
   /* @ngInject */
-  function DnsManagerCtrl($scope, $log, $state, zoneModel, googleOAuth, xdToastr) {
+  function DnsManagerCtrl($scope, $log, $state, zoneModel, googleOAuth, xdToastr, $mdSidenav, changeSetModel) {
     var dm = this;
     dm.name = 'DNS Manager';
-
     dm.zoneModel = zoneModel;
+    dm.changeSetModel = changeSetModel;
     dm.createZone = createZone;
+    dm.openZoneList = openZoneList;
+    dm.closeZoneList = closeZoneList;
+
+    $scope.$on('CREATE_ZONE', createZone);
+    $scope.$on('EDIT_ZONE', editZone);
+    $scope.$on('CANCEL_CREATE_ZONE', cancelCreateZone);
+
+    $scope.$on('SAVE_ZONE', saveZone);
+    $scope.$on('SELECT_ZONE', selectZone);
+    $scope.$on('DELETE_ZONE', deleteZone);
+    $scope.$on('EDIT_RECORD', editRecord);
+    $scope.$on('ADD_RECORD', addRecord);
+    $scope.$on('SAVE_RECORD', saveRecord);
+    $scope.$on('CANCEL_EDIT_RECORD', cancelEditRecord);
+    $scope.$on('SAVE_CHANGE_SET', saveChangeSet);
 
     $scope.$watch(
       function () {
@@ -67,14 +88,20 @@
       }
     );
 
-    $scope.$on('CREATE_ZONE', createZone);
-    $scope.$on('EDIT_ZONE', editZone);
+    function createZone() {
+      $state.go('dns.new');
+    }
 
-    $scope.$on('CANCEL_CREATE_ZONE', function (event) {
+    function editZone(event, zone) {
+      changeSetModel.createChangeSet(zone);
+      $state.go('dns.detail.edit');
+    }
+
+    function cancelCreateZone() {
       $state.go('dns.noSelection');
-    });
+    }
 
-    $scope.$on('SAVE_ZONE', function (event, zone) {
+    function saveZone(event, zone) {
       zoneModel.createZone(zone).then(
         function (resp) {
           xdToastr.success(resp.dnsName + ' created!');
@@ -85,18 +112,19 @@
           xdToastr.error('Unable to create ' + zone.dnsName + '!');
         }
       );
-    });
+    }
 
-    $scope.$on('SELECT_ZONE', function (event, zone) {
+    function selectZone(event, zone) {
       zoneModel.selectZone(zone).then(
         function () {
+          closeZoneList();
           $state.go('dns.detail.view');
         }
       );
 
-    });
+    }
 
-    $scope.$on('DELETE_ZONE', function (event, zone) {
+    function deleteZone(event, zone) {
       zoneModel.deleteZone(zone).then(
         function (resp) {
           xdToastr.success ( resp.dnsName + ' deleted!' );
@@ -107,28 +135,51 @@
           xdToastr.error ('Unable to delete ' + zoneModel.selectedZone.dnsName + '!' );
         }
       );
-    });
+    }
 
-    $scope.$on('SAVE_CHANGE_SET', function (event, changeSet) {
+    function editRecord(event, record) {
+      changeSetModel.currentRecordIsNew = false;
+      changeSetModel.currentRecord = record;
+      $state.go('dns.detail.form');
+    }
+
+    function addRecord(event) {
+      changeSetModel.currentRecordIsNew = true;
+      changeSetModel.currentRecord = {};
+      $state.go('dns.detail.form');
+    }
+
+    function cancelEditRecord() {
+      $state.go('dns.detail.edit');
+    }
+
+    function saveRecord(event, record) {
+      changeSetModel.saveRecord(record);
+      $state.go('dns.detail.edit');
+    }
+
+    function saveChangeSet(event, changeSet) {
       zoneModel.saveChanges(changeSet).then(
         function () {
           xdToastr.success ( zoneModel.selectedZone.dnsName + ' updated!' );
           $scope.$broadcast('RESET_CHANGE_SET');
+          $state.go('dns.detail.view');
         },
         function (err) {
           $log.error(err);
           xdToastr.error ('Unable to make changes to ' + zoneModel.selectedZone.dnsName + '!' );
         }
       );
-    });
-
-    function createZone() {
-      $state.go('dns.new');
     }
 
-    function editZone() {
-      $state.go('dns.detail.edit');
+    function closeZoneList() {
+      $mdSidenav('zone-list').close();
     }
+
+    function openZoneList() {
+      $mdSidenav('zone-list').open();
+    }
+
   }
 
 })();

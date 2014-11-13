@@ -1,0 +1,41 @@
+md-content
+  .alert.alert-warning
+    div(layout="horizontal")
+      div(flex layout="vertical" layout-sm="horizontal")
+        div(ng-if='vm.changeSetModel.pendingChanges.new.length > 0')
+          span(layout-padding) added: {{vm.changeSetModel.pendingChanges.new.length}}
+        div(ng-if='vm.changeSetModel.pendingChanges.updated.length > 0')
+          span(layout-padding) updated: {{vm.changeSetModel.pendingChanges.updated.length}}
+        div(ng-if='vm.changeSetModel.pendingChanges.deleted.length > 0')
+          span(layout-padding) deleted: {{vm.changeSetModel.pendingChanges.deleted.length}}
+      div
+        md-button(aria-label='Save Changes' ng-click="vm.saveChanges()") Save Changes
+  table.table.table-striped
+    thead
+      th type
+      th ttl
+      th name
+      th value
+      th
+        md-button(ng-click="vm.addRecord()" aria-label="Create Record")
+          span.fa-stack.fa-sm
+            i.fa.fa-square.fa-stack-2x.add-icon-bg
+            i.fa.fa-plus.fa-stack-1x.add-icon
+    tbody
+      tr(ng-repeat="record in vm.changeSetModel.updatedRecordView"
+        ng-class="{success: record.status === 'new', info: record.status === 'updated', danger: record.status === 'deleted'}")
+        td {{ record.type }}
+        td {{ record.ttl }}
+        td {{ record.name }}
+        td
+          div(ng-repeat="rrdata in record.rrdatas") {{rrdata}}
+        td
+          div(layout="horizontal" layout-align="end center")
+            md-button(ng-click="vm.editRecord(record)" aria-label="Edit Record")
+              span.fa-stack.fa-sm
+                i.fa.fa-square.fa-stack-2x.edit-icon
+                i.fa.fa-pencil.fa-stack-1x.edit-icon-bg
+            md-button(ng-click="vm.deleteRecord(record)" aria-label="Delete Record")
+              span.fa-stack.fa-sm
+                i.fa.fa-square.fa-stack-2x.remove-icon
+                i.fa.fa-trash.fa-stack-1x.remove-icon-bg

@@ -1,0 +1,30 @@
+div(flex).record-form
+  form.form(name="recordForm" role="form" ng-submit="vm.save()" novalidate)
+    .form-group
+      label(for="type") Type
+      input.form-control(name="type" ng-model="vm.record.type" placeholder="Type")
+    .form-group
+      label(for="ttl") TTL
+      input.form-control(name="ttl" ng-model="vm.record.ttl" placeholder="TTL")
+    .form-group
+      label(for="name") Name
+      input.form-control(name="name" ng-model="vm.record.name" placeholder="Name")
+    .form-group
+      div
+        label RRData Values
+        div(ng-repeat="rrdata in vm.record.rrdatas")
+          div(layout="horizontal")
+            span(flex) {{rrdata}}
+            md-button(ng-click="vm.removeRRData($index)" aria-label="Add RRData" type="button")
+              span.fa-stack.fa-sm
+                i.fa.fa-square.fa-stack-2x.remove-icon
+                i.fa.fa-trash.fa-stack-1x.remove-icon-bg
+        div(layout="horizontal")
+          input.form-control(name="name" ng-model="vm.rrdata" placeholder="New Value")
+          md-button(ng-click="vm.addRRData()" aria-label="Add RRData" type="button" ng-disabled="vm.disableAddRRData")
+            span.fa-stack.fa-sm
+              i.fa.fa-square.fa-stack-2x.add-icon
+              i.fa.fa-plus.fa-stack-1x.add-icon-bg
+    .form-group
+      button.btn.btn-default.btn-sm(type="button" ng-click="vm.cancel()") Cancel
+      button.btn.btn-primary(type="submit") Save
