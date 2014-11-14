@@ -18,7 +18,8 @@
     'xd.wrappers.moment',
     'xd.services.XdToastr',
     'xd.components.ChangeSetViewer',
-    'xd.components.RecordForm'
+    'xd.components.RecordForm',
+    'xd.api.GcloudDns'
   ])
     .config(config)
     .controller('dnsManagerCtrl', DnsManagerCtrl);
@@ -55,14 +56,16 @@
   }
 
   /* @ngInject */
-  function DnsManagerCtrl($scope, $log, $state, zoneModel, googleOAuth, xdToastr, $mdSidenav, changeSetModel) {
+  function DnsManagerCtrl($scope, $log, $state, zoneModel, xdToastr, $mdSidenav, changeSetModel, gcloudDns) {
     var dm = this;
+    dm.project = '';
     dm.name = 'DNS Manager';
     dm.zoneModel = zoneModel;
     dm.changeSetModel = changeSetModel;
     dm.createZone = createZone;
     dm.openZoneList = openZoneList;
     dm.closeZoneList = closeZoneList;
+    dm.setProject = setProject;
 
     $scope.$on('CREATE_ZONE', createZone);
     $scope.$on('EDIT_ZONE', editZone);
@@ -77,16 +80,15 @@
     $scope.$on('CANCEL_EDIT_RECORD', cancelEditRecord);
     $scope.$on('SAVE_CHANGE_SET', saveChangeSet);
 
-    $scope.$watch(
-      function () {
-        return googleOAuth.isAuthenticated();
-      },
-      function (authenticated) {
-        if (authenticated) {
+
+
+    function setProject() {
+      gcloudDns.setProject(dm.project).then(
+        function (project) {
           zoneModel.refreshZones();
         }
-      }
-    );
+      );
+    }
 
     function createZone() {
       $state.go('dns.new');
