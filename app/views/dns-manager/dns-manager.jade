@@ -1,16 +1,23 @@
 section(layout="horizontal" layout-padding).dnsManager.clearfix
 
   md-sidenav(is-locked-open="$media('md')" component-id="zone-list").md-sidenav-left.md-whiteframe-z2
-
     md-toolbar(md-theme="grey" layout="horizontal")
       .md-toolbar-tools
-        h3.zone-list-header(flex)
-          span Zones
-
-        md-button(ng-click="dm.createZone()" aria-label="Create Zone")
+        md-text-float(label="Project" ng-model="dm.project" flex md-theme="blue-grey")
+        md-button(aria-label="Load Project" ng-click="dm.setProject()")
           span.fa-stack.fa-med
             i.fa.fa-square.fa-stack-2x.add-icon-bg
+            i.fa.fa-refresh.fa-stack-1x.add-icon
+    md-whiteframe(ng-if="dm.zoneModel.zoneList.length > 0").md-whiteframe-z1
+      .md-toolbar-tools(layout="horizontal")
+        span(flex) Zones
+
+        md-button(ng-click="dm.createZone()" aria-label="Create Zone")
+          span.fa-stack.fa-sm
+            i.fa.fa-square.fa-stack-2x.add-icon-bg
             i.fa.fa-plus.fa-stack-1x.add-icon
+
+    md-divider
 
     md-content.md-padding
       zone-list(zones="dm.zoneModel.zoneList" selectedZone="dm.zoneModel.selectedZone")
