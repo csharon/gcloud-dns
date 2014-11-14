@@ -43,7 +43,11 @@
         "./themes/blue-grey-theme.css",
         "./themes/lime-theme.css",
         "./themes/grey-theme.css",
-        "./themes/amber-theme.css"
+        "./themes/amber-theme.css",
+        "./themes/teal-theme.css",
+        "./themes/indigo-theme.css",
+        "./themes/light-blue-dark-theme.css",
+        "./themes/deep-orange-theme.css"
       ]
     }
   },

@@ -41,7 +41,6 @@
       function (authenticated) {
         if (authenticated) {
           gcloudDns.setToken(googleOAuth.token());
-          gcloudDns.setProject('xdoji-dns');
           $state.go('dns.noSelection');
         } else {
           $state.go('welcome');

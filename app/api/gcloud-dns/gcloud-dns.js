@@ -17,12 +17,16 @@
     .factory('gcloudDns', GcloudDns);
 
   /* @ngInject */
-  function GcloudDns(Restangular, GcloudDnsConfig) {
+  function GcloudDns($q, Restangular, GcloudDnsConfig) {
     var _project,
       _token,
       _resource;
 
+    var deferred = $q.defer();
+    var _projectPromise = deferred.promise;
+
     function initResource(projectName) {
+
       _resource = Restangular.withConfig(function (RestangularConfigurer) {
         RestangularConfigurer.setBaseUrl(GcloudDnsConfig.BASE_URL);
         RestangularConfigurer.setDefaultRequestParams({access_token: getToken()});
@@ -48,16 +52,24 @@
         return data;
       });
 
+
+
       _project = _resource.one('projects', projectName);
+      deferred.resolve(_project);
+
     }
 
     function getProject() {
-      return _project;
+      return _projectPromise;
     }
 
     function setProject(name) {
+      deferred = $q.defer();
+      _projectPromise = deferred.promise;
 
       initResource(name);
+      return _projectPromise;
+
     }
 
     function getToken() {
