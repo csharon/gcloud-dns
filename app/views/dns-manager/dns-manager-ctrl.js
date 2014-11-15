@@ -104,6 +104,7 @@
       gcloudDns.setProject(dm.project).then(
         function (project) {
           projectModel.saveProject(project.id);
+          getProjects();
           zoneModel.refreshZones().then(
             function () {
               $state.go('dns.noSelection');
