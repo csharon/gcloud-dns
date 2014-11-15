@@ -173,7 +173,7 @@
       zoneModel.saveChanges(changeSet).then(
         function () {
           xdToastr.success ( zoneModel.selectedZone.dnsName + ' updated!' );
-          $scope.$broadcast('RESET_CHANGE_SET');
+          changeSetModel.resetChangeSet();
           $state.go('dns.detail.view');
         },
         function (err) {
@@ -184,6 +184,7 @@
     }
 
     function cancelChangeSet() {
+      changeSetModel.resetChangeSet();
       $state.go('dns.detail.view');
     }
 
