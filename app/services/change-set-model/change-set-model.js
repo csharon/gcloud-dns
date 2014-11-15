@@ -19,6 +19,7 @@
     api.currentRecord = {};
     api.currentRecordIsNew = false;
     api.updatedRecordView = [];
+    api.hasChanges = hasChanges;
     api.getRecord = getRecord;
     api.addRecord = addRecord;
     api.updateRecord = updateRecord;
@@ -28,6 +29,7 @@
 
     // Methods
     api.createChangeSet = createChangeSet;
+    api.resetChangeSet = resetChangeSet;
 
     // Implementation
     function createChangeSet(zone) {
@@ -38,8 +40,7 @@
         return record;
       });
       updatePendingChanges();
-      // Reset changeSet
-      api.changeSet = {additions: [], deletions: []};
+      resetChangeSet();
 
       // Add the SOA records to the Change Set
       var originalSOA = getRecord(api.zone.records, 'SOA', zone.dnsName);
@@ -47,6 +48,15 @@
         addNewSOA(originalSOA);
       }
 
+    }
+
+    function resetChangeSet() {
+      // Reset changeSet
+      api.changeSet = {additions: [], deletions: []};
+    }
+
+    function hasChanges() {
+      return angular.isDefined(api.changeSet.additions) && (api.changeSet.additions.length > 0 || api.changeSet.deletions.length > 0);
     }
 
     function getRecord(records, recordType, recordName) {
