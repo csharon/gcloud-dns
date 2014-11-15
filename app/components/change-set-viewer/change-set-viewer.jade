@@ -10,6 +10,7 @@ md-content
           span(layout-padding) deleted: {{vm.changeSetModel.pendingChanges.deleted.length}}
       div
         md-button(aria-label='Save Changes' ng-click="vm.saveChanges()") Save Changes
+        md-button(aria-label='Cancel' ng-click="vm.cancelChangeSet()") Cancel
   table.table.table-striped
     thead
       th type
