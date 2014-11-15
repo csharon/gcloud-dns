@@ -8,7 +8,7 @@
    * @function
    * @description
    */
-  angular.module('xd.components.ZoneHeader', ['xd.tmpls'])
+  angular.module('xd.components.ZoneHeader', ['xd.tmpls', 'xd.services.ConfirmModal'])
     .controller('zoneHeaderCtrl', ZoneHeaderCtrl)
     .directive('zoneHeader', ZoneHeader);
 
@@ -28,7 +28,7 @@
   }
 
   /* @ngInject */
-  function ZoneHeaderCtrl($scope) {
+  function ZoneHeaderCtrl($scope, confirmModal) {
     var vm = this;
 
     vm.editZone = editZone;
@@ -38,8 +38,18 @@
       $scope.$emit('EDIT_ZONE', vm.zone);
     }
 
-    function deleteZone() {
-      $scope.$emit('DELETE_ZONE', vm.zone);
+    function deleteZone(e) {
+      confirmModal.open({
+        event: e,
+        title: 'Confirm Zone Deletion',
+        message: 'Are you sure you want to delete ' + vm.zone.dnsName +'?'
+      }).then(
+        function () {
+          $scope.$emit('DELETE_ZONE', vm.zone);
+
+        }
+      );
+
     }
 
   }
