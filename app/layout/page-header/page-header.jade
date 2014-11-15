@@ -7,12 +7,12 @@ md-toolbar.md-toolbar-header
 
     div(layout="horizontal" layout-align="center")
       img.img-circle.profile-img(ng-src="{{vm.profile._json.picture}}", ng-if="vm.authenticated")
-      md-button(ng-click="vm.login()", ng-if="!vm.authenticated")
+      md-button(ng-click="vm.login()", ng-if="!vm.authenticated" aria-label="Login")
         span.fa-stack.fa-med
           i.fa.fa-square.fa-stack-2x.add-icon-bg
           i.fa.fa-lock.fa-stack-1x.add-icon
 
-      md-button(ng-click="vm.logout()", ng-if="vm.authenticated")
+      md-button(ng-click="vm.logout()", ng-if="vm.authenticated" aria-label="Logout")
         span.fa-stack.fa-med
           i.fa.fa-square.fa-stack-2x.add-icon-bg
           i.fa.fa-unlock.fa-stack-1x.add-icon
