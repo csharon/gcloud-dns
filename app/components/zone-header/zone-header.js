@@ -17,7 +17,8 @@
     return {
       restrict: 'E',
       scope: {
-        zone: '='
+        zone: '=',
+        editMode: '='
       },
       bindToController: true,
       controller: 'zoneHeaderCtrl',
