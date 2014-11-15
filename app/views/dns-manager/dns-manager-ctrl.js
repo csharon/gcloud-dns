@@ -199,8 +199,8 @@
       function () {
         return $state.$current;
       },
-      function (current) {
-        dm.editMode = $state.is('dns.detail.edit');
+      function () {
+        dm.editMode = $state.is('dns.detail.edit') || $state.is('dns.detail.form');
       }
     );
 
