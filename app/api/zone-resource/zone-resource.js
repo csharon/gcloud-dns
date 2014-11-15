@@ -15,13 +15,40 @@
     .factory('zoneResource', ZoneResource);
 
   /* @ngInject */
-  function ZoneResource(gcloudDns) {
+  function ZoneResource($q, gcloudDns) {
+    var zones;
 
-    var zones = gcloudDns.getProject().all(ZoneResourceConfig.RESOURCE_NAME);
+
+    function getUpdatedProject() {
+      var deferred = $q.defer();
+      var promise = deferred.promise;
+      gcloudDns.getProject().then(
+        function (project) {
+          zones = project.all(ZoneResourceConfig.RESOURCE_NAME);
+          deferred.resolve(project);
+        },
+        function (err) {
+          deferred.reject(err);
+        }
+      );
+      return promise;
+    }
     //Public API
     return {
       getAll: function () {
-        return zones.getList();
+        var deferred = $q.defer();
+        var promise = deferred.promise;
+
+        getUpdatedProject().then(
+          function () {
+            zones.getList().then(
+              function (zoneList) {
+                deferred.resolve(zoneList);
+              }
+            );
+          }
+        );
+        return promise;
       },
       create: function(zone) {
         return zones.post(zone);

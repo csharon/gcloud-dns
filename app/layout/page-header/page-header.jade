@@ -1,14 +1,18 @@
-md-toolbar
+md-toolbar.md-toolbar-header
   .md-toolbar-tools(layout="horizontal")
     md-button(ng-click="vm.openZoneList()" hide-md aria-label="Zone List")
       i.fa.fa-bars
     h1(flex)
       span Google Cloud DNS
 
-    div.navbar-right
-      img.img-circle(ng-src="{{vm.profile._json.picture}}", ng-if="vm.authenticated")
-      button.btn.navbar-btn.btn-primary(ng-click="vm.login()", ng-if="!vm.authenticated")
-        i.fa.fa-lock
+    div(layout="horizontal" layout-align="center")
+      img.img-circle.profile-img(ng-src="{{vm.profile._json.picture}}", ng-if="vm.authenticated")
+      md-button(ng-click="vm.login()", ng-if="!vm.authenticated")
+        span.fa-stack.fa-med
+          i.fa.fa-square.fa-stack-2x.add-icon-bg
+          i.fa.fa-lock.fa-stack-1x.add-icon
 
-      button.btn.navbar-btn.btn-link(ng-click="vm.logout()", ng-if="vm.authenticated")
-        i.fa.fa-unlock
+      md-button(ng-click="vm.logout()", ng-if="vm.authenticated")
+        span.fa-stack.fa-med
+          i.fa.fa-square.fa-stack-2x.add-icon-bg
+          i.fa.fa-unlock.fa-stack-1x.add-icon
