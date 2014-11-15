@@ -43,6 +43,9 @@
       .state('dns.noSelection', {
         templateUrl: '/views/dns-manager/templates/zones/no-selection.html'
       })
+      .state('dns.noProject', {
+        templateUrl: '/views/dns-manager/templates/no-project.html'
+      })
       .state('dns.detail.view', {
         templateUrl: '/views/dns-manager/templates/records/view.html'
       })
@@ -85,7 +88,11 @@
     function setProject() {
       gcloudDns.setProject(dm.project).then(
         function (project) {
-          zoneModel.refreshZones();
+          zoneModel.refreshZones().then(
+            function () {
+              $state.go('dns.noSelection');
+            }
+          );
         }
       );
     }

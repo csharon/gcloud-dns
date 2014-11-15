@@ -41,7 +41,7 @@
       function (authenticated) {
         if (authenticated) {
           gcloudDns.setToken(googleOAuth.token());
-          $state.go('dns.noSelection');
+          $state.go('dns.noProject');
         } else {
           $state.go('welcome');
         }
