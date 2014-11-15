@@ -43,6 +43,9 @@
       .state('dns.noSelection', {
         templateUrl: '/views/dns-manager/templates/zones/no-selection.html'
       })
+      .state('dns.noProject', {
+        templateUrl: '/views/dns-manager/templates/no-project.html'
+      })
       .state('dns.detail.view', {
         templateUrl: '/views/dns-manager/templates/records/view.html'
       })
@@ -62,6 +65,7 @@
     dm.name = 'DNS Manager';
     dm.zoneModel = zoneModel;
     dm.changeSetModel = changeSetModel;
+    dm.editMode = false;
     dm.createZone = createZone;
     dm.openZoneList = openZoneList;
     dm.closeZoneList = closeZoneList;
@@ -79,13 +83,18 @@
     $scope.$on('SAVE_RECORD', saveRecord);
     $scope.$on('CANCEL_EDIT_RECORD', cancelEditRecord);
     $scope.$on('SAVE_CHANGE_SET', saveChangeSet);
+    $scope.$on('CANCEL_CHANGE_SET', cancelChangeSet);
 
 
 
     function setProject() {
       gcloudDns.setProject(dm.project).then(
         function (project) {
-          zoneModel.refreshZones();
+          zoneModel.refreshZones().then(
+            function () {
+              $state.go('dns.noSelection');
+            }
+          );
         }
       );
     }
@@ -174,6 +183,10 @@
       );
     }
 
+    function cancelChangeSet() {
+      $state.go('dns.detail.view');
+    }
+
     function closeZoneList() {
       $mdSidenav('zone-list').close();
     }
@@ -181,6 +194,15 @@
     function openZoneList() {
       $mdSidenav('zone-list').open();
     }
+
+    $scope.$watch(
+      function () {
+        return $state.$current;
+      },
+      function () {
+        dm.editMode = $state.is('dns.detail.edit') || $state.is('dns.detail.form');
+      }
+    );
 
   }
 
