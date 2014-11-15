@@ -30,6 +30,7 @@
     vm.addRecord = addRecord;
     vm.deleteRecord = deleteRecord;
     vm.saveChanges = saveChanges;
+    vm.cancelChangeSet = cancelChangeSet;
 
     function editRecord(record) {
       $scope.$emit('EDIT_RECORD', record);
@@ -45,6 +46,10 @@
 
     function saveChanges() {
       $scope.$emit('SAVE_CHANGE_SET', changeSetModel.changeSet);
+    }
+
+    function cancelChangeSet () {
+      $scope.$emit('CANCEL_CHANGE_SET');
     }
 
   }

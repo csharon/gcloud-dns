@@ -65,6 +65,7 @@
     dm.name = 'DNS Manager';
     dm.zoneModel = zoneModel;
     dm.changeSetModel = changeSetModel;
+    dm.editMode = false;
     dm.createZone = createZone;
     dm.openZoneList = openZoneList;
     dm.closeZoneList = closeZoneList;
@@ -82,6 +83,7 @@
     $scope.$on('SAVE_RECORD', saveRecord);
     $scope.$on('CANCEL_EDIT_RECORD', cancelEditRecord);
     $scope.$on('SAVE_CHANGE_SET', saveChangeSet);
+    $scope.$on('CANCEL_CHANGE_SET', cancelChangeSet);
 
 
 
@@ -181,6 +183,10 @@
       );
     }
 
+    function cancelChangeSet() {
+      $state.go('dns.detail.view');
+    }
+
     function closeZoneList() {
       $mdSidenav('zone-list').close();
     }
@@ -188,6 +194,15 @@
     function openZoneList() {
       $mdSidenav('zone-list').open();
     }
+
+    $scope.$watch(
+      function () {
+        return $state.$current;
+      },
+      function (current) {
+        dm.editMode = $state.is('dns.detail.edit');
+      }
+    );
 
   }
 
