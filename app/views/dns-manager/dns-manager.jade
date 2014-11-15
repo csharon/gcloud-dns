@@ -1,14 +1,26 @@
-section(layout="horizontal" layout-padding).dnsManager.clearfix
+section(layout="horizontal" layout-padding).dnsManager
 
   md-sidenav(is-locked-open="$media('md')" component-id="zone-list").md-sidenav-left.md-whiteframe-z2
-    md-toolbar(md-theme="grey" layout="horizontal")
-      .md-toolbar-tools
-        md-text-float(label="Project" ng-model="dm.project" flex md-theme="blue-grey")
-        md-button(aria-label="Load Project" ng-click="dm.setProject()")
-          span.fa-stack.fa-med
-            i.fa.fa-square.fa-stack-2x.add-icon-bg
-            i.fa.fa-refresh.fa-stack-1x.add-icon
-    md-whiteframe(ng-if="dm.zoneModel.zoneList.length > 0").md-whiteframe-z1
+    div(layout="horizontal" layout-align="end" layout-padding)
+      form.form-inline(name="projectForm" novalidate)
+        .form-group
+          .input-group
+            input.form-control(name="projectName" ng-model="dm.project" placeholder="Project Name" flex required)
+            .input-group-btn
+              button.btn.btn-info(type="button" ng-click="dm.setProject()" ng-disabled="projectForm.$invalid") Load
+              button.btn.btn-info.dropdown-toggle(type="button" data-toggle="dropdown" ng-if="dm.projects.length > 0")
+                span.caret
+                span.sr-only Toggle Dropdown
+              ul.dropdown-menu.dropdown-menu-right(role="menu")
+                li(ng-repeat="project in dm.projects")
+                  a(href="#" ng-click="dm.project = project") {{ project }}
+
+      //md-text-float(label="Project" ng-model="dm.project" flex)
+      //md-button(aria-label="Load Project" ng-click="dm.setProject()")
+        span.fa-stack.fa-med
+          i.fa.fa-square.fa-stack-2x.add-icon-bg
+          i.fa.fa-refresh.fa-stack-1x.add-icon
+    md-toolbar(layout="horizontal" ng-if="dm.zoneModel.zoneList.length > 0")
       .md-toolbar-tools(layout="horizontal")
         span(flex) Zones
 
@@ -16,11 +28,19 @@ section(layout="horizontal" layout-padding).dnsManager.clearfix
           span.fa-stack.fa-sm
             i.fa.fa-square.fa-stack-2x.add-icon-bg
             i.fa.fa-plus.fa-stack-1x.add-icon
+    //md-whiteframe(ng-if="dm.zoneModel.zoneList.length > 0").md-whiteframe-z1
+      .md-toolbar-tools(layout="horizontal")
+        span(flex) Create Zone
 
-    md-divider
+        md-button(ng-click="dm.createZone()" aria-label="Create Zone")
+          span.fa-stack.fa-sm
+            i.fa.fa-square.fa-stack-2x.add-icon-bg
+            i.fa.fa-plus.fa-stack-1x.add-icon
 
-    md-content.md-padding
-      zone-list(zones="dm.zoneModel.zoneList" selectedZone="dm.zoneModel.selectedZone")
+    //md-divider
+
+    md-content
+      zone-list(zones="dm.zoneModel.zoneList")
   md-content(flex).right-content
 
     ui-view
