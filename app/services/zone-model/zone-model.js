@@ -19,10 +19,12 @@
       createZone: createZone,
       selectZone: selectZone,
       deleteZone: deleteZone,
-      saveChanges: saveChanges
+      saveChanges: saveChanges,
+      loadingZones: false
     };
 
     function refreshZoneList() {
+      model.loadingZones = true;
       return zoneResource.getAll().then(
         function (resp) {
           model.zoneList = resp;
@@ -31,7 +33,9 @@
         function (err) {
           $log.error(err);
         }
-      );
+      )['finally'](function () {
+        model.loadingZones = false;
+      });
     }
 
     function selectZone(zone) {

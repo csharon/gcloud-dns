@@ -2,12 +2,15 @@ section(layout="horizontal" layout-padding).dnsManager
 
   md-sidenav(is-locked-open="$media('md')" component-id="zone-list").md-sidenav-left.md-whiteframe-z2
     div(layout="horizontal" layout-align="end" layout-padding)
-      form.form-inline(name="projectForm" novalidate)
+      form.form-inline(name="projectForm" novalidate flex)
         .form-group
           .input-group
             input.form-control(name="projectName" ng-model="dm.project" placeholder="Project Name" flex required)
             .input-group-btn
-              button.btn.btn-info(type="button" ng-click="dm.setProject()" ng-disabled="projectForm.$invalid") Load
+              button.btn.btn-info(type="button" ng-click="dm.setProject()" ng-disabled="projectForm.$invalid")
+                span(ng-if="dm.zoneModel.loadingZones")
+                  i.fa.fa-spin.fa-spinner.fa-1x
+                span(ng-if="!dm.zoneModel.loadingZones") Load
               button.btn.btn-info.dropdown-toggle(type="button" data-toggle="dropdown" ng-if="dm.projects.length > 0")
                 span.caret
                 span.sr-only Toggle Dropdown
