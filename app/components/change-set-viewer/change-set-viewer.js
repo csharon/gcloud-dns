@@ -8,7 +8,7 @@
    * @function
    * @description
    */
-  angular.module('xd.components.ChangeSetViewer', ['xd.tmpls', 'xd.services.ChangeSetModel'])
+  angular.module('xd.components.ChangeSetViewer', ['xd.tmpls', 'xd.services.ChangeSetModel', 'xd.services.ConfirmModal'])
     .controller('changeSetViewerCtrl', ChangeSetViewerCtrl)
     .directive('changeSetViewer', ChangeSetViewer);
 
@@ -23,7 +23,7 @@
   }
 
   /* @ngInject */
-  function ChangeSetViewerCtrl($scope, changeSetModel) {
+  function ChangeSetViewerCtrl($scope, changeSetModel, confirmModal) {
     var vm = this;
     vm.changeSetModel = changeSetModel;
     vm.editRecord = editRecord;
@@ -41,7 +41,14 @@
     }
 
     function deleteRecord(record) {
-      changeSetModel.removeRecord(record);
+      confirmModal.open({
+        title: 'Confirm (' + record.type + ') Record Deletion',
+        message: 'Are you sure you want to delete ' + record.name +'?'
+      }).then(
+        function () {
+          changeSetModel.removeRecord(record);
+        }
+      );
     }
 
     function saveChanges() {
