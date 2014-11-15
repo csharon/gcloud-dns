@@ -18,7 +18,8 @@
     'xd.wrappers.moment',
     'xd.services.XdToastr',
     'xd.components.ChangeSetViewer',
-    'xd.components.RecordForm'
+    'xd.components.RecordForm',
+    'xd.api.GcloudDns'
   ])
     .config(config)
     .controller('dnsManagerCtrl', DnsManagerCtrl);
@@ -42,6 +43,9 @@
       .state('dns.noSelection', {
         templateUrl: '/views/dns-manager/templates/zones/no-selection.html'
       })
+      .state('dns.noProject', {
+        templateUrl: '/views/dns-manager/templates/no-project.html'
+      })
       .state('dns.detail.view', {
         templateUrl: '/views/dns-manager/templates/records/view.html'
       })
@@ -55,14 +59,17 @@
   }
 
   /* @ngInject */
-  function DnsManagerCtrl($scope, $log, $state, zoneModel, googleOAuth, xdToastr, $mdSidenav, changeSetModel) {
+  function DnsManagerCtrl($scope, $log, $state, zoneModel, xdToastr, $mdSidenav, changeSetModel, gcloudDns) {
     var dm = this;
+    dm.project = '';
     dm.name = 'DNS Manager';
     dm.zoneModel = zoneModel;
     dm.changeSetModel = changeSetModel;
+    dm.editMode = false;
     dm.createZone = createZone;
     dm.openZoneList = openZoneList;
     dm.closeZoneList = closeZoneList;
+    dm.setProject = setProject;
 
     $scope.$on('CREATE_ZONE', createZone);
     $scope.$on('EDIT_ZONE', editZone);
@@ -76,17 +83,21 @@
     $scope.$on('SAVE_RECORD', saveRecord);
     $scope.$on('CANCEL_EDIT_RECORD', cancelEditRecord);
     $scope.$on('SAVE_CHANGE_SET', saveChangeSet);
+    $scope.$on('CANCEL_CHANGE_SET', cancelChangeSet);
 
-    $scope.$watch(
-      function () {
-        return googleOAuth.isAuthenticated();
-      },
-      function (authenticated) {
-        if (authenticated) {
-          zoneModel.refreshZones();
+
+
+    function setProject() {
+      gcloudDns.setProject(dm.project).then(
+        function (project) {
+          zoneModel.refreshZones().then(
+            function () {
+              $state.go('dns.noSelection');
+            }
+          );
         }
-      }
-    );
+      );
+    }
 
     function createZone() {
       $state.go('dns.new');
@@ -172,6 +183,10 @@
       );
     }
 
+    function cancelChangeSet() {
+      $state.go('dns.detail.view');
+    }
+
     function closeZoneList() {
       $mdSidenav('zone-list').close();
     }
@@ -179,6 +194,15 @@
     function openZoneList() {
       $mdSidenav('zone-list').open();
     }
+
+    $scope.$watch(
+      function () {
+        return $state.$current;
+      },
+      function () {
+        dm.editMode = $state.is('dns.detail.edit') || $state.is('dns.detail.form');
+      }
+    );
 
   }
 

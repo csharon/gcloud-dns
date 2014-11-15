@@ -5,7 +5,7 @@ md-content(layout="horizontal" layout-padding)
   div(layout="vertical")
     span Name: {{ vm.zone.name }}
     span Created: {{ vm.zone.creationTime | moment:'DD MMM, YYYY' }}
-    div(layout="horizontal" layout-align="end center")
+    div(layout="horizontal" layout-align="end center" ng-if="!vm.editMode")
       md-button(ng-click="vm.editZone()" aria-label="Edit Zone")
         span.fa-stack.fa-lg
           i.fa.fa-square.fa-stack-2x.edit-icon

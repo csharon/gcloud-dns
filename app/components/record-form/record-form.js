@@ -31,6 +31,7 @@
     vm.removeRRData = removeRRData;
     vm.rrdata = '';
     vm.disableAddRRData = true;
+    vm.enableSave = false;
 
     vm.save = save;
     vm.cancel = cancel;
