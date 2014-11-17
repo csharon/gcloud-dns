@@ -44,6 +44,9 @@
             zones.getList().then(
               function (zoneList) {
                 deferred.resolve(zoneList);
+              },
+              function (err) {
+                deferred.reject(err);
               }
             );
           }

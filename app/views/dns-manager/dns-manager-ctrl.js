@@ -61,7 +61,7 @@
   }
 
   /* @ngInject */
-  function DnsManagerCtrl($scope, $log, $state, zoneModel, xdToastr, $mdSidenav, changeSetModel, gcloudDns, projectModel) {
+  function DnsManagerCtrl($scope, $log, $state, zoneModel, xdToastr, $mdSidenav, googleOAuth, changeSetModel, gcloudDns, projectModel) {
     var dm = this;
     dm.project = '';
     dm.projects = [];
@@ -108,6 +108,10 @@
           zoneModel.refreshZones().then(
             function () {
               $state.go('dns.noSelection');
+            },
+            function () {
+              googleOAuth.logout();
+              xdToastr.error ('Session Timeout!' );
             }
           );
         }

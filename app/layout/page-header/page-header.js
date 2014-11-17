@@ -7,7 +7,10 @@
   /* @ngInject */
   function XdPageHeader() {
     return {
-      restrict: 'EA',
+      restrict: 'E',
+      scope: {
+        appTitle: '='
+      },
       controller: 'headerCtrl',
       controllerAs: 'vm',
       bindToController: true,
@@ -16,30 +19,10 @@
   }
 
   /* @ngInject */
-  function HeaderCtrl($scope, googleOAuth, $mdSidenav) {
+  function HeaderCtrl(googleOAuth, $mdSidenav) {
     var vm = this;
-
-    vm.authenticated = false;
-    vm.profile = {};
-    vm.login = googleOAuth.login;
-    vm.logout = googleOAuth.logout;
+    vm.auth = googleOAuth;
     vm.openZoneList = openZoneList;
-
-    $scope.$watch(
-      function () {
-        return googleOAuth.isAuthenticated();
-      },
-      function (authenticated) {
-        vm.authenticated = authenticated;
-        if (authenticated) {
-          vm.profile = googleOAuth.profile();
-
-        } else {
-          vm.profile = {};
-
-        }
-      }
-    );
 
     function openZoneList() {
       $mdSidenav('zone-list').open();
