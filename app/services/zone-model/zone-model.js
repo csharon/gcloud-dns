@@ -31,7 +31,7 @@
           return resp;
         },
         function (err) {
-          $log.error(err);
+          return $q.reject(err);
         }
       )['finally'](function () {
         model.loadingZones = false;
