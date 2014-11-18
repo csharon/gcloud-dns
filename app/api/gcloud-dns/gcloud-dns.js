@@ -35,6 +35,10 @@
       _resource = Restangular.withConfig(configureRestangular);
       _resource.addResponseInterceptor(interceptResponse);
       _project = _resource.one('projects', projectName);
+      _resource.extendModel('rrsets', function (model) {
+        model = _.extend(new xd.dns.vo.ResourceRecord(), model);
+        return model;
+      });
       deferred.resolve(_project);
     }
 
