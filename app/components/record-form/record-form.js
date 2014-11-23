@@ -27,7 +27,6 @@
   function RecordFormCtrl($scope, changeSetModel) {
     var vm = this;
     vm.record = angular.copy(changeSetModel.currentRecord);
-    vm.tsRecord = new xd.dns.vo.ResourceRecord();
     vm.addRRData = addRRData;
     vm.removeRRData = removeRRData;
     vm.rrdata = '';
