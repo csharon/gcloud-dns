@@ -10,5 +10,3 @@ public/
 build/
 dist/
 dev/
-*.map
-app/vo/*.js
