@@ -5,11 +5,11 @@
    * @name xd.services.ChangeSetModel:changeSetModel
    *
    */
-  angular.module('xd.services.ChangeSetModel', [])
+  angular.module('xd.services.ChangeSetModel', ['xd.services.ArrayCollection'])
     .factory('changeSetModel', ChangeSetModel);
 
   /* @ngInject */
-  function ChangeSetModel() {
+  function ChangeSetModel(ArrayCollection) {
 
     //Public API
     var api = {};
@@ -18,7 +18,7 @@
     api.changeSet = {};
     api.currentRecord = {};
     api.currentRecordIsNew = false;
-    api.updatedRecordView = [];
+    api.updatedRecordView = new ArrayCollection();
     api.hasChanges = hasChanges;
     api.getRecord = getRecord;
     api.addRecord = addRecord;
@@ -35,7 +35,7 @@
     function createChangeSet(zone) {
       api.zone = zone;
       // Copy the records to updatedRecordView
-      api.updatedRecordView = _.map(zone.records, function (record) {
+      api.updatedRecordView.items = _.map(zone.records, function (record) {
         record.status = 'unchanged';
         return record;
       });
@@ -111,7 +111,7 @@
       if (!recordExists(api.zone.records, record) && !recordExists(api.changeSet.additions, record)) {
         api.changeSet.additions.push(record);
         record.status = 'new';
-        api.updatedRecordView.push(record);
+        api.updatedRecordView.addItem(record);
         updatePendingChanges();
       }
 
@@ -126,20 +126,18 @@
           return original.name === record.name && original.type === record.type;
         });
         // update the view by removing the new record
-        _.remove(api.updatedRecordView, function (original) {
-          return original.name === record.name && original.type === record.type;
-        });
+        api.updatedRecordView.removeItem({name: record.name, type: record.type});
+
       } else {
         // add it to the changeset
         api.changeSet.deletions.push(record);
         // mark it as deleted
         record.status = 'deleted';
         // Update the view
-        _.remove(api.updatedRecordView, function (original) {
-          return original.name === record.name && original.type === record.type;
-        });
-        api.updatedRecordView.push(record);
+        api.updatedRecordView.removeItem({name: record.name, type: record.type});
+        api.updatedRecordView.addItem(record);
       }
+
       updatePendingChanges();
     }
 
@@ -150,27 +148,21 @@
           return record.name === oldRecord.name && record.type === oldRecord.type;
         });
         api.changeSet.additions.push(newRecord);
-
-        // Update the view
-        _.remove(api.updatedRecordView, function (record) {
-          return record.name === oldRecord.name && record.type === oldRecord.type;
-        });
-        api.updatedRecordView.push(newRecord);
+        api.updatedRecordView.removeItem({name: oldRecord.name, type: oldRecord.type});
+        api.updatedRecordView.addItem(newRecord);
       } else {
         api.changeSet.additions.push(newRecord);
         api.changeSet.deletions.push(oldRecord);
         newRecord.status = 'updated';
-
-        _.remove(api.updatedRecordView, function (record) {
-          return record.name === oldRecord.name && record.type === oldRecord.type;
-        });
-        api.updatedRecordView.push(newRecord);
+        api.updatedRecordView.removeItem({name: oldRecord.name, type: oldRecord.type});
+        api.updatedRecordView.addItem(newRecord);
       }
+
       updatePendingChanges();
     }
 
     function updatePendingChanges() {
-      api.pendingChanges = _.groupBy(api.updatedRecordView, 'status');
+      api.pendingChanges = _.groupBy(api.updatedRecordView.items, 'status');
     }
 
     return api;
