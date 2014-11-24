@@ -43,14 +43,14 @@ describe.only('xd.services.ChangeSetModel', function () {
   }));
 
   it('should have an array named updatedRecordView', function () {
-    expect(angular.isArray(model.updatedRecordView)).to.be.true;
+    expect(angular.isArray(model.updatedRecordView.items)).to.be.true;
   });
 
   describe('createChangeSet', function () {
 
     it('should have 2 records in the updatedRecordView', function () {
       model.createChangeSet(zone);
-      expect(model.updatedRecordView.length).to.equal(2);
+      expect(model.updatedRecordView.items.length).to.equal(2);
     });
 
     it('should remove the old soa record', function () {
@@ -79,7 +79,7 @@ describe.only('xd.services.ChangeSetModel', function () {
 
 
       it('should add the new record to the updatedRecordView', function () {
-        expect(_.contains(model.updatedRecordView, aRecord)).to.be.true;
+        expect(_.contains(model.updatedRecordView.items, aRecord)).to.be.true;
 
       });
 
@@ -125,8 +125,8 @@ describe.only('xd.services.ChangeSetModel', function () {
 
       it('should add the updated record to the updatedRecordView', function () {
         //expect(model.updatedRecordView.length).to.equal(3);
-        expect(_.contains(model.updatedRecordView, updatedRecord)).to.be.true;
-        expect(_.contains(model.updatedRecordView, aRecord)).to.be.false;
+        expect(_.contains(model.updatedRecordView.items, updatedRecord)).to.be.true;
+        expect(_.contains(model.updatedRecordView.items, aRecord)).to.be.false;
       });
 
       it('should add a updated status to the record', function () {
@@ -152,7 +152,7 @@ describe.only('xd.services.ChangeSetModel', function () {
         expect(_.contains(model.changeSet.additions, aRecord)).to.be.false;
       });
       it ('should modify the existing element in the updated view list', function () {
-        expect(_.contains(model.updatedRecordView, updatedRecord)).to.be.true;
+        expect(_.contains(model.updatedRecordView.items, updatedRecord)).to.be.true;
         expect(_.contains(model.changeSet.deletions, aRecord)).to.be.false;
       });
 

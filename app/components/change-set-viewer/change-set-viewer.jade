@@ -23,7 +23,7 @@ md-content
             i.fa.fa-square.fa-stack-2x.add-icon-bg
             i.fa.fa-plus.fa-stack-1x.add-icon
     tbody
-      tr(ng-repeat="record in vm.changeSetModel.updatedRecordView"
+      tr(ng-repeat="record in vm.changeSetModel.updatedRecordView.items"
         ng-class="{success: record.status === 'new', info: record.status === 'updated', danger: record.status === 'deleted'}")
         td {{ record.type }}
         td {{ record.ttl }}
