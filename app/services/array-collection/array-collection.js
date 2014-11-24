@@ -65,9 +65,13 @@
     }
 
     function compareArrays(arr1, arr2) {
-     return _.every(arr1, function (item) {
-       return _.contains(arr2, item);
-      });
+      if (arr1.length === arr2.length) {
+        return _.every(arr1, function (item) {
+          return _.contains(arr2, item);
+        });
+      }
+      return false;
+
     }
 
     return ArrayCollection;
