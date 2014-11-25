@@ -175,7 +175,12 @@
 
     function addRecord() {
       changeSetModel.currentRecordIsNew = true;
-      changeSetModel.currentRecord = {};
+      changeSetModel.currentRecord = {
+        name: '',
+        type: '',
+        ttl: 0,
+        rrdatas: []
+      };
       $state.go('dns.detail.form');
     }
 
