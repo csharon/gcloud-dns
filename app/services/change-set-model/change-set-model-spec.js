@@ -55,12 +55,12 @@ describe.only('xd.services.ChangeSetModel', function () {
 
     it('should remove the old soa record', function () {
       model.createChangeSet(zone);
-      expect(model.changeSet.deletions.length).to.equal(1);
+      expect(model.changeSet.deletions.items.length).to.equal(1);
     });
 
     it('should increment the serial number of the new soa record', function () {
       model.createChangeSet(zone);
-      expect(model.changeSet.additions[0].rrdatas[0]).to.equal('ns-cloud-b1.googledomains.com. dns-admin.google.com. 1 21600 3600 1209600 300');
+      expect(model.changeSet.additions.items[0].rrdatas[0]).to.equal('ns-cloud-b1.googledomains.com. dns-admin.google.com. 1 21600 3600 1209600 300');
     });
 
   });
@@ -74,7 +74,7 @@ describe.only('xd.services.ChangeSetModel', function () {
       });
       it('should add a record to the changeSet.additions', function () {
 
-        expect(model.changeSet.additions.length).to.equal(2);
+        expect(model.changeSet.additions.items.length).to.equal(2);
       });
 
 
@@ -99,7 +99,7 @@ describe.only('xd.services.ChangeSetModel', function () {
         zone.records.push(aRecord);
         model.createChangeSet(zone);
         model.addRecord(aRecord);
-        expect(model.changeSet.additions.length).to.equal(1);
+        expect(model.changeSet.additions.items.length).to.equal(1);
       });
     });
 
@@ -113,20 +113,20 @@ describe.only('xd.services.ChangeSetModel', function () {
         model.updateRecord(updatedRecord, aRecord);
       });
       it('should add the new record to the changeSet.additions', function () {
-        expect(model.changeSet.additions.length).to.equal(2);
-        expect(_.contains(model.changeSet.additions, updatedRecord)).to.be.true;
+        expect(model.changeSet.additions.items.length).to.equal(2);
+        expect(model.changeSet.additions.containsItem(updatedRecord)).to.be.true;
 
       });
 
       it('should add the old record to the changeSet.deletions', function () {
-        expect(model.changeSet.deletions.length).to.equal(2);
-        expect(_.contains(model.changeSet.deletions, aRecord)).to.be.true;
+        expect(model.changeSet.deletions.items.length).to.equal(2);
+        expect(model.changeSet.deletions.containsItem(aRecord)).to.be.true;
       });
 
       it('should add the updated record to the updatedRecordView', function () {
         //expect(model.updatedRecordView.length).to.equal(3);
-        expect(_.contains(model.updatedRecordView.items, updatedRecord)).to.be.true;
-        expect(_.contains(model.updatedRecordView.items, aRecord)).to.be.false;
+        expect(model.updatedRecordView.containsItem(updatedRecord)).to.be.true;
+        expect(model.updatedRecordView.containsItem(aRecord)).to.be.false;
       });
 
       it('should add a updated status to the record', function () {
@@ -148,12 +148,12 @@ describe.only('xd.services.ChangeSetModel', function () {
       });
 
       it('should modify the existing elements on the additions array', function () {
-        expect(_.contains(model.changeSet.additions, updatedRecord)).to.be.true;
-        expect(_.contains(model.changeSet.additions, aRecord)).to.be.false;
+        expect(model.changeSet.additions.containsItem(updatedRecord)).to.be.true;
+        expect(model.changeSet.additions.containsItem(aRecord)).to.be.false;
       });
       it ('should modify the existing element in the updated view list', function () {
-        expect(_.contains(model.updatedRecordView.items, updatedRecord)).to.be.true;
-        expect(_.contains(model.changeSet.deletions, aRecord)).to.be.false;
+        expect(model.updatedRecordView.containsItem(updatedRecord)).to.be.true;
+        expect(model.changeSet.deletions.containsItem(aRecord)).to.be.false;
       });
 
 
@@ -166,7 +166,7 @@ describe.only('xd.services.ChangeSetModel', function () {
         model.removeRecord(aRecord);
       });
       it('should add the record to the changeSet.deletions', function () {
-        expect(_.contains(model.changeSet.deletions, aRecord)).to.be.true;
+        expect(model.changeSet.deletions.containsItem(aRecord)).to.be.true;
       });
 
       it('should add a deleted status to the record', function () {
@@ -182,10 +182,10 @@ describe.only('xd.services.ChangeSetModel', function () {
       });
 
       it('should remove existing elements on the additions array', function () {
-        expect(_.contains(model.changeSet.additions, aRecord)).to.be.false;
+        expect(model.changeSet.additions.containsItem(aRecord)).to.be.false;
       });
       it ('should remove the existing element in the updated view list', function () {
-        expect(_.contains(model.updatedRecordView, aRecord)).to.be.false;
+        expect(model.updatedRecordView.containsItem(aRecord)).to.be.false;
       });
 
 

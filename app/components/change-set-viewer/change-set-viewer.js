@@ -57,7 +57,7 @@
         message: 'Are you sure you want to save changes for ' + changeSetModel.zone.dnsName +'?'
       }).then(
         function () {
-          $scope.$emit('SAVE_CHANGE_SET', changeSetModel.changeSet);
+          $scope.$emit('SAVE_CHANGE_SET', changeSetModel.changeSet.toChangeSetJson());
         }
       );
     }
