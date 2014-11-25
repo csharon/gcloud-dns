@@ -33,7 +33,6 @@
 
     }
     ManagedZone.prototype.toManagedZoneJson = toManagedZoneJson;
-    ManagedZone.prototype.meatMeter = meatMeter;
 
     function toManagedZoneJson() {
       return {
@@ -47,13 +46,7 @@
       };
     }
 
-    function meatMeter() {
-
-    }
-
     return ManagedZone;
-
   }
-
 
 })();
