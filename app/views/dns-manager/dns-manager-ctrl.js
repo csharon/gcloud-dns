@@ -173,7 +173,7 @@
       $state.go('dns.detail.form');
     }
 
-    function addRecord(event) {
+    function addRecord() {
       changeSetModel.currentRecordIsNew = true;
       changeSetModel.currentRecord = {};
       $state.go('dns.detail.form');

@@ -33,7 +33,7 @@
       return {
         additions: this.additions.items,
         deletions: this.deletions.items
-      }
+      };
     }
 
     function addToAdditions(item) {
