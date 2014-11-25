@@ -12,12 +12,12 @@
   * GCloud Dns Api
   *
   */
-  angular.module('xd.api.GcloudDns', ['restangular', 'xd.api.GoogleOauth'])
+  angular.module('xd.api.GcloudDns', ['restangular', 'xd.api.GoogleOauth', 'xd.services.ManagedZone'])
     .constant('GcloudDnsConfig', GcloudDnsConfig)
     .factory('gcloudDns', GcloudDns);
 
   /* @ngInject */
-  function GcloudDns($q, Restangular, GcloudDnsConfig, googleOAuth) {
+  function GcloudDns($q, Restangular, GcloudDnsConfig, googleOAuth, ManagedZone) {
 
     var api = {};
     api.getProject = getProject;
@@ -35,7 +35,13 @@
       _resource = Restangular.withConfig(configureRestangular);
       _resource.addResponseInterceptor(interceptResponse);
       _project = _resource.one('projects', projectName);
+      _resource.extendModel('managedZones', extendManagedZoneModel);
       deferred.resolve(_project);
+    }
+
+    function extendManagedZoneModel(model) {
+      var mz = new ManagedZone(model);
+      return _.assign(mz, model);
     }
 
     function configureRestangular(RestangularConfigurer) {
