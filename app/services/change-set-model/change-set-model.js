@@ -16,7 +16,12 @@
     // Properties
     api.zone = {};
     api.changeSet = new ChangeSet();
-    api.currentRecord = {};
+    api.currentRecord = {
+      name: '',
+      type: '',
+      ttl: 0,
+      rrdatas: []
+    };
     api.currentRecordIsNew = false;
     api.updatedRecordView = new ArrayCollection();
     api.addRecord = addRecord;
