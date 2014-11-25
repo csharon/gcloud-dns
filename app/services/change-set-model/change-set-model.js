@@ -19,7 +19,6 @@
     api.currentRecord = {};
     api.currentRecordIsNew = false;
     api.updatedRecordView = new ArrayCollection();
-    api.getRecord = getRecord;
     api.addRecord = addRecord;
     api.updateRecord = updateRecord;
     api.saveRecord = saveRecord;
@@ -34,7 +33,7 @@
     function createChangeSet(zone) {
       api.zone = zone;
       // Copy the records to updatedRecordView
-      api.updatedRecordView.items = _.map(zone.records, function (record) {
+      api.updatedRecordView.items = _.map(zone.records.items, function (record) {
         record.status = 'unchanged';
         return record;
       });
@@ -42,7 +41,7 @@
       resetChangeSet();
 
       // Add the SOA records to the Change Set
-      var originalSOA = getRecord(api.zone.records, 'SOA', zone.dnsName);
+      var originalSOA = api.zone.records.getItem({type: 'SOA', name: zone.dnsName});
       if (angular.isDefined(originalSOA)) {
         addNewSOA(originalSOA);
       }
@@ -52,14 +51,6 @@
     function resetChangeSet() {
       // Reset changeSet
       api.changeSet = new ChangeSet();
-    }
-
-    function getRecord(records, recordType, recordName) {
-
-      if (angular.isString(recordType) && angular.isString(recordName)) {
-        return _.find(records, {type: recordType, name: recordName});
-      }
-      return null;
     }
 
     function addNewSOA(originalSOA) {
@@ -88,10 +79,6 @@
       };
     }
 
-    function recordExists(list, record) {
-      return angular.isDefined(getRecord(list, record.type, record.name));
-    }
-
     function saveRecord(record) {
       if (api.currentRecordIsNew) {
         addRecord(record);
@@ -101,7 +88,7 @@
     }
 
     function addRecord(record) {
-      if (!recordExists(api.zone.records, record) && !api.changeSet.additions.containsItem(record)) {
+      if (!api.zone.records.containsItem(record) && !api.changeSet.additions.containsItem(record)) {
         api.changeSet.addToAdditions(record);
         record.status = 'new';
         api.updatedRecordView.addItem(record);
@@ -123,8 +110,9 @@
         // mark it as deleted
         record.status = 'deleted';
         // Update the view
-        api.updatedRecordView.removeItem({name: record.name, type: record.type});
-        api.updatedRecordView.addItem(record);
+        //api.updatedRecordView.removeItem({name: record.name, type: record.type});
+        //api.updatedRecordView.addItem(record);
+        api.updatedRecordView.updateItem({name: record.name, type: record.type}, record);
       }
 
       updatePendingChanges();
@@ -134,8 +122,10 @@
       if (oldRecord.status === 'new') {
         api.changeSet.removeFromAdditions({name: oldRecord.name, type: oldRecord.type});
         api.changeSet.addToAdditions(newRecord);
-        api.updatedRecordView.removeItem({name: oldRecord.name, type: oldRecord.type});
-        api.updatedRecordView.addItem(newRecord);
+
+        //api.updatedRecordView.removeItem({name: oldRecord.name, type: oldRecord.type});
+        //api.updatedRecordView.addItem(newRecord);
+        api.updatedRecordView.updateItem({name: oldRecord.name, type: oldRecord.type}, newRecord);
       } else {
         api.changeSet.addToAdditions(newRecord);
         api.changeSet.addToDeletions(oldRecord);
