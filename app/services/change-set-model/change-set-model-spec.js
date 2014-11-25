@@ -1,12 +1,13 @@
 /*globals inject, beforeEach, describe, it, expect, module*/
 /*jshint expr: true*/
-describe.only('xd.services.ChangeSetModel', function () {
+describe('xd.services.ChangeSetModel', function () {
 
-  var model, zone, aRecord, updatedRecord;
+  var model, zone, aRecord, updatedRecord, ManagedZone;
   beforeEach( module('xd.services.ChangeSetModel'));
 
-  beforeEach(inject(function (changeSetModel) {
+  beforeEach(inject(function (changeSetModel, _ManagedZone_) {
     model = changeSetModel;
+    ManagedZone = _ManagedZone_;
     zone = {
       name: 'taco-zone',
       dnsName: 'taco.com.',
@@ -49,17 +50,17 @@ describe.only('xd.services.ChangeSetModel', function () {
   describe('createChangeSet', function () {
 
     it('should have 2 records in the updatedRecordView', function () {
-      model.createChangeSet(zone);
+      model.createChangeSet(new ManagedZone(zone));
       expect(model.updatedRecordView.items.length).to.equal(2);
     });
 
     it('should remove the old soa record', function () {
-      model.createChangeSet(zone);
+      model.createChangeSet(new ManagedZone(zone));
       expect(model.changeSet.deletions.items.length).to.equal(1);
     });
 
     it('should increment the serial number of the new soa record', function () {
-      model.createChangeSet(zone);
+      model.createChangeSet(new ManagedZone(zone));
       expect(model.changeSet.additions.items[0].rrdatas[0]).to.equal('ns-cloud-b1.googledomains.com. dns-admin.google.com. 1 21600 3600 1209600 300');
     });
 
@@ -68,8 +69,10 @@ describe.only('xd.services.ChangeSetModel', function () {
   describe('record management', function () {
 
     describe('addRecord', function () {
+      var mz;
       beforeEach(function () {
-        model.createChangeSet(zone);
+        mz = new ManagedZone(zone);
+        model.createChangeSet(mz);
         model.addRecord(aRecord);
       });
       it('should add a record to the changeSet.additions', function () {
@@ -79,7 +82,7 @@ describe.only('xd.services.ChangeSetModel', function () {
 
 
       it('should add the new record to the updatedRecordView', function () {
-        expect(_.contains(model.updatedRecordView.items, aRecord)).to.be.true;
+        expect(model.updatedRecordView.containsItem(aRecord)).to.be.true;
 
       });
 
@@ -88,26 +91,28 @@ describe.only('xd.services.ChangeSetModel', function () {
       });
 
       it('should not add the new record to zone.records', function () {
-        expect(zone.records.length).to.equal(2);
+        expect(mz.records.items.length).to.equal(2);
       });
 
 
     });
 
     describe('duplicate records', function () {
+
       it('should not add a duplicate record', function () {
         zone.records.push(aRecord);
-        model.createChangeSet(zone);
+        model.createChangeSet(new ManagedZone(zone));
         model.addRecord(aRecord);
         expect(model.changeSet.additions.items.length).to.equal(1);
       });
     });
 
     describe('updateRecord', function () {
-
+      var mz;
       beforeEach(function () {
         zone.records.push(aRecord);
-        model.createChangeSet(zone);
+        mz = new ManagedZone(zone);
+        model.createChangeSet(mz);
         updatedRecord = angular.copy(aRecord);
         updatedRecord.name = 'mail.taco.com.';
         model.updateRecord(updatedRecord, aRecord);
@@ -134,13 +139,13 @@ describe.only('xd.services.ChangeSetModel', function () {
       });
 
       it('should not add the updated record to zone.records', function () {
-        expect(zone.records.length).to.equal(3);
+        expect(mz.records.items.length).to.equal(3);
       });
     });
 
     describe('updating new records', function () {
       beforeEach(function () {
-        model.createChangeSet(zone);
+        model.createChangeSet(new ManagedZone(zone));
         model.addRecord(aRecord);
         updatedRecord = angular.copy(aRecord);
         updatedRecord.name = 'mail.taco.com.';
@@ -162,7 +167,7 @@ describe.only('xd.services.ChangeSetModel', function () {
     describe('removeRecord', function () {
       beforeEach(function () {
         zone.records.push(aRecord);
-        model.createChangeSet(zone);
+        model.createChangeSet(new ManagedZone(zone));
         model.removeRecord(aRecord);
       });
       it('should add the record to the changeSet.deletions', function () {
@@ -176,7 +181,7 @@ describe.only('xd.services.ChangeSetModel', function () {
 
     describe('deleting new records', function () {
       beforeEach(function () {
-        model.createChangeSet(zone);
+        model.createChangeSet(new ManagedZone(zone));
         model.addRecord(aRecord);
         model.removeRecord(aRecord);
       });

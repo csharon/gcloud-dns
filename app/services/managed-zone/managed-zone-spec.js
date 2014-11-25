@@ -1,6 +1,6 @@
 /*globals inject, beforeEach, describe, it, expect, module*/
 /*jshint expr: true*/
-describe.only('xd.services.ManagedZone', function () {
+describe('xd.services.ManagedZone', function () {
   var ManagedZone,
     zone = {
       name: 'meat-zone',

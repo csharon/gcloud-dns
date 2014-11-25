@@ -19,7 +19,7 @@
         this.id = data.id || 0;
         this.nameServers = data.nameServers || [];
         this.creationTime = data.creationTime || '';
-        this.records = data.records || new ArrayCollection();
+        this.records = new ArrayCollection(data.records) || new ArrayCollection();
       } else {
         this.kind = 'dns#managedZone';
         this.name = '';

@@ -13,15 +13,6 @@ describe('xd.api.GcloudDns', function () {
     resourceURL = GcloudDnsConfig.BASE_URL + '/' + GcloudDnsConfig.RESOURCE_NAME;
   }));
 
-  it('should have a getAll function that makes a GET request to https://www.googleapis.com/dns/v1beta1/projects and returns an array', inject(function (gcloudDns) {
-    $httpBackend.expectGET(resourceURL).respond(GcloudDnsMockData);
-    gcloudDns.getAll().then(
-      function (resp) {
-        expect(angular.isArray(resp)).to.be.true;
-      }
-    );
-    $httpBackend.flush();
-
-  }));
+  it('should have a getAll function that makes a GET request to https://www.googleapis.com/dns/v1beta1/projects and returns an array');
 
 });
