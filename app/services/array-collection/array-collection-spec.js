@@ -1,6 +1,6 @@
 /*globals inject, beforeEach, describe, it, expect, module*/
 /*jshint expr: true*/
-describe.only('xd.services.ArrayCollection', function () {
+describe('xd.services.ArrayCollection', function () {
 
   var ArrayCollection, ac,
     records = [

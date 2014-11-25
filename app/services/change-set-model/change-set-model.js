@@ -5,7 +5,7 @@
    * @name xd.services.ChangeSetModel:changeSetModel
    *
    */
-  angular.module('xd.services.ChangeSetModel', ['xd.services.ArrayCollection', 'xd.services.ChangeSet'])
+  angular.module('xd.services.ChangeSetModel', ['xd.services.ArrayCollection', 'xd.services.ChangeSet', 'xd.services.ManagedZone'])
     .factory('changeSetModel', ChangeSetModel);
 
   /* @ngInject */

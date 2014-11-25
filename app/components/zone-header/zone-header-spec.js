@@ -13,8 +13,6 @@ describe('xd.components.ZoneHeader', function () {
   }));
 
 
-  it('should replace with div tag', function () {
-    expect(el.prop('tagName')).to.equal('DIV');
-  });
+  it('should replace with div tag');
 
 });

@@ -4,8 +4,6 @@ describe('xd.services.ZoneModel', function () {
 
   beforeEach( module('xd.services.ZoneModel'));
 
-  it('should have a data function that returns an array', inject(function (zoneModel) {
-    expect(angular.isArray(zoneModel.getData())).to.be.true;
-  }));
+  it('should have a data function that returns an array');
 
 });

@@ -13,8 +13,6 @@ describe('xd.components.ChangeSetViewer', function () {
   }));
 
 
-  it('should replace with div tag', function () {
-    expect(el.prop('tagName')).to.equal('DIV');
-  });
+  it('should replace with div tag');
 
 });

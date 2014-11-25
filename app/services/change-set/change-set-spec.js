@@ -1,6 +1,6 @@
 /*globals inject, beforeEach, describe, it, expect, module*/
 /*jshint expr: true*/
-describe.only('xd.services.ChangeSet', function () {
+describe('xd.services.ChangeSet', function () {
 
   var ChangeSet, records = [
     {
