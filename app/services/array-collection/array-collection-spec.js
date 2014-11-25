@@ -1,4 +1,4 @@
-/*globals inject, beforeEach, describe, it, expect, module, to*/
+/*globals inject, beforeEach, describe, it, expect, module*/
 /*jshint expr: true*/
 describe.only('xd.services.ArrayCollection', function () {
 
@@ -61,7 +61,7 @@ describe.only('xd.services.ArrayCollection', function () {
     it('should populate the items array if an array is passed in', function () {
       ac = new ArrayCollection(records);
       expect(ac.items.length).to.equal(2);
-    })
+    });
 
   });
 
@@ -108,7 +108,7 @@ describe.only('xd.services.ArrayCollection', function () {
   describe('updateItem', function () {
     it('should update an item in the list', function () {
       ac = new ArrayCollection(angular.copy(records));
-      ac.updateItem(ac.items[1], updatedSOA)
+      ac.updateItem(ac.items[1], updatedSOA);
       expect(ac.items.length).to.equal(2);
       expect(ac.items[1].ttl).to.equal(8600);
     });

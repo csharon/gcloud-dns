@@ -27,7 +27,7 @@
       if (angular.isDefined(item)) {
         deferred.resolve(JSON.parse(item));
       } else {
-        deferred.reject("Key not found");
+        deferred.reject('Key not found');
       }
 
       return promise;
@@ -41,7 +41,7 @@
       if (angular.isDefined(item)) {
         deferred.resolve($window.localStorage.removeItem(key));
       } else {
-        deferred.reject("Key not found");
+        deferred.reject('Key not found');
       }
 
       return promise;
