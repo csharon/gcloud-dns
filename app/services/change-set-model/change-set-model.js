@@ -11,7 +11,8 @@
     'xd.services.ManagedZone',
     'xd.services.ResourceRecordSet'
   ])
-    .factory('changeSetModel', ChangeSetModel);
+    .factory('changeSetModel', ChangeSetModel)
+
 
   /* @ngInject */
   function ChangeSetModel(ArrayCollection, ChangeSet, ResourceRecordSet) {
