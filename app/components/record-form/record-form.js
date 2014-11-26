@@ -8,9 +8,26 @@
    * @function
    * @description
    */
-  angular.module('xd.components.RecordForm', ['xd.tmpls'])
+  angular.module('xd.components.RecordForm', ['ngMessages', 'xd.tmpls'])
     .directive('recordForm', RecordForm)
-    .controller('recordFormCtrl', RecordFormCtrl);
+    .controller('recordFormCtrl', RecordFormCtrl)
+    .directive('recordConflict', recordConflictValidator);
+
+  /* @ngInject */
+  function recordConflictValidator() {
+    return {
+      restrict: 'A',
+      require: 'ngModel',
+      controller: 'recordFormCtrl',
+      controllerAs: 'vm',
+      bindToController: true,
+      link: function (scope, element, attrs, ngModel) {
+        ngModel.$validators.recordConflict = function (modelValue, viewValue) {
+          return scope.vm.isRecordConflict();
+        };
+      }
+    }
+  }
 
   /* @ngInject */
   function RecordForm() {
@@ -29,6 +46,7 @@
     vm.record = angular.copy(changeSetModel.currentRecord);
     vm.addRRData = addRRData;
     vm.removeRRData = removeRRData;
+    vm.isRecordConflict = isRecordConflict;
     vm.rrdata = '';
     vm.disableAddRRData = true;
     vm.enableSave = false;
@@ -42,12 +60,20 @@
       vm.rrdata = '';
     }
 
+    function isRecordConflict() {
+      var conflict = !changeSetModel.zone.records.containsItem({name: $scope.recordForm.name.$viewValue, type: $scope.recordForm.type.$viewValue});
+      return conflict;
+    }
+
     function removeRRData(index) {
       vm.record.rrdatas.items.splice(index, 1);
     }
 
-    function save() {
-      $scope.$emit('SAVE_RECORD', vm.record);
+    function save(recordForm) {
+      if (recordForm.$valid) {
+        $scope.$emit('SAVE_RECORD', vm.record);
+      }
+
     }
 
     function cancel() {
