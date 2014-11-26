@@ -11,7 +11,7 @@ describe('xd.services.ManagedZone', function () {
       creationTime: '2014-11-12'
     };
 
-  beforeEach( module('xd.services.ManagedZone'));
+  beforeEach(module('xd.services.ManagedZone'));
 
   beforeEach(inject(function (_ManagedZone_) {
     ManagedZone = _ManagedZone_;
@@ -34,10 +34,10 @@ describe('xd.services.ManagedZone', function () {
 
   });
 
-  describe('toManagedZoneJson', function () {
+  describe('toJson', function () {
     it('should convert a managedZone to Json', function () {
       var mz = new ManagedZone(zone);
-      expect(mz.toManagedZoneJson().name).to.equal('meat-zone');
+      expect(mz.toJson().name).to.equal('meat-zone');
     });
 
   });

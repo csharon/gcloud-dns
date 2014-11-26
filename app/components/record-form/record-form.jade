@@ -12,9 +12,9 @@ div(flex).record-form
     .form-group
       div
         label RRData Values
-        div(ng-if="vm.record.rrdatas.length === 0")
+        div(ng-if="vm.record.rrdatas.items.length === 0")
           span(flex) Please add an RRData value
-        div(ng-if="vm.record.rrdatas.length > 0" ng-repeat="rrdata in vm.record.rrdatas")
+        div(ng-if="vm.record.rrdatas.items.length > 0" ng-repeat="rrdata in vm.record.rrdatas.items")
           div(layout="horizontal")
             span(flex) {{rrdata}}
             md-button(ng-click="vm.removeRRData($index)" aria-label="Add RRData" type="button")
@@ -29,4 +29,4 @@ div(flex).record-form
               i.fa.fa-plus.fa-stack-1x.add-icon-bg
     .form-group
       button.btn.btn-default.btn-sm(type="button" ng-click="vm.cancel()") Cancel
-      button.btn.btn-primary(type="submit" ng-disabled="recordForm.$pristine || !recordForm.$valid || vm.record.rrdatas.length === 0") Save
+      button.btn.btn-primary(type="submit" ng-disabled="recordForm.$pristine || !recordForm.$valid || vm.record.rrdatas.items.length === 0") Save

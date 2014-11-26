@@ -1,4 +1,4 @@
-/*globals inject, beforeEach, describe, it, expect, module*/
+/*globals inject, beforeEach, describe, it, module*/
 describe('xd.views.DnsManager', function () {
 
   beforeEach( module('xd.views.DnsManager'));

@@ -1,4 +1,4 @@
-/*globals inject, beforeEach, describe, it, expect, module*/
+/*globals inject, beforeEach, describe, it, module*/
 describe('xd.components.ZoneHeader', function () {
 
   var el, scope;

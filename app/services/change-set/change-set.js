@@ -22,17 +22,17 @@
 
     }
 
-    ChangeSet.prototype.toChangeSetJson = toChangeSetJson;
+    ChangeSet.prototype.toJson = toJson;
     ChangeSet.prototype.hasChanges = hasChanges;
     ChangeSet.prototype.addToAdditions = addToAdditions;
     ChangeSet.prototype.removeFromAdditions = removeFromAdditions;
     ChangeSet.prototype.addToDeletions = addToDeletions;
     ChangeSet.prototype.removeFromDeletions = removeFromDeletions;
 
-    function toChangeSetJson() {
+    function toJson() {
       return {
-        additions: this.additions.items,
-        deletions: this.deletions.items
+        additions: _.map(this.additions.items, function (item) { return item.toJson(); }),
+        deletions: _.map(this.deletions.items, function (item) { return item.toJson(); })
       };
     }
 

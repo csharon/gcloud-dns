@@ -37,19 +37,16 @@
     vm.cancel = cancel;
 
     function addRRData() {
-      if (!angular.isArray(vm.record.rrdatas)) {
-        vm.record.rrdatas = [];
-      }
-      vm.record.rrdatas.push(vm.rrdata);
+
+      vm.record.rrdatas.addItem(vm.rrdata);
       vm.rrdata = '';
     }
 
     function removeRRData(index) {
-      vm.record.rrdatas.splice(index, 1);
+      vm.record.rrdatas.items.splice(index, 1);
     }
 
     function save() {
-      //vm.record.rrdatas = [vm.rrdata];
       $scope.$emit('SAVE_RECORD', vm.record);
     }
 
