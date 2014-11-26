@@ -5,24 +5,23 @@
    * @name xd.services.ChangeSetModel:changeSetModel
    *
    */
-  angular.module('xd.services.ChangeSetModel', ['xd.services.ArrayCollection', 'xd.services.ChangeSet', 'xd.services.ManagedZone'])
+  angular.module('xd.services.ChangeSetModel', [
+    'xd.services.ArrayCollection',
+    'xd.services.ChangeSet',
+    'xd.services.ManagedZone',
+    'xd.services.ResourceRecordSet'
+  ])
     .factory('changeSetModel', ChangeSetModel);
 
   /* @ngInject */
-  function ChangeSetModel(ArrayCollection, ChangeSet) {
+  function ChangeSetModel(ArrayCollection, ChangeSet, ResourceRecordSet) {
 
     //Public API
     var api = {};
     // Properties
     api.zone = {};
     api.changeSet = new ChangeSet();
-    api.currentRecord = {
-      name: '',
-      type: '',
-      ttl: 0,
-      rrdatas: []
-    };
-    api.currentRecordIsNew = false;
+    api.currentRecord = new ResourceRecordSet();
     api.updatedRecordView = new ArrayCollection();
     api.addRecord = addRecord;
     api.updateRecord = updateRecord;
@@ -61,11 +60,11 @@
     function addNewSOA(originalSOA) {
       var newSOA = angular.copy(originalSOA);
       // Create the values for the new SOA record.
-      var newSOAVal = angular.copy(getSOAValues(newSOA.rrdatas[0]));
+      var newSOAVal = angular.copy(getSOAValues(newSOA.rrdatas.items[0]));
       // Increment the serial number of the new SOA record.
       newSOAVal.serial = newSOAVal.serial + 1;
       // Assemble the array values and stringify them for submission.
-      newSOA.rrdatas[0] = _.values(newSOAVal).join(' ');
+      newSOA.rrdatas.items[0] = _.values(newSOAVal).join(' ');
       // Push the new SOA record to the Google API
       updateRecord(newSOA, originalSOA);
 
@@ -85,7 +84,7 @@
     }
 
     function saveRecord(record) {
-      if (api.currentRecordIsNew) {
+      if (record.isNew()) {
         addRecord(record);
       } else {
         updateRecord(record, api.currentRecord);
@@ -127,9 +126,6 @@
       if (oldRecord.status === 'new') {
         api.changeSet.removeFromAdditions({name: oldRecord.name, type: oldRecord.type});
         api.changeSet.addToAdditions(newRecord);
-
-        //api.updatedRecordView.removeItem({name: oldRecord.name, type: oldRecord.type});
-        //api.updatedRecordView.addItem(newRecord);
         api.updatedRecordView.updateItem({name: oldRecord.name, type: oldRecord.type}, newRecord);
       } else {
         api.changeSet.addToAdditions(newRecord);

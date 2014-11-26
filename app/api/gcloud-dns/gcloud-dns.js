@@ -12,12 +12,17 @@
   * GCloud Dns Api
   *
   */
-  angular.module('xd.api.GcloudDns', ['restangular', 'xd.api.GoogleOauth', 'xd.services.ManagedZone'])
+  angular.module('xd.api.GcloudDns', [
+    'restangular',
+    'xd.api.GoogleOauth',
+    'xd.services.ManagedZone',
+    'xd.services.ResourceRecordSet'
+  ])
     .constant('GcloudDnsConfig', GcloudDnsConfig)
     .factory('gcloudDns', GcloudDns);
 
   /* @ngInject */
-  function GcloudDns($q, Restangular, GcloudDnsConfig, googleOAuth, ManagedZone) {
+  function GcloudDns($q, Restangular, GcloudDnsConfig, googleOAuth, ManagedZone, ResourceRecordSet) {
 
     var api = {};
     api.getProject = getProject;
@@ -36,12 +41,19 @@
       _resource.addResponseInterceptor(interceptResponse);
       _project = _resource.one('projects', projectName);
       _resource.extendModel('managedZones', extendManagedZoneModel);
+      _resource.extendModel('rrsets', extendResourceRecordSetModel);
       deferred.resolve(_project);
     }
 
     function extendManagedZoneModel(model) {
       var mz = new ManagedZone(model);
       return _.assign(mz, model);
+    }
+
+    function extendResourceRecordSetModel(model) {
+      var rs = new ResourceRecordSet(model);
+      delete model.rrdatas;
+      return _.assign(rs, model);
     }
 
     function configureRestangular(RestangularConfigurer) {

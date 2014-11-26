@@ -54,7 +54,7 @@
         return promise;
       },
       create: function(zone) {
-        return zones.post(zone);
+        return zones.post(zone.toJson());
       },
       remove: function(zone) {
         return zone.remove();
@@ -63,7 +63,7 @@
         return zone.getList(ZoneResourceConfig.RESOURCE_RECORD_SET);
       },
       createChangeSet: function (zone, changeSet) {
-        return zone.all(ZoneResourceConfig.CHANGE_SET).post(changeSet);
+        return zone.all(ZoneResourceConfig.CHANGE_SET).post(changeSet.toJson());
       }
 
     };

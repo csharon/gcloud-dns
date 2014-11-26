@@ -5,11 +5,11 @@
    * @name xd.services.ManagedZone:managedZone
    *
    */
-  angular.module('xd.services.ManagedZone', ['xd.services.ArrayCollection'])
+  angular.module('xd.services.ManagedZone', ['xd.services.ArrayCollection', 'xd.services.ResourceRecordSet'])
     .factory('ManagedZone', wrapper);
 
   /* @ngInject */
-  function wrapper(ArrayCollection) {
+  function wrapper(ArrayCollection, ResourceRecordSet) {
     function ManagedZone(data) {
       if (!_.isUndefined(data)) {
         this.kind = 'dns#managedZone';
@@ -19,7 +19,7 @@
         this.id = data.id || 0;
         this.nameServers = data.nameServers || [];
         this.creationTime = data.creationTime || '';
-        this.records = new ArrayCollection(data.records) || new ArrayCollection();
+        this.records = new ArrayCollection(_.map(data.records, function (item) { return new ResourceRecordSet(item); })) || new ArrayCollection();
       } else {
         this.kind = 'dns#managedZone';
         this.name = '';
@@ -32,9 +32,9 @@
       }
 
     }
-    ManagedZone.prototype.toManagedZoneJson = toManagedZoneJson;
+    ManagedZone.prototype.toJson = toJson;
 
-    function toManagedZoneJson() {
+    function toJson() {
       return {
         kind: this.kind,
         name: this.name,

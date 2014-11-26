@@ -94,6 +94,11 @@ describe('xd.services.ArrayCollection', function () {
       expect(ac.containsItem(records[0])).to.be.true;
       expect(ac.containsItem(records[1])).to.be.true;
     });
+
+    it('should handle an array of strings', function () {
+      ac = new ArrayCollection(['corn', 'pork', 'beef']);
+      expect(ac.containsItem('pork')).to.be.true;
+    });
   });
 
   describe('getItem', function () {

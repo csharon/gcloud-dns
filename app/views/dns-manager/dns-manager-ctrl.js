@@ -21,7 +21,8 @@
     'xd.components.RecordForm',
     'xd.api.GcloudDns',
     'xd.services.LocalStorage',
-    'xd.services.ProjectModel'
+    'xd.services.ProjectModel',
+    'xd.services.ResourceRecordSet'
   ])
     .config(config)
     .controller('dnsManagerCtrl', DnsManagerCtrl);
@@ -61,7 +62,19 @@
   }
 
   /* @ngInject */
-  function DnsManagerCtrl($scope, $log, $state, zoneModel, xdToastr, $mdSidenav, googleOAuth, changeSetModel, gcloudDns, projectModel) {
+  function DnsManagerCtrl(
+    $scope,
+    $log,
+    $state,
+    zoneModel,
+    xdToastr,
+    $mdSidenav,
+    googleOAuth,
+    changeSetModel,
+    gcloudDns,
+    projectModel,
+    ResourceRecordSet
+  ) {
     var dm = this;
     dm.project = '';
     dm.projects = [];
@@ -168,19 +181,12 @@
     }
 
     function editRecord(event, record) {
-      changeSetModel.currentRecordIsNew = false;
       changeSetModel.currentRecord = record;
       $state.go('dns.detail.form');
     }
 
     function addRecord() {
-      changeSetModel.currentRecordIsNew = true;
-      changeSetModel.currentRecord = {
-        name: '',
-        type: '',
-        ttl: 0,
-        rrdatas: []
-      };
+      changeSetModel.currentRecord = new ResourceRecordSet();
       $state.go('dns.detail.form');
     }
 

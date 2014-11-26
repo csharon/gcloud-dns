@@ -1,4 +1,4 @@
-/*globals inject, beforeEach, describe, it, expect, module*/
+/*globals beforeEach, describe, it, module*/
 /*jshint expr: true*/
 describe('xd.services.ZoneModel', function () {
 

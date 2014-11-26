@@ -2,12 +2,13 @@
 /*jshint expr: true*/
 describe('xd.services.ChangeSetModel', function () {
 
-  var model, zone, aRecord, updatedRecord, ManagedZone;
+  var model, zone, aRecord, updatedRecord, ManagedZone, ResourceRecordSet;
   beforeEach( module('xd.services.ChangeSetModel'));
 
-  beforeEach(inject(function (changeSetModel, _ManagedZone_) {
+  beforeEach(inject(function (changeSetModel, _ManagedZone_, _ResourceRecordSet_) {
     model = changeSetModel;
     ManagedZone = _ManagedZone_;
+    ResourceRecordSet = _ResourceRecordSet_;
     zone = {
       name: 'taco-zone',
       dnsName: 'taco.com.',
@@ -61,7 +62,7 @@ describe('xd.services.ChangeSetModel', function () {
 
     it('should increment the serial number of the new soa record', function () {
       model.createChangeSet(new ManagedZone(zone));
-      expect(model.changeSet.additions.items[0].rrdatas[0]).to.equal('ns-cloud-b1.googledomains.com. dns-admin.google.com. 1 21600 3600 1209600 300');
+      expect(model.changeSet.additions.items[0].rrdatas.items[0]).to.equal('ns-cloud-b1.googledomains.com. dns-admin.google.com. 1 21600 3600 1209600 300');
     });
 
   });

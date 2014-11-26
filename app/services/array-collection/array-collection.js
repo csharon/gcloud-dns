@@ -48,6 +48,9 @@
 
     function containsItem(item) {
       return _.some(this.items, function (listItem) {
+        if (_.isString(item)) {
+          return item === listItem;
+        }
         return matches(listItem, item);
       });
     }
