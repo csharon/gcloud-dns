@@ -36,7 +36,7 @@ md-content
               span.fa-stack.fa-sm
                 i.fa.fa-square.fa-stack-2x.edit-icon
                 i.fa.fa-pencil.fa-stack-1x.edit-icon-bg
-            md-button(ng-click="vm.deleteRecord(record)" aria-label="Delete Record")
+            md-button(ng-click="vm.deleteRecord(record)" aria-label="Delete Record" ng-hide="record.type === 'SOA' || record.type === 'NS'")
               span.fa-stack.fa-sm
                 i.fa.fa-square.fa-stack-2x.remove-icon
                 i.fa.fa-trash.fa-stack-1x.remove-icon-bg
