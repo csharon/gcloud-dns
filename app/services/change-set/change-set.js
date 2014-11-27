@@ -38,10 +38,6 @@
 
     function toJson() {
       return {
-        kind: this.kind,
-        id: this.id,
-        startTime: this.startTime,
-        status: this.status,
         additions: _.map(this.additions.items, function (item) { return item.toJson(); }),
         deletions: _.map(this.deletions.items, function (item) { return item.toJson(); })
       };
