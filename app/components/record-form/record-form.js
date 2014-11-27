@@ -8,7 +8,7 @@
    * @function
    * @description
    */
-  angular.module('xd.components.RecordForm', ['ngMessages', 'xd.tmpls'])
+  angular.module('xd.components.RecordForm', ['ngMessages', 'xd.tmpls', 'xd.services.ResourceRecordType'])
     .directive('recordForm', RecordForm)
     .controller('recordFormCtrl', RecordFormCtrl)
     .directive('recordConflict', recordConflictValidator);
@@ -41,8 +41,21 @@
   }
 
   /* @ngInject */
-  function RecordFormCtrl($scope, changeSetModel) {
+  function RecordFormCtrl($scope, changeSetModel, ResourceRecordType) {
     var vm = this;
+    vm.recordTypes = _(ResourceRecordType)
+      .forIn(function (val) {
+        return val;
+      })
+      .filter(function (rType) {
+        if (rType.allowDuplicates) {
+          return true;
+        } else {
+          return !changeSetModel.zone.records.containsItem({type: rType.type});
+        }
+      })
+      .pluck('type')
+      .value();
     vm.record = angular.copy(changeSetModel.currentRecord);
     vm.addRRData = addRRData;
     vm.removeRRData = removeRRData;
@@ -61,7 +74,7 @@
     }
 
     function isRecordConflict() {
-      return !changeSetModel.zone.records.containsItem({name: $scope.recordForm.name.$viewValue, type: $scope.recordForm.type.$viewValue});;
+      return !changeSetModel.zone.records.containsItem({name: $scope.recordForm.name.$viewValue, type: $scope.recordForm.type.$viewValue});
     }
 
     function removeRRData(index) {
