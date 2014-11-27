@@ -8,6 +8,7 @@ div(flex).record-form
         name="type"
         ng-model="vm.record.type"
         required
+        ng-disabled="!vm.record.isNew()"
         ng-model-options="{debounce: {'default': 500, blur: 0}}"
         ng-options="type for type in vm.recordTypes")
           option(value="" disabled) Select Type ...
