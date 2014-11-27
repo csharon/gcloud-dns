@@ -85,7 +85,7 @@
     }
 
     function saveRecord(record) {
-      if (record.isNew()) {
+      if (record.isNew() && !record.pendingChanges) {
         addRecord(record);
       } else {
         updateRecord(record, api.currentRecord);
@@ -94,8 +94,9 @@
 
     function addRecord(record) {
       if (!api.zone.records.containsItem(record) && !api.changeSet.additions.containsItem(record)) {
-        api.changeSet.addToAdditions(record);
         record.status = 'new';
+        record.pendingChanges = true;
+        api.changeSet.addToAdditions(record);
         api.updatedRecordView.addItem(record);
         updatePendingChanges();
       }
