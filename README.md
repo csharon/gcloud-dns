@@ -1,19 +1,21 @@
-gcloudDns
+Google Cloud DNS Editor
 =============================
+####Overview
+The Google Cloud DNS Editor is a GUI for managing your DNS Zones using the [Google Cloud Platform API](https://cloud.google.com/dns/api/v1beta1/).
 
 ####Requirements
 * NodeJS
 * Bower
 
 ####Installation
-```bash
+```
 npm install
 bower install
 ```
 
 ####Gulp Tasks
-```bash
-gulp dev  #Development - builds application, runs development server, watches for changes, runs tdd server
+```
+gulp dev  #Development - builds application, runs express server, watches for changes
 
 gulp tdd  #TDD - Test Driven Development, automatically runs mocha units tests as you edit files.
 
@@ -23,6 +25,7 @@ gulp test #Test - Run mocha unit tests using PhantomJS and exits
 #### Technologies Used
 * Client
   * [Angular JS](https://angularjs.org/)
+  * [Angular Material](https://material.angularjs.org/)
   * [Bootstrap](http://getbootstrap.com/)
   * [Restangular](https://github.com/mgonto/restangular)
   * [Angular UI Router](https://github.com/angular-ui/ui-router)
