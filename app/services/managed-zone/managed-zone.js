@@ -12,7 +12,6 @@
   function wrapper(ArrayCollection, ResourceRecordSet) {
     function ManagedZone(data) {
       if (!_.isUndefined(data)) {
-        this.kind = 'dns#managedZone';
         this.name = data.name || '';
         this.dnsName = data.dnsName || '';
         this.description = data.description || '';
@@ -21,7 +20,6 @@
         this.creationTime = data.creationTime || '';
         this.records = new ArrayCollection(_.map(data.records, function (item) { return new ResourceRecordSet(item); })) || new ArrayCollection();
       } else {
-        this.kind = 'dns#managedZone';
         this.name = '';
         this.dnsName = '';
         this.description = '';
@@ -33,6 +31,7 @@
 
     }
     ManagedZone.prototype.toJson = toJson;
+    ManagedZone.prototype.kind = 'dns#managedZone';
 
     function toJson() {
       return {
