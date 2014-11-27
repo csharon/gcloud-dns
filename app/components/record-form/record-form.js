@@ -43,20 +43,13 @@
   /* @ngInject */
   function RecordFormCtrl($scope, changeSetModel, ResourceRecordType) {
     var vm = this;
+    vm.record = angular.copy(changeSetModel.currentRecord);
     vm.recordTypes = _(ResourceRecordType)
-      .forIn(function (val) {
-        return val;
-      })
-      .filter(function (rType) {
-        if (rType.allowDuplicates) {
-          return true;
-        } else {
-          return !changeSetModel.zone.records.containsItem({type: rType.type});
-        }
-      })
+      .values()
+      .filter(filterRecordTypes)
       .pluck('type')
       .value();
-    vm.record = angular.copy(changeSetModel.currentRecord);
+
     vm.addRRData = addRRData;
     vm.removeRRData = removeRRData;
     vm.isRecordConflict = isRecordConflict;
@@ -90,6 +83,14 @@
 
     function cancel() {
       $scope.$emit('CANCEL_EDIT_RECORD');
+    }
+
+    function filterRecordTypes(rType) {
+      if (!vm.record.isNew() || rType.allowDuplicates) {
+        return true;
+      } else {
+        return !changeSetModel.zone.records.containsItem({type: rType.type});
+      }
     }
 
     $scope.$watch(
