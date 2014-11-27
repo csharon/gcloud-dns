@@ -13,6 +13,7 @@
 
     function ResourceRecordSet(data) {
       this.fromServer = false;
+      this.pendingChanges = false;
       if (!_.isUndefined(data)) {
         this.name = data.name || '';
         this.type = data.type || '';
