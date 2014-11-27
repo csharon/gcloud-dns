@@ -12,7 +12,6 @@
   function wrapper(ArrayCollection) {
 
     function ResourceRecordSet(data) {
-      this.kind = 'dns#resourceRecordSet';
       this.fromServer = false;
       if (!_.isUndefined(data)) {
         this.name = data.name || '';
@@ -31,6 +30,7 @@
 
     ResourceRecordSet.prototype.toJson = toJson;
     ResourceRecordSet.prototype.isNew = isNew;
+    ResourceRecordSet.prototype.kind = 'dns#resourceRecordSet';
 
     function toJson() {
       return {
