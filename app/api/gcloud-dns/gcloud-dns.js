@@ -12,12 +12,23 @@
   * GCloud Dns Api
   *
   */
-  angular.module('xd.api.GcloudDns', ['restangular'])
+  angular.module('xd.api.GcloudDns', [
+    'restangular',
+    'xd.api.GoogleOauth',
+    'xd.services.ManagedZone',
+    'xd.services.ResourceRecordSet'
+  ])
     .constant('GcloudDnsConfig', GcloudDnsConfig)
     .factory('gcloudDns', GcloudDns);
 
   /* @ngInject */
-  function GcloudDns($q, Restangular, GcloudDnsConfig) {
+  function GcloudDns($q, Restangular, GcloudDnsConfig, googleOAuth, ManagedZone, ResourceRecordSet) {
+
+    var api = {};
+    api.getProject = getProject;
+    api.setProject = setProject;
+    api.setToken = setToken;
+
     var _project,
       _token,
       _resource;
@@ -26,37 +37,55 @@
     var _projectPromise = deferred.promise;
 
     function initResource(projectName) {
-
-      _resource = Restangular.withConfig(function (RestangularConfigurer) {
-        RestangularConfigurer.setBaseUrl(GcloudDnsConfig.BASE_URL);
-        RestangularConfigurer.setDefaultRequestParams({access_token: getToken()});
-        RestangularConfigurer.setDefaultHeaders({'Content-Type': 'application/json'});
-        RestangularConfigurer.setFullRequestInterceptor(function (element, operation, route, url, headers, params) {
-          if (operation === 'remove') {
-            element = null;
-          }
-          return {
-            headers: headers,
-            params: params,
-            element: element,
-            httpConfig: {}
-          };
-        });
-      });
-      _resource.addResponseInterceptor(function (data, operation, what) {
-        if (operation === 'getList' && what === 'managedZones') {
-          return data.managedZones;
-        } else if (operation === 'getList' && what === 'rrsets') {
-          return data.rrsets;
-        }
-        return data;
-      });
-
-
-
+      _resource = Restangular.withConfig(configureRestangular);
+      _resource.addResponseInterceptor(interceptResponse);
       _project = _resource.one('projects', projectName);
+      _resource.extendModel('managedZones', extendManagedZoneModel);
+      _resource.extendModel('rrsets', extendResourceRecordSetModel);
       deferred.resolve(_project);
+    }
 
+    function extendManagedZoneModel(model) {
+      var mz = new ManagedZone(model);
+      return _.assign(mz, model);
+    }
+
+    function extendResourceRecordSetModel(model) {
+      var rs = new ResourceRecordSet(model);
+      delete model.rrdatas;
+      return _.assign(rs, model);
+    }
+
+    function configureRestangular(RestangularConfigurer) {
+      RestangularConfigurer.setBaseUrl(GcloudDnsConfig.BASE_URL);
+      RestangularConfigurer.setDefaultRequestParams({access_token: getToken()});
+      RestangularConfigurer.setDefaultHeaders({'Content-Type': 'application/json'});
+      RestangularConfigurer.setFullRequestInterceptor(interceptRequest);
+    }
+
+    function interceptRequest(element, operation, route, url, headers, params) {
+      if (operation === 'remove') {
+        element = null;
+      }
+      return {
+        headers: headers,
+        params: params,
+        element: element,
+        httpConfig: {}
+      };
+    }
+
+    function interceptResponse(data, operation, what, url, response, deferred) {
+      if (response.status === 401) {
+        googleOAuth.logout();
+        return deferred.reject('Session Timout');
+      }
+      if (operation === 'getList' && what === 'managedZones') {
+        return data.managedZones;
+      } else if (operation === 'getList' && what === 'rrsets') {
+        return data.rrsets;
+      }
+      return data;
     }
 
     function getProject() {
@@ -81,23 +110,7 @@
     }
 
     //Public API
-    return {
-      /**
-       *
-       * @returns {*} Restangular Project Resource
-       */
-      getProject: getProject,
-      /**
-       *
-       * @param {String} name Google Project ID
-       */
-      setProject: setProject,
-      /**
-       *
-       * @param {String} token Google OAuth2 token
-       */
-      setToken: setToken
-    };
+    return api;
   }
 
 })();

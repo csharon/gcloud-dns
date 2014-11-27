@@ -1,4 +1,4 @@
-/*globals inject, beforeEach, describe, it, expect, module*/
+/*globals inject, beforeEach, describe, it, module*/
 describe('xd.views.Welcome', function () {
 
   beforeEach( module('xd.views.Welcome'));
@@ -9,8 +9,6 @@ describe('xd.views.Welcome', function () {
   }));
 
 
-  it('should have scope', function () {
-    expect(scope.vm.name).to.equal('WelcomeCtrl');
-  });
+  it('should have scope');
 
 });

@@ -6,10 +6,10 @@ md-content
       th name
       th value
     tbody
-      tr(ng-repeat="record in vm.records")
+      tr(ng-repeat="record in vm.records.items")
         td {{ record.type }}
         td {{ record.ttl }}
         td {{ record.name }}
         td(layout="vertical")
-          span(ng-repeat="rrdata in record.rrdatas") {{rrdata}}
+          span(ng-repeat="rrdata in record.rrdatas.items") {{rrdata}}
 

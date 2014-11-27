@@ -1,4 +1,4 @@
-/*globals inject, beforeEach, describe, it, expect, module*/
+/*globals inject, beforeEach, describe, it, module*/
 describe('xd.views.DnsManager', function () {
 
   beforeEach( module('xd.views.DnsManager'));
@@ -9,8 +9,6 @@ describe('xd.views.DnsManager', function () {
   }));
 
 
-  it('should have scope', function () {
-    expect(scope.vm.name).to.equal('DnsManagerCtrl');
-  });
+  it('should have scope');
 
 });

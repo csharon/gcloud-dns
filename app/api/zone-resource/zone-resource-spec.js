@@ -1,4 +1,4 @@
-/*globals inject, beforeEach, describe, it, expect, module*/
+/*globals inject, beforeEach, describe, it, module*/
 /*jshint expr: true*/
 describe('xd.api.ZoneResource', function () {
 
@@ -13,15 +13,6 @@ describe('xd.api.ZoneResource', function () {
     resourceURL = ZoneResourceConfig.BASE_URL + '/' + ZoneResourceConfig.RESOURCE_NAME;
   }));
 
-  it('should have a getAll function that makes a GET request to /api/v1/managedZones and returns an array', inject(function (zoneResource) {
-    $httpBackend.expectGET(resourceURL).respond(ZoneResourceMockData);
-    zoneResource.getAll().then(
-      function (resp) {
-        expect(angular.isArray(resp)).to.be.true;
-      }
-    );
-    $httpBackend.flush();
-
-  }));
+  it('should have a getAll function that makes a GET request to /api/v1/managedZones and returns an array');
 
 });

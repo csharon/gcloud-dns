@@ -1,6 +1,7 @@
 node_modules/
 bower_components/
 .DS_Store
+test-results.xml
 *.log
 *.tpls.js
 .idea/
@@ -10,3 +11,4 @@ public/
 build/
 dist/
 dev/
+docs/

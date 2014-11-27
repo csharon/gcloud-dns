@@ -1,5 +1,11 @@
-md-list.zone-list
+//md-list.zone-list
   md-item(ng-repeat="zone in vm.zones")
-    md-item-content
-      md-button(flex ng-click="vm.selectZone(zone)" aria-label="{{zone.dnsName}}") {{zone.dnsName}}
+    md-item-content(ng-class="{active: zone.dnsName === $parent.vm.zoneModel.selectedZone.dnsName}")
+      md-button(flex ng-click="vm.selectZone(zone)"
+        aria-label="{{zone.dnsName}}") {{zone.dnsName}}
     md-divider
+.list-group(flex)
+  a.list-group-item(ng-repeat="zone in vm.zones"
+      ng-class="{active: zone.dnsName === $parent.vm.zoneModel.selectedZone.dnsName}"
+      ng-click="vm.selectZone(zone)"
+      href="#") {{zone.dnsName}}

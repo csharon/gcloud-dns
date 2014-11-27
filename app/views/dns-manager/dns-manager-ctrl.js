@@ -19,7 +19,10 @@
     'xd.services.XdToastr',
     'xd.components.ChangeSetViewer',
     'xd.components.RecordForm',
-    'xd.api.GcloudDns'
+    'xd.api.GcloudDns',
+    'xd.services.LocalStorage',
+    'xd.services.ProjectModel',
+    'xd.services.ResourceRecordSet'
   ])
     .config(config)
     .controller('dnsManagerCtrl', DnsManagerCtrl);
@@ -59,9 +62,22 @@
   }
 
   /* @ngInject */
-  function DnsManagerCtrl($scope, $log, $state, zoneModel, xdToastr, $mdSidenav, changeSetModel, gcloudDns) {
+  function DnsManagerCtrl(
+    $scope,
+    $log,
+    $state,
+    zoneModel,
+    xdToastr,
+    $mdSidenav,
+    googleOAuth,
+    changeSetModel,
+    gcloudDns,
+    projectModel,
+    ResourceRecordSet
+  ) {
     var dm = this;
     dm.project = '';
+    dm.projects = [];
     dm.name = 'DNS Manager';
     dm.zoneModel = zoneModel;
     dm.changeSetModel = changeSetModel;
@@ -85,14 +101,30 @@
     $scope.$on('SAVE_CHANGE_SET', saveChangeSet);
     $scope.$on('CANCEL_CHANGE_SET', cancelChangeSet);
 
+    function initDNS() {
+      getProjects();
+    }
 
+    function getProjects() {
+      projectModel.load().then(
+        function (projects) {
+          dm.projects = projects;
+        }
+      );
+    }
 
     function setProject() {
       gcloudDns.setProject(dm.project).then(
         function (project) {
+          projectModel.saveProject(project.id);
+          getProjects();
           zoneModel.refreshZones().then(
             function () {
               $state.go('dns.noSelection');
+            },
+            function () {
+              googleOAuth.logout();
+              xdToastr.error ('Session Timeout!' );
             }
           );
         }
@@ -149,14 +181,12 @@
     }
 
     function editRecord(event, record) {
-      changeSetModel.currentRecordIsNew = false;
       changeSetModel.currentRecord = record;
       $state.go('dns.detail.form');
     }
 
-    function addRecord(event) {
-      changeSetModel.currentRecordIsNew = true;
-      changeSetModel.currentRecord = {};
+    function addRecord() {
+      changeSetModel.currentRecord = new ResourceRecordSet();
       $state.go('dns.detail.form');
     }
 
@@ -204,6 +234,8 @@
         dm.editMode = $state.is('dns.detail.edit') || $state.is('dns.detail.form');
       }
     );
+    initDNS();
+    $log.info('dns manager controller created.');
 
   }
 
