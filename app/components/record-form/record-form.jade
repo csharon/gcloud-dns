@@ -11,8 +11,7 @@ div(flex).record-form
         ng-model-options="{debounce: {'default': 500, blur: 0}}")
       div.text-danger(ng-messages="recordForm.type.$error" ng-if="recordForm.type.$touched")
         div(ng-message="required") You must specify a record type.
-        div(ng-message="recordConflict")
-          span A Record for this Name &amp; Type already exists.
+
     .form-group(ng-class="{'has-error': recordForm.ttl.$invalid && recordForm.ttl.$touched}")
       label(for="ttl") TTL
       input.form-control(name="ttl" type="number" ng-model="vm.record.ttl" placeholder="TTL" required ng-model-options="{debounce: {'default': 500, blur: 0}}")

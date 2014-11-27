@@ -11,7 +11,7 @@
     'xd.services.ManagedZone',
     'xd.services.ResourceRecordSet'
   ])
-    .factory('changeSetModel', ChangeSetModel)
+    .factory('changeSetModel', ChangeSetModel);
 
 
   /* @ngInject */
@@ -115,8 +115,6 @@
         // mark it as deleted
         record.status = 'deleted';
         // Update the view
-        //api.updatedRecordView.removeItem({name: record.name, type: record.type});
-        //api.updatedRecordView.addItem(record);
         api.updatedRecordView.updateItem({name: record.name, type: record.type}, record);
       }
 

@@ -22,11 +22,11 @@
       controllerAs: 'vm',
       bindToController: true,
       link: function (scope, element, attrs, ngModel) {
-        ngModel.$validators.recordConflict = function (modelValue, viewValue) {
+        ngModel.$validators.recordConflict = function () {
           return scope.vm.isRecordConflict();
         };
       }
-    }
+    };
   }
 
   /* @ngInject */
@@ -61,8 +61,7 @@
     }
 
     function isRecordConflict() {
-      var conflict = !changeSetModel.zone.records.containsItem({name: $scope.recordForm.name.$viewValue, type: $scope.recordForm.type.$viewValue});
-      return conflict;
+      return !changeSetModel.zone.records.containsItem({name: $scope.recordForm.name.$viewValue, type: $scope.recordForm.type.$viewValue});;
     }
 
     function removeRRData(index) {
