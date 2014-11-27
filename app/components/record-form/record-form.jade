@@ -1,20 +1,45 @@
 div(flex).record-form
-  form.form(name="recordForm" role="form" ng-submit="vm.save()" novalidate)
-    .form-group
+  form.form(name="recordForm" role="form" ng-submit="vm.save(recordForm)" novalidate)
+
+    .form-group(ng-class="{'has-error': recordForm.type.$invalid && recordForm.type.$touched}")
+
       label(for="type") Type
-      input.form-control(name="type" ng-model="vm.record.type" placeholder="Type" required)
-    .form-group
+      select.form-control(
+        name="type"
+        ng-model="vm.record.type"
+        required
+        ng-disabled="!vm.record.isNew()"
+        ng-model-options="{debounce: {'default': 500, blur: 0}}"
+        ng-options="type for type in vm.recordTypes")
+          option(value="" disabled) Select Type ...
+      div.text-danger(ng-messages="recordForm.type.$error" ng-if="recordForm.type.$touched")
+        div(ng-message="required") You must specify a record type.
+
+    .form-group(ng-class="{'has-error': recordForm.ttl.$invalid && recordForm.ttl.$touched}")
       label(for="ttl") TTL
-      input.form-control(name="ttl" ng-model="vm.record.ttl" placeholder="TTL" required)
-    .form-group
+      input.form-control(name="ttl" type="number" ng-model="vm.record.ttl" placeholder="TTL" required ng-model-options="{debounce: {'default': 500, blur: 0}}")
+      div.text-danger(ng-messages="recordForm.ttl.$error" ng-if="recordForm.ttl.$touched")
+        div(ng-message="required") You must specify a ttl.
+        div(ng-message="number") The TTL must be a numeric value
+    .form-group(ng-class="{'has-error': recordForm.name.$invalid && recordForm.name.$touched}")
       label(for="name") Name
-      input.form-control(name="name" ng-model="vm.record.name" placeholder="Name" required)
+      input.form-control(
+        name="name"
+        ng-model="vm.record.name"
+        placeholder="Name"
+        required
+        record-conflict
+        ng-model-options="{debounce: {'default': 500, blur: 0}}")
+      div.text-danger(ng-messages="recordForm.name.$error" ng-if="recordForm.name.$touched")
+        div(ng-message="required") You must specify a name.
+        div(ng-message="recordConflict") A Record for this Name &amp; Type already exists.
+
     .form-group
       div
         label RRData Values
-        div(ng-if="vm.record.rrdatas.length === 0")
+        div(ng-if="vm.record.rrdatas.items.length === 0")
           span(flex) Please add an RRData value
-        div(ng-if="vm.record.rrdatas.length > 0" ng-repeat="rrdata in vm.record.rrdatas")
+        div(ng-if="vm.record.rrdatas.items.length > 0" ng-repeat="rrdata in vm.record.rrdatas.items")
           div(layout="horizontal")
             span(flex) {{rrdata}}
             md-button(ng-click="vm.removeRRData($index)" aria-label="Add RRData" type="button")
@@ -29,4 +54,4 @@ div(flex).record-form
               i.fa.fa-plus.fa-stack-1x.add-icon-bg
     .form-group
       button.btn.btn-default.btn-sm(type="button" ng-click="vm.cancel()") Cancel
-      button.btn.btn-primary(type="submit" ng-disabled="!recordForm.$valid || vm.record.rrdatas.length === 0") Save
+      button.btn.btn-primary(type="submit" ng-disabled="recordForm.$pristine || !recordForm.$valid || vm.record.rrdatas.items.length === 0") Save

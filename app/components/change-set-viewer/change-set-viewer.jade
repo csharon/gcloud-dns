@@ -23,20 +23,20 @@ md-content
             i.fa.fa-square.fa-stack-2x.add-icon-bg
             i.fa.fa-plus.fa-stack-1x.add-icon
     tbody
-      tr(ng-repeat="record in vm.changeSetModel.updatedRecordView"
+      tr(ng-repeat="record in vm.changeSetModel.updatedRecordView.items"
         ng-class="{success: record.status === 'new', info: record.status === 'updated', danger: record.status === 'deleted'}")
         td {{ record.type }}
         td {{ record.ttl }}
         td {{ record.name }}
         td
-          div(ng-repeat="rrdata in record.rrdatas") {{rrdata}}
+          div(ng-repeat="rrdata in record.rrdatas.items") {{rrdata}}
         td
           div(layout="horizontal" layout-align="end center")
             md-button(ng-click="vm.editRecord(record)" aria-label="Edit Record")
               span.fa-stack.fa-sm
                 i.fa.fa-square.fa-stack-2x.edit-icon
                 i.fa.fa-pencil.fa-stack-1x.edit-icon-bg
-            md-button(ng-click="vm.deleteRecord(record)" aria-label="Delete Record")
+            md-button(ng-click="vm.deleteRecord(record)" aria-label="Delete Record" ng-hide="record.type === 'SOA' || record.type === 'NS'")
               span.fa-stack.fa-sm
                 i.fa.fa-square.fa-stack-2x.remove-icon
                 i.fa.fa-trash.fa-stack-1x.remove-icon-bg

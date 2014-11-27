@@ -30,23 +30,21 @@
   }
 
   /* @ngInject */
-  function GcloudDnsCtrl ($scope, $state, googleOAuth, gcloudDns) {
+  function GcloudDnsCtrl ($state, googleOAuth, gcloudDns) {
     var vm = this;
     vm.appTitle = 'Gcloud Dns';
-    $state.go('welcome');
-    $scope.$watch(
-      function () {
-        return googleOAuth.isAuthenticated();
-      },
-      function (authenticated) {
-        if (authenticated) {
-          gcloudDns.setToken(googleOAuth.token());
-          $state.go('dns.noProject');
-        } else {
-          $state.go('welcome');
-        }
-      }
-    );
+
+    googleOAuth.loadProfile().then(loginSuccess, loginFailed);
+
+    function loginSuccess(resp) {
+      gcloudDns.setToken(resp.token);
+      $state.go('dns.noProject');
+    }
+
+    function loginFailed() {
+      $state.go('welcome');
+    }
+
   }
 
 

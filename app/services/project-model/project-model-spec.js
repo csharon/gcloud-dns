@@ -1,8 +1,8 @@
 /*globals beforeEach, describe, it, module*/
 /*jshint expr: true*/
-describe('xd.services.ZoneModel', function () {
+describe('xd.services.ProjectModel', function () {
 
-  beforeEach( module('xd.services.ZoneModel'));
+  beforeEach( module('xd.services.ProjectModel'));
 
   it('should have a data function that returns an array');
 

@@ -26,11 +26,11 @@
     var api = {};
 
     //Properties
-    api.open = open;
-    api.close = close;
+    api.open = openModal;
+    api.close = closeModal;
 
 
-    function open(opts) {
+    function openModal(opts) {
       confirmationModel.title = opts.title;
       confirmationModel.message = opts.message;
       return $mdDialog.show({
@@ -41,7 +41,7 @@
       });
     }
 
-    function close() {
+    function closeModal() {
       $mdDialog.hide();
     }
 

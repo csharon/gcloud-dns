@@ -1,4 +1,4 @@
-/*globals inject, beforeEach, describe, it, expect, module*/
+/*globals inject, beforeEach, describe, it, module*/
 describe('xd.components.ZoneForm', function () {
 
   var el, scope;
@@ -13,8 +13,6 @@ describe('xd.components.ZoneForm', function () {
   }));
 
 
-  it('should replace with div tag', function () {
-    expect(el.prop('tagName')).to.equal('DIV');
-  });
+  it('should replace with div tag');
 
 });

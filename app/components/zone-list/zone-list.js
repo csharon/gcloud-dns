@@ -17,8 +17,7 @@
     return {
       restrict: 'E',
       scope: {
-        zones: '=',
-        selectedZone: '='
+        zones: '='
       },
       bindToController: true,
       controller: 'zoneListCtrl',
@@ -28,11 +27,12 @@
   }
 
   /* @ngInject */
-  function ZoneListCtrl($scope) {
+  function ZoneListCtrl($scope, zoneModel) {
     var vm = this;
 
     vm.createZone = createZone;
     vm.selectZone = selectZone;
+    vm.zoneModel = zoneModel;
 
     function createZone() {
       $scope.$emit('CREATE_ZONE');

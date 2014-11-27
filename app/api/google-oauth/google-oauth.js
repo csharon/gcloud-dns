@@ -4,10 +4,14 @@
     .factory('googleOAuth', GoogleOauth);
 
   /* @ngInject */
-  function GoogleOauth($http, $window, $log) {
-    var _token = '';
-    var _isAuthenticated = false;
-    var _profile;
+  function GoogleOauth($http, $window, $q) {
+    var api = {};
+    api.token = '';
+    api.profile = {};
+    api.isAuthenticated = false;
+    api.login = login;
+    api.logout = logout;
+    api.loadProfile = loadProfile;
 
     function login() {
       $window.location.assign('/auth/google');
@@ -22,30 +26,21 @@
       );
     }
 
-    $http.get('/api/profile').then(
-      function (resp) {
-        _isAuthenticated = true;
-        _token = resp.data.token;
-        _profile = resp.data.profile;
-      },
-      function (err) {
-        $log.error(err);
-      }
-    );
+    function loadProfile() {
+      return $http.get('/api/profile').then(
+        function (resp) {
+          api.isAuthenticated = true;
+          api.token = resp.data.token;
+          api.profile = resp.data.profile;
+          return resp.data;
+        },
+        function (err) {
+          return $q.reject(err);
+        }
+      );
+    }
 
-    return {
-      token: function () {
-        return _token;
-      },
-      profile: function () {
-        return _profile;
-      },
-      isAuthenticated: function () {
-        return _isAuthenticated;
-      },
-      login: login,
-      logout: logout
-    };
+    return api;
   }
 
 })();

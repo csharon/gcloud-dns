@@ -19,19 +19,23 @@
       createZone: createZone,
       selectZone: selectZone,
       deleteZone: deleteZone,
-      saveChanges: saveChanges
+      saveChanges: saveChanges,
+      loadingZones: false
     };
 
     function refreshZoneList() {
+      model.loadingZones = true;
       return zoneResource.getAll().then(
         function (resp) {
           model.zoneList = resp;
           return resp;
         },
         function (err) {
-          $log.error(err);
+          return $q.reject(err);
         }
-      );
+      )['finally'](function () {
+        model.loadingZones = false;
+      });
     }
 
     function selectZone(zone) {
@@ -75,7 +79,7 @@
     function getRecords(zone) {
       return zoneResource.getRecords(zone).then(
         function (resp) {
-          model.selectedZone.records = resp;
+          model.selectedZone.records.items = resp;
         },
         function (err) {
           return $q.reject(err);
