@@ -35,13 +35,9 @@
 
     function toJson() {
       return {
-        kind: this.kind,
         name: this.name,
         dnsName: this.dnsName,
-        description: this.description,
-        id: this.id,
-        nameServers: this.nameServers,
-        creationTime: this.creationTime
+        description: this.description
       };
     }
 
