@@ -78,26 +78,33 @@
     var dm = this;
     dm.project = '';
     dm.projects = [];
+    dm.setProject = setProject;
+
     dm.name = 'DNS Manager';
-    dm.zoneModel = zoneModel;
-    dm.changeSetModel = changeSetModel;
     dm.editMode = false;
+
+    dm.zoneModel = zoneModel;
     dm.createZone = createZone;
     dm.openZoneList = openZoneList;
     dm.closeZoneList = closeZoneList;
-    dm.setProject = setProject;
+
+    dm.changeSetModel = changeSetModel;
+
+
+
 
     $scope.$on('CREATE_ZONE', createZone);
     $scope.$on('EDIT_ZONE', editZone);
     $scope.$on('CANCEL_CREATE_ZONE', cancelCreateZone);
-
     $scope.$on('SAVE_ZONE', saveZone);
     $scope.$on('SELECT_ZONE', selectZone);
     $scope.$on('DELETE_ZONE', deleteZone);
+
     $scope.$on('EDIT_RECORD', editRecord);
     $scope.$on('ADD_RECORD', addRecord);
     $scope.$on('SAVE_RECORD', saveRecord);
     $scope.$on('CANCEL_EDIT_RECORD', cancelEditRecord);
+
     $scope.$on('SAVE_CHANGE_SET', saveChangeSet);
     $scope.$on('CANCEL_CHANGE_SET', cancelChangeSet);
 
@@ -132,6 +139,7 @@
     }
 
     function createZone() {
+      closeZoneList();
       $state.go('dns.new');
     }
 

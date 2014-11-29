@@ -8,7 +8,7 @@
    * @function
    * @description
    */
-  angular.module('xd.components.ZoneForm', ['xd.tmpls'])
+  angular.module('xd.components.ZoneForm', ['xd.tmpls', 'xd.services.ManagedZone'])
     .controller('zoneFormCtrl', ZoneFormCtrl)
     .directive('zoneForm', ZoneForm);
 
@@ -24,9 +24,9 @@
   }
 
   /* @ngInject */
-  function ZoneFormCtrl($scope) {
+  function ZoneFormCtrl($scope, ManagedZone) {
     var vm = this;
-    vm.zone = {};
+    vm.zone = new ManagedZone();
     vm.name = 'Add a New Zone';
     vm.save = save;
     vm.cancel = cancel;
