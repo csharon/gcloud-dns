@@ -25,11 +25,9 @@
       switch(data.type) {
         case 'SOA':
           return new SOARecordSet(data);
-          break;
 
         case 'MX':
           return new MXRecordSet(data);
-          break;
 
         default:
           return new ResourceRecordSet(data);

@@ -53,7 +53,7 @@ describe('xd.services.ChangeSet', function () {
     var cs;
     beforeEach(function () {
       cs = new ChangeSet();
-      cs.addToAdditions(records[0]);
+      cs.addTo(records[0], 'additions');
     });
 
     it('should add an object to the additions collection when you call addToAdditions', function () {
@@ -61,7 +61,7 @@ describe('xd.services.ChangeSet', function () {
     });
 
     it('should remove an object from the additions collection when you call removeFromAdditions', function () {
-      cs.removeFromAdditions(records[0]);
+      cs.removeFrom(records[0], 'additions');
       expect(cs.additions.items.length).to.equal(0);
     });
 
@@ -71,7 +71,7 @@ describe('xd.services.ChangeSet', function () {
     var cs;
     beforeEach(function () {
       cs = new ChangeSet();
-      cs.addToDeletions(records[0]);
+      cs.addTo(records[0], 'deletions');
     });
 
     it('should add an object to the deletions collection when you call addToDeletions', function () {
@@ -79,7 +79,7 @@ describe('xd.services.ChangeSet', function () {
     });
 
     it('should remove an object from the deletions collection when you call removeFromDeletions', function () {
-      cs.removeFromDeletions(records[0]);
+      cs.removeFrom(records[0], 'deletions');
       expect(cs.deletions.items.length).to.equal(0);
     });
 

@@ -19,7 +19,15 @@
       }
     }
 
+
     SOARecordSet.prototype = Object.create(DNSRecordSet.prototype);
+    SOARecordSet.prototype.getNext = getNext;
+
+    function getNext() {
+      var next = new SOARecordSet(this.toJson());
+      next.rrdatas.items[0].serial = next.rrdatas.items[0].serial + 1;
+      return next;
+    }
 
     return SOARecordSet;
   }
