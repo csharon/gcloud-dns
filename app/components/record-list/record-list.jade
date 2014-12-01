@@ -10,6 +10,6 @@ md-content
         td {{ record.type }}
         td {{ record.ttl }}
         td {{ record.name }}
-        td(layout="vertical")
+        td(layout="column")
           span(ng-repeat="rrdata in record.rrdatas.items") {{rrdata.toString()}}
 

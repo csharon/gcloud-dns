@@ -4,6 +4,6 @@ md-dialog(aria-label="Confirm")
     h2 {{ vm.model.title }}
     p {{ vm.model.message }}
 
-  .md-actions(layout="horizontal" layout-align="end")
+  .md-actions(layout="row" layout-align="end")
     md-button(ng-click="vm.cancel()" aria-label="No") NO
     md-button.md-primary(md-theme="deep-orange" ng-click="vm.confirm()" aria-label="Yes") YES
