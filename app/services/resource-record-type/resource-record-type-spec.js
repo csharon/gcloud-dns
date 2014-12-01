@@ -4,8 +4,8 @@ describe('xd.services.ResourceRecordType', function () {
 
   beforeEach( module('xd.services.ResourceRecordType'));
 
-  it('should have a data function that returns an array', inject(function (resourceRecordType) {
-    expect(angular.isArray(resourceRecordType.getData())).to.be.true;
+  it('should return a json object with record types', inject(function (ResourceRecordType) {
+    expect(ResourceRecordType.A.type ).to.equal('A');
   }));
 
 });
