@@ -1,11 +1,11 @@
-md-content(layout="horizontal" layout-padding)
+md-content(layout="row" layout-padding)
   div(flex)
     h1 {{vm.zone.dnsName}}
     p {{ vm.zone.description }}
-  div(layout="vertical")
+  div(layout="column")
     span Name: {{ vm.zone.name }}
     span Created: {{ vm.zone.creationTime | moment:'DD MMM, YYYY' }}
-    div(layout="horizontal" layout-align="end center" ng-if="!vm.editMode")
+    div(layout="row" layout-align="end center" ng-if="!vm.editMode")
       md-button(ng-click="vm.editZone()" aria-label="Edit Zone")
         span.fa-stack.fa-lg
           i.fa.fa-square.fa-stack-2x.edit-icon

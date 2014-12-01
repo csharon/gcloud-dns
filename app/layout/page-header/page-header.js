@@ -25,7 +25,7 @@
     vm.openZoneList = openZoneList;
 
     function openZoneList() {
-      $mdSidenav('zone-list').open();
+      $mdSidenav('zone-list').toggle();
     }
 
   }
