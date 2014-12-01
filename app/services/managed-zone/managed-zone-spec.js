@@ -38,7 +38,6 @@ describe('xd.services.ManagedZone', function () {
     it('should convert a managedZone to Json', function () {
       var mz = new ManagedZone(zone);
       expect(mz.toJson().name).to.equal('meat-zone');
-      expect(mz.toJson().kind).to.equal('dns#managedZone');
     });
 
   });
