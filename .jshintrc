@@ -25,6 +25,11 @@
     "require": true,
     "exports": true,
     "module": true,
-    "process": true
+    "process": true,
+    "expect": true,
+    "inject": true,
+    "beforeEach": true,
+    "it": true,
+    "describe": true
   }
 }
