@@ -1,4 +1,3 @@
-/*globals inject, beforeEach, describe, it, expect, module*/
 /*jshint expr: true*/
 describe('xd.services.MXRecordSet', function () {
 

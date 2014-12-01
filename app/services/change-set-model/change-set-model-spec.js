@@ -62,7 +62,7 @@ describe('xd.services.ChangeSetModel', function () {
 
     it('should increment the serial number of the new soa record', function () {
       model.createChangeSet(new ManagedZone(zone));
-      expect(model.changeSet.additions.items[0].rrdatas.items[0]).to.equal('ns-cloud-b1.googledomains.com. dns-admin.google.com. 1 21600 3600 1209600 300');
+      expect(model.changeSet.additions.items[0].rrdatas.items[0].toString()).to.equal('ns-cloud-b1.googledomains.com. dns-admin.google.com. 1 21600 3600 1209600 300');
     });
 
   });

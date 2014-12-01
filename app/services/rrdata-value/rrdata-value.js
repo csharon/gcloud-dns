@@ -27,7 +27,7 @@
     }
 
     function fromString(rrdataVal) {
-      _.isString(rrdataVal) ? this.rrdata = rrdataVal : this.rrdata = '';
+      this.rrdata = _.isString(rrdataVal) ? rrdataVal : '';
 
     }
 
