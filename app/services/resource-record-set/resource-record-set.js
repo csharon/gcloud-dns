@@ -5,47 +5,21 @@
    * @name xd.services.ResourceRecordSet:resourceRecordSet
    *
    */
-  angular.module('xd.services.ResourceRecordSet', ['xd.services.ArrayCollection'])
+  angular.module('xd.services.ResourceRecordSet', ['xd.services.ArrayCollection', 'xd.services.RRDataValue', 'xd.services.DNSRecordSet'])
     .factory('ResourceRecordSet', wrapper);
 
   /* @ngInject */
-  function wrapper(ArrayCollection) {
+  function wrapper(ArrayCollection, RRDataValue, DNSRecordSet) {
 
     function ResourceRecordSet(data) {
-      this.fromServer = false;
-      this.pendingChanges = false;
-      if (!_.isUndefined(data)) {
-        this.name = data.name || '';
-        this.type = data.type || '';
-        this.ttl = data.ttl || 8600;
-        this.rrdatas = new ArrayCollection(data.rrdatas) || new ArrayCollection();
-        this.status = data.status || 'unchanged';
-      } else {
-        this.name = '';
-        this.type = '';
-        this.ttl = 8600;
-        this.rrdatas = new ArrayCollection();
-        this.status = 'new';
+      DNSRecordSet.call(this, data);
+
+      if (!_.isUndefined(data) && !_.isUndefined(data.rrdatas)) {
+        this.rrdatas.items = _.map(data.rrdatas, function (rrdata) { return new RRDataValue(rrdata);});
       }
     }
 
-    ResourceRecordSet.prototype.toJson = toJson;
-    ResourceRecordSet.prototype.isNew = isNew;
-    ResourceRecordSet.prototype.kind = 'dns#resourceRecordSet';
-
-    function toJson() {
-      return {
-        kind: this.kind,
-        name: this.name,
-        type: this.type,
-        ttl: this.ttl,
-        rrdatas: this.rrdatas.items
-      };
-    }
-
-    function isNew() {
-      return !this.fromServer;
-    }
+    ResourceRecordSet.prototype = Object.create(DNSRecordSet.prototype);
 
     return ResourceRecordSet;
   }

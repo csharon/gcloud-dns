@@ -72,7 +72,7 @@
     }
 
     function getSOAValues(rrdataVal) {
-      var soaParts = rrdataVal.split(' ');
+      var soaParts = rrdataVal.toString().split(' ');
       return {
         nameServer: soaParts[0],
         email: soaParts[1],

@@ -41,13 +41,13 @@ div(flex).record-form
           span(flex) Please add an RRData value
         div(ng-if="vm.record.rrdatas.items.length > 0" ng-repeat="rrdata in vm.record.rrdatas.items")
           div(layout="horizontal")
-            span(flex) {{rrdata}}
+            span(flex) {{rrdata.toString()}}
             md-button(ng-click="vm.removeRRData($index)" aria-label="Add RRData" type="button")
               span.fa-stack.fa-sm
                 i.fa.fa-square.fa-stack-2x.remove-icon
                 i.fa.fa-trash.fa-stack-1x.remove-icon-bg
         div(layout="horizontal")
-          input.form-control(name="rrdata" ng-model="vm.rrdata" placeholder="New Value")
+          input.form-control(name="rrdata" ng-model="vm.rrdata" placeholder="New Value" unsaved-changes ng-model-options="{allowInvalid: true}")
           button.btn.btn-link(ng-click="vm.addRRData()" type="button" ng-disabled="vm.disableAddRRData")
             span.fa-stack.fa-sm
               i.fa.fa-square.fa-stack-2x.add-icon

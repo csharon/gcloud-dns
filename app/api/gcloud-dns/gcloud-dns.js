@@ -16,13 +16,13 @@
     'restangular',
     'xd.api.GoogleOauth',
     'xd.services.ManagedZone',
-    'xd.services.ResourceRecordSet'
+    'xd.services.DNSRecordFactory'
   ])
     .constant('GcloudDnsConfig', GcloudDnsConfig)
     .factory('gcloudDns', GcloudDns);
 
   /* @ngInject */
-  function GcloudDns($q, Restangular, GcloudDnsConfig, googleOAuth, ManagedZone, ResourceRecordSet) {
+  function GcloudDns($q, Restangular, GcloudDnsConfig, googleOAuth, ManagedZone, DNSRecordFactory) {
 
     var api = {};
     api.getProject = getProject;
@@ -51,7 +51,7 @@
     }
 
     function extendResourceRecordSetModel(model) {
-      var rs = new ResourceRecordSet(model);
+      var rs = DNSRecordFactory.createDNSRecord(model);
       delete model.rrdatas;
       return _.assign(rs, model);
     }
