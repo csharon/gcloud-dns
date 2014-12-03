@@ -2,16 +2,16 @@
 
   /**
    * @ngdoc service
-   * @name xd.services.SOARRDataValue:SOARRDataValue
+   * @name xd.services.SOADataValue:SOADataValue
    *
    */
-  angular.module('xd.services.SOARRDataValue', [])
-    .factory('SOARRDataValue', wrapper);
+  angular.module('xd.services.SOADataValue', [])
+    .factory('SOADataValue', wrapper);
 
   /* @ngInject */
   function wrapper() {
 
-    function SOARRDataValue(val) {
+    function SOADataValue(val) {
       if (_.isUndefined(val)) {
         this.nameServer = '';
         this.email = '';
@@ -25,8 +25,8 @@
       }
     }
 
-    SOARRDataValue.prototype.toString = toString;
-    SOARRDataValue.prototype.fromString = fromString;
+    SOADataValue.prototype.toString = toString;
+    SOADataValue.prototype.fromString = fromString;
 
     function toString() {
       return this.nameServer.concat(' ')
@@ -51,7 +51,7 @@
 
     }
 
-    return SOARRDataValue;
+    return SOADataValue;
   }
 
 })();
