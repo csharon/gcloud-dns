@@ -2,16 +2,16 @@
 
   /**
    * @ngdoc service
-   * @name xd.services.MXRRDataValue:MXRRDataValue
+   * @name xd.services.MXDataValue:MXDataValue
    *
    */
-  angular.module('xd.services.MXRRDataValue', [])
-    .factory('MXRRDataValue', wrapper);
+  angular.module('xd.services.MXDataValue', [])
+    .factory('MXDataValue', wrapper);
 
   /* @ngInject */
 
   function wrapper() {
-    function MXRRDataValue(val) {
+    function MXDataValue(val) {
       if (_.isUndefined(val)) {
         this.priority = 0;
         this.server = '';
@@ -19,8 +19,8 @@
         this.fromString(val);
       }
     }
-    MXRRDataValue.prototype.toString = toString;
-    MXRRDataValue.prototype.fromString = fromString;
+    MXDataValue.prototype.toString = toString;
+    MXDataValue.prototype.fromString = fromString;
 
     function toString() {
       return this.priority + ' ' + this.server;
@@ -29,11 +29,11 @@
     function fromString(rrdataVal) {
       var mxParts = rrdataVal.split(' ');
 
-      this.priority = mxParts[0];
+      this.priority = parseInt(mxParts[0], 10);
       this.server = mxParts[1];
     }
 
-    return MXRRDataValue;
+    return MXDataValue;
 
   }
 
