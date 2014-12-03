@@ -7,9 +7,9 @@
       ResourceRecordSet,
       SOARecordSet,
       RRDataValue,
-      SOARRDataValue,
+      SOADataValue,
       MXRecordSet,
-      MXRRDataValue,
+      MXDataValue,
       aRecord = {
         name: 'taco.com.',
         type: 'A',
@@ -35,14 +35,14 @@
         ]
       };
     beforeEach(module('xd.services.DNSRecordFactory'));
-    beforeEach(inject(function (_DNSRecordFactory_, _ResourceRecordSet_, _RRDataValue_, _SOARecordSet_, _SOARRDataValue_, _MXRecordSet_, _MXRRDataValue_) {
+    beforeEach(inject(function (_DNSRecordFactory_, _ResourceRecordSet_, _RRDataValue_, _SOARecordSet_, _SOADataValue_, _MXRecordSet_, _MXDataValue_) {
       DNSRecordFactory = _DNSRecordFactory_;
       ResourceRecordSet = _ResourceRecordSet_;
       RRDataValue = _RRDataValue_;
       SOARecordSet = _SOARecordSet_;
-      SOARRDataValue = _SOARRDataValue_;
+      SOADataValue = _SOADataValue_;
       MXRecordSet = _MXRecordSet_;
-      MXRRDataValue = _MXRRDataValue_;
+      MXDataValue = _MXDataValue_;
     }));
 
     describe('createDNSRecord', function () {
@@ -66,7 +66,7 @@
         it('should create a SOARecordSet when called with type=SOA', function () {
           var record = DNSRecordFactory.createDNSRecord(soaRecord);
           expect(record instanceof SOARecordSet).to.be.true;
-          expect(record.rrdatas.items[0] instanceof SOARRDataValue).to.be.true;
+          expect(record.rrdatas.items[0] instanceof SOADataValue).to.be.true;
           expect(record.rrdatas.items[0].toString()).to.equal('ns-cloud-e1.googledomains.com. dns-admin.google.com. 5 21600 3600 1209600 300');
         });
       });
@@ -76,7 +76,7 @@
         it('should create a MXRecordSet when called with type=MX', function () {
           var record = DNSRecordFactory.createDNSRecord(mxRecord);
           expect(record instanceof MXRecordSet).to.be.true;
-          expect(record.rrdatas.items[0] instanceof MXRRDataValue).to.be.true;
+          expect(record.rrdatas.items[0] instanceof MXDataValue).to.be.true;
           expect(record.rrdatas.items[0].toString()).to.equal('10 mail.taco.com.');
         });
       });
