@@ -1,9 +1,28 @@
-/*globals beforeEach, describe, it, module*/
 /*jshint expr: true*/
-describe('xd.services.ProjectModel', function () {
 
-  beforeEach( module('xd.services.ProjectModel'));
+(function () {
 
-  it('should have a data function that returns an array');
+  describe('xd.services.ProjectModel', function () {
 
-});
+    // Testy
+
+/*    beforeEach( module('xd.services.ProjectModel'));
+
+    beforeEach(inject(function (_ProjectModel_) {
+      ProjectModel = _ProjectModel_;
+    }));
+
+    describe("loadProjects", function () {
+      it("should load a project", function () {
+        var project = ProjectModel.load();
+
+      });
+
+    });*/
+
+  });
+
+
+})();
+
+

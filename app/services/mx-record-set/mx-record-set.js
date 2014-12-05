@@ -16,6 +16,8 @@
 
       if (!_.isUndefined(data) && !_.isUndefined(data.rrdatas)) {
         this.rrdatas.items = _.map(data.rrdatas, function (rrdata) { return new MXDataValue(rrdata);});
+      } else {
+        this.rrdatas.addItem(new MXDataValue());
       }
     }
 
