@@ -17,7 +17,7 @@
         var mx = new MXDataValue();
         expect(mx instanceof MXDataValue).to.be.true;
         expect(mx.priority).to.equal(0);
-        expect(mx.server).to.equal('');
+        expect(mx.server).to.equal('mailServer');
       });
 
       it('should accept a data value', function () {

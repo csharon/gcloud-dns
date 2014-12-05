@@ -14,7 +14,7 @@
     function MXDataValue(val) {
       if (_.isUndefined(val)) {
         this.priority = 0;
-        this.server = '';
+        this.server = 'mailServer';
       }else{
         this.fromString(val);
       }

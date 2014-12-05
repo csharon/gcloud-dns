@@ -30,7 +30,6 @@
 
     ChangeSet.prototype.kind = 'dns#change';
     ChangeSet.prototype.toJson = toJson;
-    ChangeSet.prototype.hasChanges = hasChanges;
     ChangeSet.prototype.addTo = addTo;
     ChangeSet.prototype.removeFrom = removeFrom;
     ChangeSet.prototype.updateItem = updateItem;
@@ -54,9 +53,6 @@
       this[collection].removeItem(item);
     }
 
-    function hasChanges() {
-      return (this.additions.length > 0 || this.deletions.length > 0);
-    }
 
     return ChangeSet;
   }
