@@ -5,11 +5,11 @@
    * @name xd.services.ManagedZone:managedZone
    *
    */
-  angular.module('xd.services.ManagedZone', ['xd.services.ArrayCollection', 'xd.services.ResourceRecordSet'])
+  angular.module('xd.services.ManagedZone', ['xd.services.ArrayCollection','xd.services.DNSRecordFactory'])
     .factory('ManagedZone', wrapper);
 
   /* @ngInject */
-  function wrapper(ArrayCollection, ResourceRecordSet) {
+  function wrapper(ArrayCollection, DNSRecordFactory) {
     function ManagedZone(data) {
       if (!_.isUndefined(data)) {
         this.name = data.name || '';
@@ -18,7 +18,7 @@
         this.id = data.id || 0;
         this.nameServers = data.nameServers || [];
         this.creationTime = data.creationTime || '';
-        this.records = new ArrayCollection(_.map(data.records, function (item) { return new ResourceRecordSet(item); })) || new ArrayCollection();
+        this.records = !_.isUndefined(data.records) ? new ArrayCollection(_.map(data.records, function (item) { return DNSRecordFactory.createDNSRecord(item); })) : new ArrayCollection();
       } else {
         this.name = '';
         this.dnsName = '';

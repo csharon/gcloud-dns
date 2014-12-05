@@ -1,11 +1,11 @@
 md-toolbar.md-toolbar-header
-  .md-toolbar-tools(layout="horizontal")
-    md-button(ng-click="vm.openZoneList()" hide-md aria-label="Zone List")
+  .md-toolbar-tools(layout="row")
+    md-button(ng-click="vm.openZoneList()" hide-gt-md aria-label="Zone List")
       i.fa.fa-bars
     h1(flex)
       span Google Cloud DNS
 
-    div(layout="horizontal" layout-align="center")
+    div(layout="row" layout-align="center")
       img.img-circle.profile-img(ng-src="{{vm.auth.profile._json.picture}}", ng-if="vm.auth.isAuthenticated")
       md-button(ng-click="vm.auth.login()", ng-if="!vm.auth.isAuthenticated" aria-label="Login")
         span.fa-stack.fa-med

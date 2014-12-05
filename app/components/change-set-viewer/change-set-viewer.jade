@@ -1,7 +1,7 @@
 md-content
   .alert.alert-warning
-    div(layout="horizontal")
-      div(flex layout="vertical" layout-sm="horizontal")
+    div(layout="row")
+      div(flex layout="column" layout-sm="row")
         div(ng-if='vm.changeSetModel.pendingChanges.new.length > 0')
           span(layout-padding) added: {{vm.changeSetModel.pendingChanges.new.length}}
         div(ng-if='vm.changeSetModel.pendingChanges.updated.length > 0')
@@ -29,9 +29,9 @@ md-content
         td {{ record.ttl }}
         td {{ record.name }}
         td
-          div(ng-repeat="rrdata in record.rrdatas.items") {{rrdata}}
+          div(ng-repeat="rrdata in record.rrdatas.items") {{rrdata.toString()}}
         td
-          div(layout="horizontal" layout-align="end center")
+          div(layout="row" layout-align="end center")
             md-button(ng-click="vm.editRecord(record)" aria-label="Edit Record")
               span.fa-stack.fa-sm
                 i.fa.fa-square.fa-stack-2x.edit-icon

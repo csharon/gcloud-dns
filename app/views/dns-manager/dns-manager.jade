@@ -1,7 +1,7 @@
-section(layout="horizontal" layout-padding).dnsManager
+section(layout="row" layout-padding).dnsManager
 
-  md-sidenav(is-locked-open="$media('md')" component-id="zone-list").md-sidenav-left.md-whiteframe-z2
-    div(layout="horizontal" layout-align="end" layout-padding)
+  md-sidenav(md-is-locked-open="$media('md')" md-component-id="zone-list").md-sidenav-left.md-whiteframe-z2
+    div(layout="row" layout-align="end" layout-padding)
       form.form-inline(name="projectForm" novalidate flex)
         .form-group
           .input-group
@@ -18,8 +18,8 @@ section(layout="horizontal" layout-padding).dnsManager
                 li(ng-repeat="project in dm.projects")
                   a(href="#" ng-click="dm.project = project") {{ project }}
 
-    md-toolbar(layout="horizontal" ng-if="dm.zoneModel.zoneList.length > 0")
-      .md-toolbar-tools(layout="horizontal")
+    md-toolbar(layout="row" ng-if="dm.zoneModel.zoneList.length > 0")
+      .md-toolbar-tools(layout="row")
         span(flex) Zones
 
         md-button(ng-click="dm.createZone()" aria-label="Create Zone")

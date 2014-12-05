@@ -1,8 +1,12 @@
-/*globals inject, beforeEach, describe, it, expect, module*/
 /*jshint expr: true*/
 describe('xd.services.ResourceRecordSet', function () {
 
-  var ResourceRecordSet,
+  var ResourceRecordSet, RRDataValue, rset;
+  beforeEach(module('xd.services.ResourceRecordSet'));
+
+  beforeEach(inject(function (_ResourceRecordSet_, _RRDataValue_) {
+    ResourceRecordSet = _ResourceRecordSet_;
+    RRDataValue = _RRDataValue_;
     rset = {
       name: 'taco.com.',
       type: 'A',
@@ -11,10 +15,6 @@ describe('xd.services.ResourceRecordSet', function () {
         '1.2.3.4'
       ]
     };
-  beforeEach(module('xd.services.ResourceRecordSet'));
-
-  beforeEach(inject(function (_ResourceRecordSet_) {
-    ResourceRecordSet = _ResourceRecordSet_;
   }));
 
   describe('Constructor', function () {
@@ -37,7 +37,16 @@ describe('xd.services.ResourceRecordSet', function () {
       var rs = new ResourceRecordSet(rset);
       expect(rs.toJson().name).to.equal('taco.com.');
     });
-
   });
+
+  describe('rrdata values', function () {
+    it('should contain an array of RRDataValues', function () {
+      var rs = new ResourceRecordSet(rset);
+      var item = rs.rrdatas.items[0];
+      expect(item instanceof RRDataValue).to.be.true;
+      expect(item.toString()).to.equal('1.2.3.4');
+    });
+  });
+
 
 });
