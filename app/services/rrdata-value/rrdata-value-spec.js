@@ -22,6 +22,11 @@ describe('xd.services.RRDataValue', function () {
       expect(data.rrdata).to.equal('127.0.0.1');
     });
 
+    it('should create a RRDataValue from a any input', function () {
+      var data = new RRDataValue(5);
+      expect(data.rrdata).to.equal('');
+    });
+
   });
 
   describe('RRDataValue toString', function () {
