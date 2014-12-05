@@ -18,7 +18,7 @@
         this.id = data.id || 0;
         this.nameServers = data.nameServers || [];
         this.creationTime = data.creationTime || '';
-        this.records = new ArrayCollection(_.map(data.records, function (item) { return DNSRecordFactory.createDNSRecord(item); })) || new ArrayCollection();
+        this.records = !_.isUndefined(data.records) ? new ArrayCollection(_.map(data.records, function (item) { return DNSRecordFactory.createDNSRecord(item); })) : new ArrayCollection();
       } else {
         this.name = '';
         this.dnsName = '';

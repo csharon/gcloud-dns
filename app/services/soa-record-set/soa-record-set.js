@@ -16,6 +16,8 @@
 
       if (!_.isUndefined(data) && !_.isUndefined(data.rrdatas)) {
         this.rrdatas.items = _.map(data.rrdatas, function (rrdata) { return new SOADataValue(rrdata);});
+      } else {
+        this.rrdatas.addItem(new SOADataValue());
       }
     }
 

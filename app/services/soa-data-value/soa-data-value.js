@@ -13,8 +13,8 @@
 
     function SOADataValue(val) {
       if (_.isUndefined(val)) {
-        this.nameServer = '';
-        this.email = '';
+        this.nameServer = 'nameServer';
+        this.email = 'email';
         this.serial = 0;
         this.refreshRate = 21600;
         this.updateRetry = 3600;
