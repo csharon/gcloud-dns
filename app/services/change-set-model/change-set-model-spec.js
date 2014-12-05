@@ -1,4 +1,3 @@
-/*globals inject, beforeEach, describe, it, expect, module*/
 /*jshint expr: true*/
 describe('xd.services.ChangeSetModel', function () {
 
@@ -62,7 +61,7 @@ describe('xd.services.ChangeSetModel', function () {
 
     it('should increment the serial number of the new soa record', function () {
       model.createChangeSet(new ManagedZone(zone));
-      expect(model.changeSet.additions.items[0].rrdatas.items[0]).to.equal('ns-cloud-b1.googledomains.com. dns-admin.google.com. 1 21600 3600 1209600 300');
+      expect(model.changeSet.additions.items[0].rrdatas.items[0].toString()).to.equal('ns-cloud-b1.googledomains.com. dns-admin.google.com. 1 21600 3600 1209600 300');
     });
 
   });
@@ -196,6 +195,39 @@ describe('xd.services.ChangeSetModel', function () {
 
 
     });
+
+    describe('saveRecord', function () {
+      beforeEach(function () {
+        model.createChangeSet(new ManagedZone(zone));
+        sinon.spy(model, 'addRecord');
+        sinon.spy(model, 'updateRecord');
+      });
+
+      afterEach(function () {
+        model.addRecord.restore();
+        model.updateRecord.restore();
+      });
+
+      it('should add a record when it is new', function () {
+
+        var record = new ResourceRecordSet(aRecord);
+        model.saveRecord(record);
+        expect(model.addRecord.calledOnce).to.be.true;
+        expect(model.updateRecord.called).to.be.false;
+      });
+
+      it('should update a record when it is not new', function () {
+        var record = new ResourceRecordSet(aRecord);
+        record.fromServer = true;
+        model.currentRecord = record;
+        var updated = angular.copy(record);
+        updated.name = 'some.taco.com.';
+        model.saveRecord(updated);
+        expect(model.updateRecord.calledOnce).to.be.true;
+        expect(model.addRecord.called).to.be.false;
+      });
+    });
+
   });
 
 

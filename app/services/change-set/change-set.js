@@ -30,11 +30,9 @@
 
     ChangeSet.prototype.kind = 'dns#change';
     ChangeSet.prototype.toJson = toJson;
-    ChangeSet.prototype.hasChanges = hasChanges;
-    ChangeSet.prototype.addToAdditions = addToAdditions;
-    ChangeSet.prototype.removeFromAdditions = removeFromAdditions;
-    ChangeSet.prototype.addToDeletions = addToDeletions;
-    ChangeSet.prototype.removeFromDeletions = removeFromDeletions;
+    ChangeSet.prototype.addTo = addTo;
+    ChangeSet.prototype.removeFrom = removeFrom;
+    ChangeSet.prototype.updateItem = updateItem;
 
     function toJson() {
       return {
@@ -43,25 +41,18 @@
       };
     }
 
-    function addToAdditions(item) {
-      this.additions.addItem(item);
+    function addTo(item, collection) {
+      this[collection].addItem(item);
     }
 
-    function removeFromAdditions(item) {
-      this.additions.removeItem(item);
+    function updateItem(original, updated, collection) {
+      this[collection].updateItem(original, updated);
     }
 
-    function addToDeletions(item) {
-      this.deletions.addItem(item);
+    function removeFrom(item, collection) {
+      this[collection].removeItem(item);
     }
 
-    function removeFromDeletions(item) {
-      this.deletions.removeItem(item);
-    }
-
-    function hasChanges() {
-      return (this.additions.length > 0 || this.deletions.length > 0);
-    }
 
     return ChangeSet;
   }

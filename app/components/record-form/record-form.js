@@ -8,10 +8,11 @@
    * @function
    * @description
    */
-  angular.module('xd.components.RecordForm', ['ngMessages', 'xd.tmpls', 'xd.services.ResourceRecordType'])
+  angular.module('xd.components.RecordForm', ['ngMessages', 'xd.tmpls', 'xd.services.ResourceRecordType', 'xd.services.RRDataValue'])
     .directive('recordForm', RecordForm)
     .controller('recordFormCtrl', RecordFormCtrl)
-    .directive('recordConflict', recordConflictValidator);
+    .directive('recordConflict', recordConflictValidator)
+    .directive('unsavedChanges', unsavedChangesValidator);
 
   /* @ngInject */
   function recordConflictValidator() {
@@ -30,6 +31,22 @@
   }
 
   /* @ngInject */
+  function unsavedChangesValidator() {
+    return {
+      restrict: 'A',
+      require: 'ngModel',
+      controller: 'recordFormCtrl',
+      controllerAs: 'vm',
+      bindToController: true,
+      link: function (scope, element, attrs, ngModel) {
+        ngModel.$validators.unsavedChanges = function (viewValue) {
+          return !(ngModel.$dirty && !_.isEmpty(viewValue));
+        };
+      }
+    };
+  }
+
+  /* @ngInject */
   function RecordForm() {
     return {
       restrict: 'E',
@@ -41,7 +58,7 @@
   }
 
   /* @ngInject */
-  function RecordFormCtrl($scope, changeSetModel, ResourceRecordType) {
+  function RecordFormCtrl($scope, changeSetModel, ResourceRecordType, RRDataValue) {
     var vm = this;
     vm.record = angular.copy(changeSetModel.currentRecord);
     vm.recordTypes = _(ResourceRecordType)
@@ -53,6 +70,7 @@
     vm.addRRData = addRRData;
     vm.removeRRData = removeRRData;
     vm.isRecordConflict = isRecordConflict;
+    vm.hasUnsavedChanges = hasUnsavedChanges;
     vm.rrdata = '';
     vm.disableAddRRData = true;
     vm.enableSave = false;
@@ -62,11 +80,18 @@
 
     function addRRData() {
 
-      vm.record.rrdatas.addItem(vm.rrdata);
+      vm.record.rrdatas.addItem(new RRDataValue(vm.rrdata));
       vm.rrdata = '';
     }
 
+    function hasUnsavedChanges() {
+      return $scope.recordForm.rrdata.$dirty && $scope.recordForm.rrdata.$viewValue.length > 0;
+    }
+
     function isRecordConflict() {
+      if (!vm.record.isNew() || vm.record.pendingChanges) {
+        return true;
+      }
       return !changeSetModel.zone.records.containsItem({name: $scope.recordForm.name.$viewValue, type: $scope.recordForm.type.$viewValue});
     }
 

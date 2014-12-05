@@ -2,7 +2,7 @@
 /*jshint expr: true*/
 describe('xd.services.ChangeSet', function () {
 
-  var ChangeSet, records = [
+  var ChangeSet, SOARecordSet, records = [
     {
       name: 'taco.com.',
       type: 'NS',
@@ -24,9 +24,11 @@ describe('xd.services.ChangeSet', function () {
     }
   ];
   beforeEach( module('xd.services.ChangeSet'));
+  beforeEach( module('xd.services.SOARecordSet'));
 
-  beforeEach(inject(function (_ChangeSet_) {
+  beforeEach(inject(function (_ChangeSet_, _SOARecordSet_) {
     ChangeSet = _ChangeSet_;
+    SOARecordSet = _SOARecordSet_;
   }));
 
   describe('ChangeSet constructor', function () {
@@ -47,13 +49,23 @@ describe('xd.services.ChangeSet', function () {
       expect(cs.deletions.items.length).to.equal(1);
     });
 
+    it('should create a ChangeSet when you pass in an object with fkd up arrays', function () {
+      var data = {
+        additions: 42,
+        deletions: 'meat'
+      };
+      var cs = new ChangeSet(data);
+      expect(cs.additions.items.length).to.equal(0);
+      expect(cs.deletions.items.length).to.equal(0);
+    });
+
   });
 
   describe('additions', function () {
     var cs;
     beforeEach(function () {
       cs = new ChangeSet();
-      cs.addToAdditions(records[0]);
+      cs.addTo(records[0], 'additions');
     });
 
     it('should add an object to the additions collection when you call addToAdditions', function () {
@@ -61,7 +73,7 @@ describe('xd.services.ChangeSet', function () {
     });
 
     it('should remove an object from the additions collection when you call removeFromAdditions', function () {
-      cs.removeFromAdditions(records[0]);
+      cs.removeFrom(records[0], 'additions');
       expect(cs.additions.items.length).to.equal(0);
     });
 
@@ -71,7 +83,7 @@ describe('xd.services.ChangeSet', function () {
     var cs;
     beforeEach(function () {
       cs = new ChangeSet();
-      cs.addToDeletions(records[0]);
+      cs.addTo(records[0], 'deletions');
     });
 
     it('should add an object to the deletions collection when you call addToDeletions', function () {
@@ -79,10 +91,22 @@ describe('xd.services.ChangeSet', function () {
     });
 
     it('should remove an object from the deletions collection when you call removeFromDeletions', function () {
-      cs.removeFromDeletions(records[0]);
+      cs.removeFrom(records[0], 'deletions');
       expect(cs.deletions.items.length).to.equal(0);
     });
 
+  });
+
+  describe('toJson', function () {
+
+    it('should generate a json object that makes google happy', function () {
+      var soa = new SOARecordSet(records[1]);
+      var next = soa.getNext();
+      var cs = new ChangeSet();
+      cs.addTo(soa, 'deletions');
+      cs.addTo(next, 'additions');
+      expect(cs.toJson().additions[0].rrdatas[0]).to.equal('ns-cloud-b1.googledomains.com. dns-admin.google.com. 1 21600 3600 1209600 300');
+    });
   });
 
 });

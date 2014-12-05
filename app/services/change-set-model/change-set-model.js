@@ -48,7 +48,7 @@
       // Add the SOA records to the Change Set
       var originalSOA = api.zone.records.getItem({type: 'SOA', name: zone.dnsName});
       if (angular.isDefined(originalSOA)) {
-        addNewSOA(originalSOA);
+        updateRecord(originalSOA.getNext(), originalSOA);
       }
 
     }
@@ -58,37 +58,11 @@
       api.changeSet = new ChangeSet();
     }
 
-    function addNewSOA(originalSOA) {
-      var newSOA = angular.copy(originalSOA);
-      // Create the values for the new SOA record.
-      var newSOAVal = angular.copy(getSOAValues(newSOA.rrdatas.items[0]));
-      // Increment the serial number of the new SOA record.
-      newSOAVal.serial = newSOAVal.serial + 1;
-      // Assemble the array values and stringify them for submission.
-      newSOA.rrdatas.items[0] = _.values(newSOAVal).join(' ');
-      // Push the new SOA record to the Google API
-      updateRecord(newSOA, originalSOA);
-
-    }
-
-    function getSOAValues(rrdataVal) {
-      var soaParts = rrdataVal.split(' ');
-      return {
-        nameServer: soaParts[0],
-        email: soaParts[1],
-        serial: parseInt(soaParts[2], 10),
-        refreshRate: parseInt(soaParts[3], 10),
-        updateRetry: parseInt(soaParts[4], 10),
-        expiry: parseInt(soaParts[5], 10),
-        minCache: parseInt(soaParts[6], 10)
-      };
-    }
-
     function saveRecord(record) {
       if (record.isNew() && !record.pendingChanges) {
-        addRecord(record);
+        api.addRecord(record);
       } else {
-        updateRecord(record, api.currentRecord);
+        api.updateRecord(record, api.currentRecord);
       }
     }
 
@@ -96,7 +70,7 @@
       if (!api.zone.records.containsItem(record) && !api.changeSet.additions.containsItem(record)) {
         record.status = 'new';
         record.pendingChanges = true;
-        api.changeSet.addToAdditions(record);
+        api.changeSet.addTo(record, 'additions');
         api.updatedRecordView.addItem(record);
         updatePendingChanges();
       }
@@ -107,12 +81,12 @@
 
       // If the record status is new
       if (record.status === 'new') {
-        api.changeSet.removeFromAdditions({name: record.name, type: record.type});
+        api.changeSet.removeFrom({name: record.name, type: record.type}, 'additions');
         api.updatedRecordView.removeItem({name: record.name, type: record.type});
 
       } else {
         // add it to the changeset
-        api.changeSet.addToDeletions(record);
+        api.changeSet.addTo(record, 'deletions');
         // mark it as deleted
         record.status = 'deleted';
         // Update the view
@@ -124,12 +98,11 @@
 
     function updateRecord(newRecord, oldRecord) {
       if (oldRecord.status === 'new') {
-        api.changeSet.removeFromAdditions({name: oldRecord.name, type: oldRecord.type});
-        api.changeSet.addToAdditions(newRecord);
+        api.changeSet.updateItem({name: oldRecord.name, type: oldRecord.type}, newRecord, 'additions');
         api.updatedRecordView.updateItem({name: oldRecord.name, type: oldRecord.type}, newRecord);
       } else {
-        api.changeSet.addToAdditions(newRecord);
-        api.changeSet.addToDeletions(oldRecord);
+        api.changeSet.addTo(newRecord, 'additions');
+        api.changeSet.addTo(oldRecord, 'deletions');
         newRecord.status = 'updated';
         api.updatedRecordView.removeItem({name: oldRecord.name, type: oldRecord.type});
         api.updatedRecordView.addItem(newRecord);
