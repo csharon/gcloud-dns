@@ -29,7 +29,9 @@
     "expect": true,
     "inject": true,
     "beforeEach": true,
+    "afterEach": true,
     "it": true,
-    "describe": true
+    "describe": true,
+    "sinon": true
   }
 }

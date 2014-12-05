@@ -60,9 +60,9 @@
 
     function saveRecord(record) {
       if (record.isNew() && !record.pendingChanges) {
-        addRecord(record);
+        api.addRecord(record);
       } else {
-        updateRecord(record, api.currentRecord);
+        api.updateRecord(record, api.currentRecord);
       }
     }
 

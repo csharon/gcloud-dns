@@ -1,4 +1,3 @@
-/*globals inject, beforeEach, describe, it, expect, module, sinon*/
 /*jshint expr: true*/
 describe('xd.services.ChangeSetModel', function () {
 
@@ -200,24 +199,32 @@ describe('xd.services.ChangeSetModel', function () {
     describe('saveRecord', function () {
       beforeEach(function () {
         model.createChangeSet(new ManagedZone(zone));
+        sinon.spy(model, 'addRecord');
+        sinon.spy(model, 'updateRecord');
+      });
 
+      afterEach(function () {
+        model.addRecord.restore();
+        model.updateRecord.restore();
       });
 
       it('should add a record when it is new', function () {
-        sinon.stub(model, 'addRecord');
+
         var record = new ResourceRecordSet(aRecord);
         model.saveRecord(record);
-        expect(model.addRecord).to.have.been.called;
-
+        expect(model.addRecord.calledOnce).to.be.true;
+        expect(model.updateRecord.called).to.be.false;
       });
 
       it('should update a record when it is not new', function () {
-        sinon.stub(model, 'updateRecord');
         var record = new ResourceRecordSet(aRecord);
         record.fromServer = true;
-        model.saveRecord(record);
-        expect(model.updateRecord).to.have.been.called;
-
+        model.currentRecord = record;
+        var updated = angular.copy(record);
+        updated.name = 'some.taco.com.';
+        model.saveRecord(updated);
+        expect(model.updateRecord.calledOnce).to.be.true;
+        expect(model.addRecord.called).to.be.false;
       });
     });
 
