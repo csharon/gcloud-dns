@@ -18,7 +18,6 @@
   function ZoneResource($q, gcloudDns) {
     var zones;
 
-
     function getUpdatedProject() {
       var deferred = $q.defer();
       var promise = deferred.promise;

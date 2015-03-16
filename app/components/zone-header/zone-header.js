@@ -42,7 +42,7 @@
       confirmModal.open({
         event: e,
         title: 'Confirm Zone Deletion',
-        message: 'Are you sure you want to delete ' + vm.zone.dnsName +'?'
+        message: 'Are you sure you want to delete ' + vm.zone.dnsName + '?'
       }).then(
         function () {
           $scope.$emit('DELETE_ZONE', vm.zone);

@@ -1,7 +1,12 @@
 (function () {
-  angular.module('xd.api.GcloudDnsMock', ['ngMockE2E', 'xd.api.GcloudDnsMockData', 'xd.api.GcloudDns'])
-    .run(GcloudDnsMock);
-    
+  'use strict';
+
+  angular.module('xd.api.GcloudDnsMock', [
+    'ngMockE2E',
+    'xd.api.GcloudDnsMockData',
+    'xd.api.GcloudDns'
+  ]).run(GcloudDnsMock);
+
   function GcloudDnsMock($httpBackend, GcloudDnsMockData, GcloudDnsConfig) {
     var URL = GcloudDnsConfig.BASE_URL + '/' + GcloudDnsConfig.RESOURCE_NAME;
 

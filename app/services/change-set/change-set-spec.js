@@ -23,8 +23,8 @@ describe('xd.services.ChangeSet', function () {
       ]
     }
   ];
-  beforeEach( module('xd.services.ChangeSet'));
-  beforeEach( module('xd.services.SOARecordSet'));
+  beforeEach(module('xd.services.ChangeSet'));
+  beforeEach(module('xd.services.SOARecordSet'));
 
   beforeEach(inject(function (_ChangeSet_, _SOARecordSet_) {
     ChangeSet = _ChangeSet_;
@@ -68,11 +68,13 @@ describe('xd.services.ChangeSet', function () {
       cs.addTo(records[0], 'additions');
     });
 
-    it('should add an object to the additions collection when you call addToAdditions', function () {
+    it('should add an object to the additions collection when you call addToAdditions',
+      function () {
       expect(cs.additions.items.length).to.equal(1);
     });
 
-    it('should remove an object from the additions collection when you call removeFromAdditions', function () {
+    it('should remove an object from the additions collection when you call removeFromAdditions',
+      function () {
       cs.removeFrom(records[0], 'additions');
       expect(cs.additions.items.length).to.equal(0);
     });
@@ -86,11 +88,13 @@ describe('xd.services.ChangeSet', function () {
       cs.addTo(records[0], 'deletions');
     });
 
-    it('should add an object to the deletions collection when you call addToDeletions', function () {
+    it('should add an object to the deletions collection when you call addToDeletions',
+      function () {
       expect(cs.deletions.items.length).to.equal(1);
     });
 
-    it('should remove an object from the deletions collection when you call removeFromDeletions', function () {
+    it('should remove an object from the deletions collection when you call removeFromDeletions',
+      function () {
       cs.removeFrom(records[0], 'deletions');
       expect(cs.deletions.items.length).to.equal(0);
     });
@@ -105,7 +109,8 @@ describe('xd.services.ChangeSet', function () {
       var cs = new ChangeSet();
       cs.addTo(soa, 'deletions');
       cs.addTo(next, 'additions');
-      expect(cs.toJson().additions[0].rrdatas[0]).to.equal('ns-cloud-b1.googledomains.com. dns-admin.google.com. 1 21600 3600 1209600 300');
+      expect(cs.toJson().additions[0].rrdatas[0])
+        .to.equal('ns-cloud-b1.googledomains.com. dns-admin.google.com. 1 21600 3600 1209600 300');
     });
   });
 

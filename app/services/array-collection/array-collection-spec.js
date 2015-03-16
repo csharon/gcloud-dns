@@ -39,7 +39,7 @@ describe('xd.services.ArrayCollection', function () {
         'ns-cloud-b1.googledomains.com. dns-admin.google.com. 0 21600 3600 1209600 300'
       ]
     };
-  beforeEach( module('xd.services.ArrayCollection'));
+  beforeEach(module('xd.services.ArrayCollection'));
 
   beforeEach(inject(function (_ArrayCollection_) {
     ArrayCollection = _ArrayCollection_;
