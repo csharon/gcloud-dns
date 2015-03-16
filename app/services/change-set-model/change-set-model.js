@@ -13,7 +13,6 @@
   ])
     .factory('changeSetModel', ChangeSetModel);
 
-
   /* @ngInject */
   function ChangeSetModel(ArrayCollection, ChangeSet, ResourceRecordSet) {
 
@@ -98,7 +97,10 @@
 
     function updateRecord(newRecord, oldRecord) {
       if (oldRecord.status === 'new') {
-        api.changeSet.updateItem({name: oldRecord.name, type: oldRecord.type}, newRecord, 'additions');
+        api.changeSet.updateItem({
+          name: oldRecord.name,
+          type: oldRecord.type
+        }, newRecord, 'additions');
         api.updatedRecordView.updateItem({name: oldRecord.name, type: oldRecord.type}, newRecord);
       } else {
         api.changeSet.addTo(newRecord, 'additions');

@@ -61,7 +61,7 @@
     function deleteZone(zone) {
       return zoneResource.remove(zone).then(
         function () {
-          var tempZone =_(model.zoneList)
+          var tempZone = _(model.zoneList)
             .remove(function (zone) {
               return zone.id === model.selectedZone.id;
             })

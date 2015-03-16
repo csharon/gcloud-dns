@@ -6,5 +6,5 @@
 
   angular.module('xd.api.ZoneResourceMockData')
     .value('ZoneResourceMockData', ZoneResourceMockData);
-    
+
 })();
