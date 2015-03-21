@@ -13,3 +13,4 @@ dist/
 dev/
 docs/
 reports
+.tmp/
