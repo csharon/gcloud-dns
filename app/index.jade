@@ -1,8 +1,29 @@
-extends partials/layout
-block main-content
+doctype html
+html(lang="en" ng-app="GcloudDns")
+  head
+    title Gcloud Dns
+    base(href="/")
+    link(href="/favicon.ico", rel="shortcut icon", type="image/x-icon")
 
-  xd-page-header
+    // bower:css
+    // endbower
 
-  div
-    md-content(layout-padding)
-      ui-view
+    // inject:css
+    // endinject
+
+  body(ng-controller="gcloudDnsCtrl as vm" ng-cloak md-theme="blue-grey" layout="column")
+
+    xd-page-header
+
+    div
+      md-content(layout-padding)
+        ui-view
+
+    // bower:js
+    // endbower
+
+    // inject:templates:js
+    // endinject
+
+    // inject:js
+    // endinject
