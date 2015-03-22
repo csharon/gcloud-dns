@@ -1,7 +1,11 @@
 (function () {
-  angular.module('xd.api.ZoneResourceMock', ['ngMockE2E', 'xd.api.ZoneResourceMockData', 'xd.api.ZoneResource'])
+  angular.module('xd.api.ZoneResourceMock', [
+    'ngMockE2E',
+    'xd.api.ZoneResourceMockData',
+    'xd.api.ZoneResource'
+  ])
     .run(ZoneResourceMock);
-    
+
   function ZoneResourceMock($httpBackend, ZoneResourceMockData, ZoneResourceConfig) {
     var URL = ZoneResourceConfig.BASE_URL + '/' + ZoneResourceConfig.RESOURCE_NAME;
 

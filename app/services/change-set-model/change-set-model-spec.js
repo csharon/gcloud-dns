@@ -2,7 +2,7 @@
 describe('xd.services.ChangeSetModel', function () {
 
   var model, zone, aRecord, updatedRecord, ManagedZone, ResourceRecordSet;
-  beforeEach( module('xd.services.ChangeSetModel'));
+  beforeEach(module('xd.services.ChangeSetModel'));
 
   beforeEach(inject(function (changeSetModel, _ManagedZone_, _ResourceRecordSet_) {
     model = changeSetModel;
@@ -61,7 +61,8 @@ describe('xd.services.ChangeSetModel', function () {
 
     it('should increment the serial number of the new soa record', function () {
       model.createChangeSet(new ManagedZone(zone));
-      expect(model.changeSet.additions.items[0].rrdatas.items[0].toString()).to.equal('ns-cloud-b1.googledomains.com. dns-admin.google.com. 1 21600 3600 1209600 300');
+      expect(model.changeSet.additions.items[0].rrdatas.items[0].toString())
+        .to.equal('ns-cloud-b1.googledomains.com. dns-admin.google.com. 1 21600 3600 1209600 300');
     });
 
   });
@@ -80,7 +81,6 @@ describe('xd.services.ChangeSetModel', function () {
         expect(model.changeSet.additions.items.length).to.equal(2);
       });
 
-
       it('should add the new record to the updatedRecordView', function () {
         expect(model.updatedRecordView.containsItem(aRecord)).to.be.true;
 
@@ -93,7 +93,6 @@ describe('xd.services.ChangeSetModel', function () {
       it('should not add the new record to zone.records', function () {
         expect(mz.records.items.length).to.equal(2);
       });
-
 
     });
 
@@ -161,7 +160,6 @@ describe('xd.services.ChangeSetModel', function () {
         expect(model.changeSet.deletions.containsItem(aRecord)).to.be.false;
       });
 
-
     });
 
     describe('removeRecord', function () {
@@ -192,7 +190,6 @@ describe('xd.services.ChangeSetModel', function () {
       it ('should remove the existing element in the updated view list', function () {
         expect(model.updatedRecordView.containsItem(aRecord)).to.be.false;
       });
-
 
     });
 
@@ -229,6 +226,5 @@ describe('xd.services.ChangeSetModel', function () {
     });
 
   });
-
 
 });

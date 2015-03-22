@@ -22,7 +22,7 @@
       if (_.isUndefined(data)) {
         return new ResourceRecordSet();
       }
-      switch(data.type) {
+      switch (data.type) {
         case 'SOA':
           return new SOARecordSet(data);
 
@@ -36,6 +36,5 @@
 
     return api;
   }
-
 
 })();

@@ -25,7 +25,10 @@
     delete $httpProvider.defaults.headers.common['X-Requested-With'];
 
     $stateProvider
-      .state('welcome', { templateUrl: '/views/welcome/welcome.html', controller: 'welcomeCtrl', controllerAs: 'vm'});
+      .state('welcome', {
+        templateUrl: '/views/welcome/welcome.html',
+        controller: 'welcomeCtrl', controllerAs: 'vm'
+      });
 
   }
 
@@ -46,6 +49,5 @@
     }
 
   }
-
 
 })();

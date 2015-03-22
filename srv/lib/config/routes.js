@@ -35,6 +35,6 @@ module.exports = function (app, config) {
 */
 
   app.get('*', function (req, res) {
-    res.sendFile(config.webRoot.concat('/index.html'));
+    res.sendFile(process.cwd() + '/.tmp/index.html');
   });
 };
