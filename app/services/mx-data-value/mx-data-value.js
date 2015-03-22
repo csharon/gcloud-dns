@@ -15,7 +15,7 @@
       if (_.isUndefined(val)) {
         this.priority = 0;
         this.server = 'mailServer';
-      }else{
+      } else {
         this.fromString(val);
       }
     }
@@ -36,6 +36,5 @@
     return MXDataValue;
 
   }
-
 
 })();

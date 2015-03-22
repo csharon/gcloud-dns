@@ -20,7 +20,6 @@
     ArrayCollection.prototype.containsItem = containsItem;
     ArrayCollection.prototype.updateItem = updateItem;
 
-
     function getItem(item) {
       return _.find(this.items, function (listItem) {
         return matches(listItem, item);

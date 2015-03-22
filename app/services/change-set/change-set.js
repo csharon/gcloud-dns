@@ -16,8 +16,10 @@
         this.id = data.id || '';
         this.startTime = data.startTime || '';
         this.status = data.status || '';
-        this.additions = _.isArray(data.additions) ? new ArrayCollection(data.additions) : new ArrayCollection();
-        this.deletions = _.isArray(data.deletions) ? new ArrayCollection(data.deletions) : new ArrayCollection();
+        this.additions = _.isArray(data.additions) ?
+          new ArrayCollection(data.additions) : new ArrayCollection();
+        this.deletions = _.isArray(data.deletions) ?
+          new ArrayCollection(data.deletions) : new ArrayCollection();
       } else {
         this.id = '';
         this.startTime = '';
@@ -52,7 +54,6 @@
     function removeFrom(item, collection) {
       this[collection].removeItem(item);
     }
-
 
     return ChangeSet;
   }

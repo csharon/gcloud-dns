@@ -5,7 +5,7 @@ describe('xd.services.RRDataValue', function () {
   var RRDataValue,
     rrVal = '127.0.0.1';
 
-  beforeEach( module('xd.services.RRDataValue'));
+  beforeEach(module('xd.services.RRDataValue'));
   beforeEach(inject(function (_RRDataValue_) {
     RRDataValue = _RRDataValue_;
   }));
@@ -37,6 +37,5 @@ describe('xd.services.RRDataValue', function () {
     });
 
   });
-
 
 });

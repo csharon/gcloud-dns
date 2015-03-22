@@ -5,7 +5,7 @@
 
     var MXDataValue, mxdata = '10 mx.taco.com.';
 
-    beforeEach( module('xd.services.MXDataValue'));
+    beforeEach(module('xd.services.MXDataValue'));
 
     beforeEach(inject(function (_MXDataValue_) {
       MXDataValue = _MXDataValue_;

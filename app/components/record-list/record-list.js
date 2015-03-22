@@ -30,7 +30,6 @@
   /* @ngInject */
   function RecordListCtrl() {
 
-
   }
 
 })();

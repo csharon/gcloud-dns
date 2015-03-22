@@ -6,5 +6,5 @@
 
   angular.module('xd.api.GcloudDnsMockData')
     .value('GcloudDnsMockData', GcloudDnsMockData);
-    
+
 })();
