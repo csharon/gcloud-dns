@@ -4,12 +4,15 @@ html(lang="en" ng-app="GcloudDns")
     title Gcloud Dns
     base(href="/")
     link(href="/favicon.ico", rel="shortcut icon", type="image/x-icon")
-
+    // build:css assets/css/vendor.css
     // bower:css
     // endbower
+    // endbuild
 
+    // build:css assets/css/app.css
     // inject:css
     // endinject
+    // endbuild
 
   body(ng-controller="gcloudDnsCtrl as vm" ng-cloak md-theme="blue-grey" layout="column")
     xd-page-header
@@ -18,11 +21,15 @@ html(lang="en" ng-app="GcloudDns")
       md-content(layout-padding)
         ui-view
 
+    // build:js scripts/vendor.js
     // bower:js
     // endbower
+    // endbuild
 
+    // build:js scripts/app.js
     // inject:templates:js
     // endinject
 
     // inject:js
     // endinject
+    // endbuild
