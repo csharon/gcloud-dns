@@ -1,14 +1,14 @@
 var rootPath = process.env.PWD = process.cwd();
 
-console.log('App rootPath: ' + rootPath);
-console.log('Dev webRoot: ' + rootPath.concat('/dev'));
-console.log('Prod webRoot: ' + rootPath.concat('/public'));
-
 module.exports = {
   development: {
     rootPath: rootPath,
-    port: process.env.PORT || 3000,
-    webRoot: rootPath.concat('/dev'),
+    port: process.env.PORT || 3005,
+    webRoot: [
+      './app/',
+      './',
+      './.tmp/'
+    ],
     google: {
       clientID: '795904425230-4lk581rn4rbapi8hconn8fl20fink2cu.apps.googleusercontent.com',
       clientSecret: 'wLhMSxr-WIkDcR9jZPXhJtDG',
@@ -26,6 +26,6 @@ module.exports = {
   production: {
     rootPath: rootPath,
     port: process.env.PORT || 3000,
-    webRoot: rootPath.concat('/public')
+    webRoot: [rootPath.concat('/public')]
   }
 };

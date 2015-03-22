@@ -3,9 +3,8 @@ var express = require('express'),
     passport = require('passport'),
     logger = require('morgan'),
     methodOverride = require('method-override'),
-    expressSession = require('express-session');
-
-var environment = process.env.NODE_ENV;
+    expressSession = require('express-session'),
+    _ = require('lodash');
 
 module.exports = function (app, config) {
 
@@ -19,11 +18,8 @@ module.exports = function (app, config) {
   }));
   app.use(passport.initialize());
   app.use(passport.session());
-  //app.use(express.static(config.webRoot));
-  if (environment === 'development') {
-    app.use(express.static('./app/'));
-    app.use(express.static('./'));
-    app.use(express.static('./.tmp/'));
-  }
+  _.each(config.webRoot, function (path) {
+    app.use(express.static(path));
+  });
 
 };
