@@ -7,7 +7,7 @@
     var SOADataValue,
       soaVal = 'ns-cloud-e1.googledomains.com. dns-admin.google.com. 5 21600 3600 1209600 300';
 
-    beforeEach( module('xd.services.SOADataValue'));
+    beforeEach(module('xd.services.SOADataValue'));
     beforeEach(inject(function (_SOADataValue_) {
       SOADataValue = _SOADataValue_;
     }));
@@ -35,8 +35,6 @@
 
     });
 
-
   });
-
 
 })();

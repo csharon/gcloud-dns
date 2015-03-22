@@ -10,7 +10,7 @@
       rrdatas: ['ns-cloud-e1.googledomains.com. dns-admin.google.com. 5 21600 3600 1209600 300']
     };
 
-    beforeEach( module('xd.services.SOARecordSet'));
+    beforeEach(module('xd.services.SOARecordSet'));
 
     beforeEach(inject(function (_SOARecordSet_, _SOADataValue_) {
       SOARecordSet = _SOARecordSet_;
@@ -50,6 +50,5 @@
     });
 
   });
-
 
 })();

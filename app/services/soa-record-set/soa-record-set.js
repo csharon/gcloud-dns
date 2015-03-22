@@ -5,7 +5,9 @@
    * @name xd.services.SOARecordSet:SOARecordSet
    *
    */
-  angular.module('xd.services.SOARecordSet', ['xd.services.SOADataValue', 'xd.services.DNSRecordSet'])
+  angular.module('xd.services.SOARecordSet', [
+    'xd.services.SOADataValue', 'xd.services.DNSRecordSet'
+  ])
     .factory('SOARecordSet', wrapper);
 
   /* @ngInject */
@@ -15,12 +17,13 @@
       DNSRecordSet.call(this, data);
 
       if (!_.isUndefined(data) && !_.isUndefined(data.rrdatas)) {
-        this.rrdatas.items = _.map(data.rrdatas, function (rrdata) { return new SOADataValue(rrdata);});
+        this.rrdatas.items = _.map(
+          data.rrdatas, function (rrdata) { return new SOADataValue(rrdata);}
+        );
       } else {
         this.rrdatas.addItem(new SOADataValue());
       }
     }
-
 
     SOARecordSet.prototype = Object.create(DNSRecordSet.prototype);
     SOARecordSet.prototype.getNext = getNext;

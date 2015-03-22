@@ -3,15 +3,14 @@ describe('xd.components.RecordList', function () {
 
   var el, scope;
 
-  beforeEach( module('xd.components.RecordList'));
+  beforeEach(module('xd.components.RecordList'));
 
-  beforeEach( inject( function ($rootScope, $compile){
+  beforeEach(inject(function ($rootScope, $compile) {
     scope = $rootScope.$new();
     el = angular.element('<record-list></record-list>');
     $compile(el, scope);
     scope.$apply();
   }));
-
 
   it('should replace with div tag');
 

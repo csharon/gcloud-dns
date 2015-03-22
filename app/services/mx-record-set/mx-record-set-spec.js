@@ -11,7 +11,7 @@
       rrdatas: ['10 mx.taco.com.']
     };
 
-    beforeEach( module('xd.services.MXRecordSet'));
+    beforeEach(module('xd.services.MXRecordSet'));
 
     beforeEach(inject(function (_MXRecordSet_, _MXDataValue_) {
       MXRecordSet = _MXRecordSet_;
@@ -37,6 +37,4 @@
 
   });
 
-
 })();
-

@@ -29,7 +29,6 @@
     api.open = openModal;
     api.close = closeModal;
 
-
     function openModal(opts) {
       confirmationModel.title = opts.title;
       confirmationModel.message = opts.message;
@@ -50,7 +49,7 @@
   }
 
   /* @ngInject */
-  function ConfirmModalCtrl($scope, confirmationModel, $mdDialog) {
+  function ConfirmModalCtrl(confirmationModel, $mdDialog) {
     var vm = this;
     vm.model = confirmationModel;
 
