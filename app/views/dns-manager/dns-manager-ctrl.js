@@ -90,9 +90,6 @@
 
     dm.changeSetModel = changeSetModel;
 
-
-
-
     $scope.$on('CREATE_ZONE', createZone);
     $scope.$on('EDIT_ZONE', editZone);
     $scope.$on('CANCEL_CREATE_ZONE', cancelCreateZone);
@@ -131,7 +128,7 @@
             },
             function () {
               googleOAuth.logout();
-              xdToastr.error ('Session Timeout!' );
+              xdToastr.error ('Session Timeout!');
             }
           );
         }
@@ -178,12 +175,12 @@
     function deleteZone(event, zone) {
       zoneModel.deleteZone(zone).then(
         function (resp) {
-          xdToastr.success ( resp.dnsName + ' deleted!' );
+          xdToastr.success (resp.dnsName + ' deleted!');
           $state.go('dns.noSelection');
         },
         function (err) {
           $log.error(err);
-          xdToastr.error ('Unable to delete ' + zoneModel.selectedZone.dnsName + '!' );
+          xdToastr.error ('Unable to delete ' + zoneModel.selectedZone.dnsName + '!');
         }
       );
     }
@@ -210,13 +207,13 @@
     function saveChangeSet(event, changeSet) {
       zoneModel.saveChanges(changeSet).then(
         function () {
-          xdToastr.success ( zoneModel.selectedZone.dnsName + ' updated!' );
+          xdToastr.success(zoneModel.selectedZone.dnsName + ' updated!');
           changeSetModel.resetChangeSet();
           $state.go('dns.detail.view');
         },
         function (err) {
           $log.error(err);
-          xdToastr.error ('Unable to make changes to ' + zoneModel.selectedZone.dnsName + '!' );
+          xdToastr.error ('Unable to make changes to ' + zoneModel.selectedZone.dnsName + '!');
         }
       );
     }

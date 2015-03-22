@@ -8,7 +8,11 @@
    * @function
    * @description
    */
-  angular.module('xd.components.ChangeSetViewer', ['xd.tmpls', 'xd.services.ChangeSetModel', 'xd.services.ConfirmModal'])
+  angular.module('xd.components.ChangeSetViewer', [
+    'xd.tmpls',
+    'xd.services.ChangeSetModel',
+    'xd.services.ConfirmModal'
+  ])
     .controller('changeSetViewerCtrl', ChangeSetViewerCtrl)
     .directive('changeSetViewer', ChangeSetViewer);
 
@@ -43,7 +47,7 @@
     function deleteRecord(record) {
       confirmModal.open({
         title: 'Confirm (' + record.type + ') Record Deletion',
-        message: 'Are you sure you want to delete ' + record.name +'?'
+        message: 'Are you sure you want to delete ' + record.name + '?'
       }).then(
         function () {
           changeSetModel.removeRecord(record);
@@ -54,7 +58,7 @@
     function saveChanges() {
       confirmModal.open({
         title: 'Save Zone Changes',
-        message: 'Are you sure you want to save changes for ' + changeSetModel.zone.dnsName +'?'
+        message: 'Are you sure you want to save changes for ' + changeSetModel.zone.dnsName + '?'
       }).then(
         function () {
           $scope.$emit('SAVE_CHANGE_SET', changeSetModel.changeSet);
@@ -67,7 +71,5 @@
     }
 
   }
-
-
 
 })();

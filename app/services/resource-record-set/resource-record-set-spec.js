@@ -48,5 +48,4 @@ describe('xd.services.ResourceRecordSet', function () {
     });
   });
 
-
 });

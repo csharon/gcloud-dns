@@ -1,28 +1,11 @@
-/*global require*/
 var gulp = require('gulp'),
-  config = require('./lib/config.js'),
   requireDir = require('require-dir'),
-  del = require('del');
+  glp = require('gulp-load-plugins')({lazy: true});
 
-var env = process.env.NODE_ENV = process.env.NODE_ENV || 'development';
+requireDir('./lib/pipelines', {recurse: true});
 
-requireDir('./lib/tasks', { recurse: true });
+gulp.task('help', glp.taskListing);
+gulp.task('default', ['help']);
 
-/**
- *  Main Tasks
- */
-gulp.task('dev', ['open:dev']);
-gulp.task('test', ['createtesttmpls', 'test:ci']);
-gulp.task('tdd', ['createtesttmpls', 'autotest', 'watch:testtemplates']);
-gulp.task('docs', ['open:docs']);
-
-
-/**
- *  Development Sub Tasks
- */
-
-gulp.task('dev:build', ['clean:dev', 'lint', 'jade:index', 'sass', 'copy:vendor', 'copy:assets', 'build:js']);
-
-gulp.task('clean:dev', function () {
-  del.sync([config.filesets.dev]);
-});
+gulp.task('verify', ['validate', 'test']);
+gulp.task('build', ['package']);

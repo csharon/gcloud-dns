@@ -3,7 +3,8 @@ var express = require('express'),
     passport = require('passport'),
     logger = require('morgan'),
     methodOverride = require('method-override'),
-    expressSession = require('express-session');
+    expressSession = require('express-session'),
+    _ = require('lodash');
 
 module.exports = function (app, config) {
 
@@ -17,7 +18,8 @@ module.exports = function (app, config) {
   }));
   app.use(passport.initialize());
   app.use(passport.session());
-  app.use(express.static(config.webRoot));
+  _.each(config.webRoot, function (path) {
+    app.use(express.static(path));
+  });
 
-
-  };
+};

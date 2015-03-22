@@ -8,7 +8,11 @@
    * @function
    * @description
    */
-  angular.module('xd.components.RecordForm', ['ngMessages', 'xd.tmpls', 'xd.services.ResourceRecordType', 'xd.services.RRDataValue'])
+  angular.module('xd.components.RecordForm', [
+    'ngMessages', 'xd.tmpls',
+    'xd.services.ResourceRecordType',
+    'xd.services.RRDataValue'
+  ])
     .directive('recordForm', RecordForm)
     .controller('recordFormCtrl', RecordFormCtrl)
     .directive('recordConflict', recordConflictValidator)
@@ -92,7 +96,10 @@
       if (!vm.record.isNew() || vm.record.pendingChanges) {
         return true;
       }
-      return !changeSetModel.zone.records.containsItem({name: $scope.recordForm.name.$viewValue, type: $scope.recordForm.type.$viewValue});
+      return !changeSetModel.zone.records.containsItem({
+        name: $scope.recordForm.name.$viewValue,
+        type: $scope.recordForm.type.$viewValue
+      });
     }
 
     function removeRRData(index) {

@@ -11,7 +11,7 @@
       ]
     };
 
-    beforeEach( module('xd.services.DNSRecordSet'));
+    beforeEach(module('xd.services.DNSRecordSet'));
 
     beforeEach(inject(function (_DNSRecordSet_) {
       DNSRecordSet = _DNSRecordSet_;
@@ -47,8 +47,6 @@
 
     });
 
-
   });
 
 })();
-
