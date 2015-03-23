@@ -8,3 +8,4 @@ gulp.task('help', glp.taskListing);
 gulp.task('default', ['help']);
 
 gulp.task('verify', ['validate', 'test']);
+gulp.task('dev', ['serve']);
