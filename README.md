@@ -43,5 +43,5 @@ gulp test #Test - Run mocha unit tests using PhantomJS and exits
   * [Compass](http://compass-style.org/)
 * Testing
   * [Karma](https://github.com/karma-runner/karma)
-  * [Mocha](http://visionmedia.github.io/mocha/)
+  * [Mocha](https://mochajs.org/)
   * [Chai](http://chaijs.com/)
